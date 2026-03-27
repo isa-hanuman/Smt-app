@@ -4,1000 +4,1126 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>S&C Muay Thai</title>
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="S&C MT">
+<meta name="theme-color" content="#0a0a0f">
 <style>
 :root{
   --bg:#0a0a0f;--card:#13131a;--card2:#1a1a24;--border:#2a2a3a;
   --red:#e63946;--red2:#c1121f;--green:#2dc653;--blue:#4361ee;
-  --orange:#f4a261;--text:#e8e8f0;--text2:#8888aa;--text3:#55556a;
-  --radius:14px;--radius-sm:8px;
+  --orange:#f4a261;--purple:#7b2d8b;
+  --text:#e8e8f0;--text2:#8888aa;--text3:#55556a;
+  --radius:14px;--rsm:8px;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{background:var(--bg);color:var(--text);font-family:-apple-system,'Segoe UI',Arial,sans-serif;min-height:100vh;overflow-x:hidden}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,'Segoe UI',Arial,sans-serif;min-height:100vh}
 .screen{display:none;min-height:100vh}
 .screen.active{display:flex;flex-direction:column}
 
-/* ── LOGIN ── */
+/* LOGIN */
 #s-login{background:linear-gradient(160deg,#0a0a0f 0%,#13091a 100%);align-items:center;justify-content:center;padding:24px}
 .login-box{width:100%;max-width:380px}
-.logo{text-align:center;margin-bottom:40px}
-.logo-icon{width:72px;height:72px;background:var(--red);border-radius:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:32px}
-.logo h1{font-size:24px;font-weight:800;letter-spacing:-0.5px}
+.logo{text-align:center;margin-bottom:36px}
+.logo-icon{width:72px;height:72px;background:var(--red);border-radius:20px;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:32px}
+.logo h1{font-size:24px;font-weight:800}
 .logo p{color:var(--text2);font-size:13px;margin-top:4px}
-.tab-row{display:flex;background:var(--card);border-radius:var(--radius-sm);padding:4px;margin-bottom:24px}
+.tab-row{display:flex;background:var(--card);border-radius:var(--rsm);padding:4px;margin-bottom:22px}
 .tab-btn{flex:1;padding:8px;border:none;background:none;color:var(--text2);font-size:13px;font-weight:600;border-radius:6px;cursor:pointer;transition:.2s}
 .tab-btn.on{background:var(--card2);color:var(--text)}
-.field{margin-bottom:14px}
-.field label{display:block;font-size:11px;font-weight:600;color:var(--text2);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
-.field input{width:100%;padding:13px 14px;background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:14px}
+.field{margin-bottom:13px}
+.field label{display:block;font-size:11px;font-weight:600;color:var(--text2);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
+.field input{width:100%;padding:12px 13px;background:var(--card);border:1.5px solid var(--border);border-radius:var(--rsm);color:var(--text);font-size:14px}
 .field input:focus{outline:none;border-color:var(--red)}
-.btn-main{width:100%;padding:14px;background:var(--red);color:#fff;border:none;border-radius:var(--radius-sm);font-size:15px;font-weight:700;cursor:pointer;transition:.2s}
-.btn-main:hover{background:var(--red2)}
-.btn-main:disabled{opacity:.5;cursor:not-allowed}
-.msg{font-size:12px;text-align:center;margin-top:12px;min-height:18px}
+.btn-main{width:100%;padding:14px;background:var(--red);color:#fff;border:none;border-radius:var(--rsm);font-size:15px;font-weight:700;cursor:pointer}
+.btn-main:disabled{opacity:.5}
+.msg{font-size:12px;text-align:center;margin-top:10px;min-height:18px}
 .msg.err{color:var(--red)}.msg.ok{color:var(--green)}
 
-/* ── NAV ── */
+/* NAV */
 nav{background:var(--card);border-bottom:1px solid var(--border);padding:0 16px;display:flex;align-items:center;justify-content:space-between;height:52px;position:sticky;top:0;z-index:100}
 .nav-logo{font-size:15px;font-weight:800;display:flex;align-items:center;gap:8px}
-.nav-logo span{background:var(--red);color:#fff;border-radius:6px;padding:3px 7px;font-size:11px}
+.nav-badge{background:var(--red);color:#fff;border-radius:6px;padding:3px 8px;font-size:10px;font-weight:700}
 .nav-right{display:flex;align-items:center;gap:8px}
-.nav-user{font-size:12px;color:var(--text2)}
-.btn-sm{padding:6px 12px;border:1.5px solid var(--border);border-radius:6px;background:none;color:var(--text2);font-size:11px;font-weight:600;cursor:pointer}
-.btn-sm:hover{border-color:var(--text2);color:var(--text)}
+.nav-user{font-size:11px;color:var(--text2);max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.btn-xs{padding:5px 10px;border:1.5px solid var(--border);border-radius:5px;background:none;color:var(--text2);font-size:10px;font-weight:600;cursor:pointer}
 
-/* ── BOTTOM NAV ── */
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--border);display:flex;padding-bottom:env(safe-area-inset-bottom)}
-.bn-item{flex:1;display:flex;flex-direction:column;align-items:center;padding:10px 4px;cursor:pointer;border:none;background:none;color:var(--text3);gap:3px;transition:.15s}
-.bn-item.on{color:var(--red)}
-.bn-icon{font-size:20px;line-height:1}
-.bn-label{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.3px}
+/* BOTTOM NAV */
+.bnav{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--border);display:flex;padding-bottom:env(safe-area-inset-bottom)}
+.bn{flex:1;display:flex;flex-direction:column;align-items:center;padding:9px 4px;cursor:pointer;border:none;background:none;color:var(--text3);gap:2px;transition:.15s}
+.bn.on{color:var(--red)}
+.bn-ic{font-size:20px;line-height:1}
+.bn-lb{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.3px}
 
-/* ── CONTENT ── */
-.content{flex:1;overflow-y:auto;padding:16px;padding-bottom:80px;max-width:700px;margin:0 auto;width:100%}
+/* CONTENT */
+.content{flex:1;overflow-y:auto;padding:14px;padding-bottom:76px;max-width:700px;margin:0 auto;width:100%}
 .page{display:none}.page.on{display:block}
 
-/* ── CARDS ── */
-.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px}
-.card-title{font-size:12px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}
-.section-title{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin:20px 0 10px}
+/* CARDS */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px}
+.card-title{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+.sec-title{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin:16px 0 8px}
 
-/* ── STATS ── */
-.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px}
-.stat-box{background:var(--card2);border-radius:var(--radius-sm);padding:14px 12px}
-.stat-val{font-size:28px;font-weight:800;line-height:1}
-.stat-lbl{font-size:10px;color:var(--text2);margin-top:3px;text-transform:uppercase;letter-spacing:.3px}
-.stat-box.red .stat-val{color:var(--red)}
-.stat-box.green .stat-val{color:var(--green)}
-.stat-box.blue .stat-val{color:var(--blue)}
-.stat-box.orange .stat-val{color:var(--orange)}
+/* STATS */
+.sg2{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px}
+.sg4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+@media(max-width:400px){.sg4{grid-template-columns:repeat(2,1fr)}}
+.sb{background:var(--card2);border-radius:var(--rsm);padding:12px}
+.sb .v{font-size:26px;font-weight:800;line-height:1}
+.sb .l{font-size:9px;color:var(--text2);margin-top:2px;text-transform:uppercase;letter-spacing:.3px}
+.sb.r .v{color:var(--red)}.sb.g .v{color:var(--green)}.sb.b .v{color:var(--blue)}.sb.o .v{color:var(--orange)}
 
-/* ── ALERT ── */
-.alert{padding:10px 12px;border-radius:var(--radius-sm);font-size:12px;margin-bottom:8px;border-left:3px solid}
-.alert-r{background:#2a1015;color:#ff6b7a;border-color:var(--red)}
-.alert-g{background:#0d2a15;color:#4ade80;border-color:var(--green)}
-.alert-o{background:#2a1a08;color:#fba94c;border-color:var(--orange)}
+/* ALERTS */
+.al{padding:9px 11px;border-radius:var(--rsm);font-size:11px;margin-bottom:7px;border-left:3px solid}
+.al-r{background:#1a0a0c;color:#ff7080;border-color:var(--red)}
+.al-g{background:#0a1a0f;color:#4ade80;border-color:var(--green)}
+.al-o{background:#1a1008;color:#fba94c;border-color:var(--orange)}
 
-/* ── ATLETA LIST ── */
-.atleta-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border)}
-.atleta-row:last-child{border-bottom:none}
-.atleta-name{font-size:14px;font-weight:600}
-.atleta-meta{font-size:11px;color:var(--text2);margin-top:2px}
-.badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700}
-.badge-r{background:#2a1015;color:#ff6b7a}
-.badge-g{background:#0d2a15;color:#4ade80}
-.badge-o{background:#2a1a08;color:#fba94c}
-.badge-b{background:#0d1a3a;color:#7b9eff}
-
-/* ── TREINO DO DIA ── */
-.treino-header{background:linear-gradient(135deg,var(--red2),#7b0000);border-radius:var(--radius);padding:16px;margin-bottom:12px}
-.treino-header h2{font-size:18px;font-weight:800}
-.treino-header p{font-size:12px;color:rgba(255,255,255,.7);margin-top:4px}
-.ex-block{background:var(--card2);border-radius:var(--radius-sm);padding:12px;margin-bottom:8px}
-.ex-name{font-size:13px;font-weight:700;color:var(--text);margin-bottom:2px}
-.ex-inst{font-size:11px;color:var(--text2);margin-bottom:10px}
-.serie-row{padding:10px 0;border-bottom:1px solid var(--border)}
-.serie-row:last-child{border-bottom:none}
-.serie-label{font-size:11px;font-weight:700;color:var(--text2);margin-bottom:7px;display:flex;align-items:center;gap:6px}
-.serie-label .trab{color:var(--red);font-size:10px;background:#2a1015;padding:1px 6px;border-radius:4px}
-.inputs-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
-.inp-group label{font-size:10px;color:var(--text3);margin-bottom:3px;display:block}
-.inp-group input{width:100%;padding:9px;background:var(--bg);border:1.5px solid var(--border);border-radius:6px;color:var(--text);font-size:15px;font-weight:700;text-align:center}
-.inp-group input:focus{outline:none;border-color:var(--red)}
-.rpe-row{display:flex;gap:4px;margin-bottom:6px}
-.rpe-btn{flex:1;padding:7px 2px;border:1.5px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text2);font-size:11px;font-weight:700;cursor:pointer;text-align:center;transition:.15s}
-.rpe-btn.sel{border-color:var(--red);background:#2a1015;color:var(--red)}
-.rir-row{display:flex;gap:4px}
-.rir-btn{flex:1;padding:6px 2px;border:1.5px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text2);font-size:11px;font-weight:700;cursor:pointer;text-align:center;transition:.15s}
-.rir-btn.sel{border-color:var(--green);background:#0d2a15;color:var(--green)}
-
-/* ── PSE GERAL ── */
-.pse-grid{display:flex;gap:6px;margin:8px 0}
-.pse-btn{flex:1;padding:12px 4px;border:1.5px solid var(--border);border-radius:8px;background:var(--card2);color:var(--text2);font-size:14px;font-weight:800;cursor:pointer;text-align:center;transition:.15s}
-.pse-btn.sel{border-color:var(--red);background:#2a1015;color:var(--red)}
-
-/* ── WELLNESS ── */
-.w-row{display:flex;gap:5px;margin:6px 0}
-.w-btn{flex:1;padding:8px 2px;border:1.5px solid var(--border);border-radius:6px;background:var(--card2);color:var(--text2);font-size:9px;font-weight:600;cursor:pointer;text-align:center;line-height:1.3;transition:.15s}
-.w-btn.w1{border-color:var(--red);background:#2a1015;color:var(--red)}
-.w-btn.w2{border-color:var(--orange);background:#2a1a08;color:var(--orange)}
-.w-btn.w3{border-color:var(--text3);background:var(--card2);color:var(--text)}
-.w-btn.w4{border-color:var(--blue);background:#0d1a3a;color:#7b9eff}
-.w-btn.w5{border-color:var(--green);background:#0d2a15;color:var(--green)}
-
-/* ── FORMS ── */
-.form-group{margin-bottom:12px}
-.form-group label{display:block;font-size:11px;font-weight:600;color:var(--text2);margin-bottom:5px;text-transform:uppercase;letter-spacing:.3px}
-.form-group input,.form-group select,.form-group textarea{width:100%;padding:10px 12px;background:var(--card2);border:1.5px solid var(--border);border-radius:var(--radius-sm);color:var(--text);font-size:13px}
-.form-group input:focus,.form-group select:focus{outline:none;border-color:var(--red)}
-.form-group textarea{resize:vertical;min-height:60px}
-.form-group select option{background:var(--card)}
-.btn-red{padding:12px 20px;background:var(--red);color:#fff;border:none;border-radius:var(--radius-sm);font-size:13px;font-weight:700;cursor:pointer;transition:.15s}
-.btn-red:hover{background:var(--red2)}
-.btn-red.full{width:100%;padding:14px;font-size:15px}
-.btn-ghost{padding:10px 16px;background:none;border:1.5px solid var(--border);border-radius:var(--radius-sm);color:var(--text2);font-size:12px;font-weight:600;cursor:pointer}
+/* BUTTONS */
+.btn{padding:9px 16px;border:none;border-radius:var(--rsm);font-size:12px;font-weight:700;cursor:pointer;transition:.15s}
+.btn-r{background:var(--red);color:#fff}.btn-r:hover{background:var(--red2)}
+.btn-g{background:var(--green);color:#fff}
+.btn-b{background:var(--blue);color:#fff}
+.btn-o{background:var(--orange);color:#fff}
+.btn-ghost{background:none;border:1.5px solid var(--border);color:var(--text2)}
 .btn-ghost:hover{border-color:var(--text);color:var(--text)}
-.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.btn-danger{background:#2a0a0c;color:var(--red);border:1.5px solid var(--red)}
+.btn-full{width:100%;padding:13px;font-size:14px}
+.btn-row{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
 
-/* ── PROGRESS BAR ── */
-.prog-bar{height:6px;background:var(--card2);border-radius:3px;overflow:hidden;margin-top:4px}
-.prog-fill{height:100%;border-radius:3px;transition:width .4s}
+/* FORMS */
+.fg{margin-bottom:11px}
+.fg label{display:block;font-size:10px;font-weight:600;color:var(--text2);margin-bottom:4px;text-transform:uppercase;letter-spacing:.3px}
+.fg input,.fg select,.fg textarea{width:100%;padding:9px 11px;background:var(--card2);border:1.5px solid var(--border);border-radius:var(--rsm);color:var(--text);font-size:13px}
+.fg input:focus,.fg select:focus,.fg textarea:focus{outline:none;border-color:var(--red)}
+.fg textarea{resize:vertical;min-height:56px}
+.fg select option{background:var(--card)}
+.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 
-/* ── TABLE ── */
-.table-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;font-size:12px}
-th{background:var(--card2);color:var(--text2);padding:8px 10px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.3px}
-td{padding:9px 10px;border-bottom:1px solid var(--border);vertical-align:middle}
-tr:hover td{background:var(--card2)}
+/* TABLE */
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:11px}
+th{background:var(--card2);color:var(--text2);padding:7px 9px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;white-space:nowrap}
+td{padding:8px 9px;border-bottom:1px solid var(--border);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(255,255,255,.02)}
 
-/* ── SUCESSO ── */
-.success-screen{text-align:center;padding:40px 20px;display:none}
-.success-screen.show{display:block}
-.success-icon{font-size:64px;margin-bottom:16px}
-.success-screen h3{font-size:22px;font-weight:800;color:var(--green);margin-bottom:8px}
-.success-screen p{color:var(--text2);font-size:13px}
+/* BADGES */
+.bx{display:inline-block;padding:2px 7px;border-radius:20px;font-size:10px;font-weight:700}
+.bx-r{background:#1a0a0c;color:#ff7080}
+.bx-g{background:#0a1a0f;color:#4ade80}
+.bx-o{background:#1a1008;color:#fba94c}
+.bx-b{background:#0a0f1a;color:#7b9eff}
 
-/* ── HISTÓRICO ── */
-.hist-item{background:var(--card2);border-radius:var(--radius-sm);padding:12px;margin-bottom:8px}
-.hist-date{font-size:11px;color:var(--text2);margin-bottom:4px}
-.hist-name{font-size:14px;font-weight:700;margin-bottom:8px}
-.hist-stats{display:flex;gap:12px}
-.hist-stat{font-size:11px;color:var(--text2)}.hist-stat b{color:var(--text)}
+/* TREINO */
+.treino-hd{background:linear-gradient(135deg,var(--red2),#7b0000);border-radius:var(--radius);padding:14px;margin-bottom:10px}
+.treino-hd h2{font-size:17px;font-weight:800}
+.treino-hd p{font-size:11px;color:rgba(255,255,255,.7);margin-top:3px}
+.ex-block{background:var(--card2);border-radius:var(--rsm);padding:11px;margin-bottom:7px}
+.ex-name{font-size:13px;font-weight:700;margin-bottom:2px}
+.ex-inst{font-size:10px;color:var(--text2);margin-bottom:8px}
+.sr{padding:9px 0;border-bottom:1px solid var(--border)}
+.sr:last-child{border-bottom:none}
+.sr-lbl{font-size:10px;font-weight:700;color:var(--text2);margin-bottom:6px;display:flex;align-items:center;gap:5px}
+.trab-tag{font-size:9px;background:#1a0a0c;color:var(--red);padding:1px 5px;border-radius:3px}
+.ir{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:7px}
+.ig label{font-size:9px;color:var(--text3);margin-bottom:2px;display:block}
+.ig input{width:100%;padding:8px;background:var(--bg);border:1.5px solid var(--border);border-radius:5px;color:var(--text);font-size:15px;font-weight:700;text-align:center}
+.ig input:focus{outline:none;border-color:var(--red)}
+.rpe-row,.rir-row{display:flex;gap:3px;margin-bottom:5px}
+.rpe-btn,.rir-btn{flex:1;padding:7px 0;border:1.5px solid var(--border);border-radius:5px;background:var(--bg);color:var(--text2);font-size:11px;font-weight:700;cursor:pointer;text-align:center;transition:.1s}
+.rpe-btn.sel{border-color:var(--red);background:#1a0a0c;color:var(--red)}
+.rir-btn.sel{border-color:var(--green);background:#0a1a0f;color:var(--green)}
 
-/* ── MISC ── */
-.dv{height:1px;background:var(--border);margin:14px 0}
-.sm{font-size:11px;color:var(--text2)}.tc{text-align:center}
-.mt8{margin-top:8px}.mt14{margin-top:14px}.mt20{margin-top:20px}
-.empty{text-align:center;padding:40px 20px;color:var(--text3);font-size:13px}
-.tag{display:inline-block;padding:3px 8px;border-radius:4px;font-size:10px;font-weight:700;background:var(--card2);color:var(--text2)}
-.tag-red{background:#2a1015;color:var(--red)}
+/* PSE/WELLNESS */
+.pse-grid{display:flex;gap:5px;margin:7px 0}
+.pse-btn{flex:1;padding:11px 2px;border:1.5px solid var(--border);border-radius:7px;background:var(--card2);color:var(--text2);font-size:13px;font-weight:800;cursor:pointer;text-align:center;transition:.1s}
+.pse-btn.sel{border-color:var(--red);background:#1a0a0c;color:var(--red)}
+.w-row{display:flex;gap:4px;margin:5px 0}
+.wb{flex:1;padding:7px 1px;border:1.5px solid var(--border);border-radius:5px;background:var(--card2);color:var(--text2);font-size:8px;font-weight:600;cursor:pointer;text-align:center;line-height:1.4;transition:.1s}
+.wb.w1{border-color:var(--red);background:#1a0a0c;color:var(--red)}
+.wb.w2{border-color:var(--orange);background:#1a1008;color:var(--orange)}
+.wb.w3{border-color:var(--text3);background:var(--card2);color:var(--text)}
+.wb.w4{border-color:var(--blue);background:#0a0f1a;color:#7b9eff}
+.wb.w5{border-color:var(--green);background:#0a1a0f;color:var(--green)}
 
-/* ── MODAL ── */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:200;align-items:flex-end;justify-content:center}
-.modal-overlay.show{display:flex}
-.modal{background:var(--card);border-radius:20px 20px 0 0;padding:20px;width:100%;max-width:500px;max-height:85vh;overflow-y:auto}
-.modal-title{font-size:16px;font-weight:800;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
-.modal-close{background:none;border:none;color:var(--text2);font-size:20px;cursor:pointer;padding:4px}
+/* MODAL */
+.mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:200;align-items:flex-end;justify-content:center}
+.mo.show{display:flex}
+.mo-box{background:var(--card);border-radius:20px 20px 0 0;padding:20px;width:100%;max-width:520px;max-height:88vh;overflow-y:auto}
+.mo-title{font-size:15px;font-weight:800;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center}
+.mo-close{background:none;border:none;color:var(--text2);font-size:22px;cursor:pointer;line-height:1}
 
-/* ── JSON EDITOR ── */
-.json-area{font-family:monospace;font-size:11px;min-height:180px;background:var(--bg);color:#a8d8a8;border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:12px;width:100%}
+/* ATLETA ROW */
+.at-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--border)}
+.at-row:last-child{border-bottom:none}
+.at-name{font-size:13px;font-weight:700}
+.at-meta{font-size:10px;color:var(--text2);margin-top:2px}
+.at-actions{display:flex;gap:5px;flex-shrink:0}
 
-/* ── COACH NAV ── */
-.coach-tabs{display:flex;gap:6px;margin-bottom:16px;overflow-x:auto;padding-bottom:2px}
-.coach-tab{padding:7px 14px;border:1.5px solid var(--border);border-radius:20px;background:none;color:var(--text2);font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;transition:.15s}
-.coach-tab.on{background:var(--red);color:#fff;border-color:var(--red)}
+/* TESTES */
+.teste-item{background:var(--card2);border-radius:var(--rsm);padding:11px;margin-bottom:7px;display:flex;justify-content:space-between;align-items:center}
+.teste-tipo{font-size:12px;font-weight:700}
+.teste-valor{font-size:18px;font-weight:800;color:var(--red)}
+.teste-meta{font-size:10px;color:var(--text2);margin-top:2px}
+.teste-actions{display:flex;gap:4px}
 
-/* ── PUBLISH BANNER ── */
-.publish-card{background:linear-gradient(135deg,#1a0a0a,#2a1010);border:1px solid #3a1515;border-radius:var(--radius);padding:16px;margin-bottom:12px}
-.publish-card h3{font-size:15px;font-weight:700;margin-bottom:6px}
-.publish-card p{font-size:12px;color:var(--text2);margin-bottom:12px}
+/* COACH TABS */
+.ctabs{display:flex;gap:5px;margin-bottom:14px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+.ctabs::-webkit-scrollbar{display:none}
+.ctab{padding:6px 13px;border:1.5px solid var(--border);border-radius:20px;background:none;color:var(--text2);font-size:11px;font-weight:600;cursor:pointer;white-space:nowrap;transition:.15s;flex-shrink:0}
+.ctab.on{background:var(--red);color:#fff;border-color:var(--red)}
+
+/* SUCCESS */
+.ok-screen{text-align:center;padding:36px 20px;display:none}
+.ok-screen.show{display:block}
+.ok-icon{font-size:60px;margin-bottom:14px}
+
+/* HISTORICO */
+.hist-item{background:var(--card2);border-radius:var(--rsm);padding:11px;margin-bottom:7px}
+.hist-date{font-size:10px;color:var(--text2);margin-bottom:3px}
+.hist-name{font-size:13px;font-weight:700;margin-bottom:6px}
+.hist-stats{display:flex;gap:10px;flex-wrap:wrap}
+.hs{font-size:10px;color:var(--text2)}.hs b{color:var(--text)}
+
+/* JSON */
+.json-area{font-family:monospace;font-size:11px;min-height:160px;background:var(--bg);color:#a8d8a8;border:1.5px solid var(--border);border-radius:var(--rsm);padding:11px;width:100%}
+
+/* MISC */
+.dv{height:1px;background:var(--border);margin:12px 0}
+.sm{font-size:10px;color:var(--text2)}.tc{text-align:center}
+.mt8{margin-top:8px}.mt14{margin-top:14px}
+.empty{text-align:center;padding:32px;color:var(--text3);font-size:12px}
+.prog-bar{height:5px;background:var(--card2);border-radius:3px;overflow:hidden;margin-top:3px}
+.prog-fill{height:100%;border-radius:3px}
+.tag{display:inline-block;padding:2px 7px;border-radius:4px;font-size:9px;font-weight:700;background:var(--card2);color:var(--text2)}
 </style>
 </head>
 <body>
 
-<!-- ═══ LOGIN ═══ -->
+<!-- LOGIN -->
 <div class="screen active" id="s-login">
   <div class="login-box">
     <div class="logo">
       <div class="logo-icon">💪</div>
       <h1>S&C Muay Thai</h1>
-      <p>Treinamento de força e potência</p>
+      <p>Treinamento de forca e potencia</p>
     </div>
     <div class="tab-row">
       <button class="tab-btn on" onclick="loginTab('login',this)">Entrar</button>
-      <button class="tab-btn" onclick="loginTab('register',this)">Criar conta</button>
+      <button class="tab-btn" onclick="loginTab('reg',this)">Criar conta</button>
     </div>
-    <div id="login-form">
-      <div class="field"><label>Email</label><input id="l-email" type="email" placeholder="seu@email.com" autocomplete="email"></div>
-      <div class="field"><label>Senha</label><input id="l-pass" type="password" placeholder="••••••••" autocomplete="current-password"></div>
-      <button class="btn-main" onclick="fazerLogin()">Entrar</button>
+    <div id="f-login">
+      <div class="field"><label>Email</label><input id="l-em" type="email" placeholder="seu@email.com" autocomplete="email"></div>
+      <div class="field"><label>Senha</label><input id="l-pw" type="password" placeholder="••••••••" autocomplete="current-password"></div>
+      <button class="btn-main" onclick="doLogin()">Entrar</button>
       <div class="msg" id="l-msg"></div>
     </div>
-    <div id="reg-form" style="display:none">
-      <div class="field"><label>Nome</label><input id="r-nome" placeholder="Seu nome completo"></div>
-      <div class="field"><label>Email</label><input id="r-email" type="email" placeholder="seu@email.com"></div>
-      <div class="field"><label>Senha</label><input id="r-pass" type="password" placeholder="mínimo 6 caracteres"></div>
-      <div class="field"><label>Código do coach (opcional)</label><input id="r-cod" placeholder="Código fornecido pelo coach"></div>
-      <button class="btn-main" onclick="fazerCadastro()">Criar conta</button>
+    <div id="f-reg" style="display:none">
+      <div class="field"><label>Nome</label><input id="r-nm" placeholder="Seu nome completo"></div>
+      <div class="field"><label>Email</label><input id="r-em" type="email" placeholder="seu@email.com"></div>
+      <div class="field"><label>Senha (min. 6 caracteres)</label><input id="r-pw" type="password" placeholder="••••••••"></div>
+      <div class="field"><label>Codigo do coach (opcional)</label><input id="r-cd" placeholder="Fornecido pelo coach"></div>
+      <button class="btn-main" onclick="doReg()">Criar conta</button>
       <div class="msg" id="r-msg"></div>
     </div>
   </div>
 </div>
 
-<!-- ═══ APP PRINCIPAL ═══ -->
+<!-- APP -->
 <div class="screen" id="s-app">
   <nav>
-    <div class="nav-logo">S&C <span id="nav-role">ATLETA</span></div>
+    <div class="nav-logo">S&C <span class="nav-badge" id="nav-role">ATLETA</span></div>
     <div class="nav-right">
-      <span class="nav-user" id="nav-name"></span>
-      <button class="btn-sm" onclick="sair()">Sair</button>
+      <span class="nav-user" id="nav-nm"></span>
+      <button class="btn-xs" onclick="doLogout()">Sair</button>
     </div>
   </nav>
-
   <div class="content">
 
-    <!-- ATLETA: TREINO DO DIA -->
+    <!-- ATLETA: TREINO -->
     <div class="page on" id="p-treino">
-      <div id="treino-content"></div>
-      <div id="pse-section" style="display:none">
+      <div id="treino-wrap"></div>
+      <div id="pse-wrap" style="display:none">
         <div class="card">
-          <div class="card-title">PSE da sessao — como foi o treino todo?</div>
-          <div style="background:#1a0a08;border-left:3px solid var(--orange);border-radius:6px;padding:8px 10px;margin-bottom:10px;font-size:10px;color:#fba94c;line-height:1.5">
-            6 = muito leve | 7 = leve | 8 = moderado | 9 = dificil | 9.5 = quase no limite | 10 = maximo
-          </div>
-          <div class="pse-grid" id="pse-geral-btns"></div>
+          <div class="card-title">PSE geral — como foi o treino todo?</div>
+          <div class="al al-o" style="font-size:10px;margin-bottom:8px">6=muito leve | 7=leve | 8=moderado | 9=dificil | 9.5=quase no limite | 10=maximo</div>
+          <div class="pse-grid" id="pse-btns"></div>
           <div class="dv"></div>
           <div class="card-title">Como voce esta hoje?</div>
-          <div id="wellness-area"></div>
-          <div class="form-group mt8"><label>Obs (opcional)</label><textarea id="obs-input" placeholder="Algo para o coach saber..."></textarea></div>
-          <button class="btn-red full mt8" onclick="enviarFeedback()">Enviar tudo</button>
+          <div id="well-wrap"></div>
+          <div class="fg mt8"><label>Observacao (opcional)</label><textarea id="obs-inp" placeholder="Algo para o coach saber..."></textarea></div>
+          <button class="btn btn-r btn-full mt8" onclick="envFb()">Enviar feedback</button>
         </div>
       </div>
-      <div class="success-screen" id="treino-ok">
-        <div class="success-icon">✅</div>
-        <h3>Treino registrado!</h3>
-        <p>O coach ja recebeu suas informacoes.</p>
+      <div class="ok-screen" id="treino-ok">
+        <div class="ok-icon">✅</div>
+        <div style="font-size:20px;font-weight:800;color:var(--green);margin-bottom:6px">Treino registrado!</div>
+        <div class="sm">O coach ja recebeu suas informacoes.</div>
       </div>
+    </div>
+
+    <!-- ATLETA: MEUS TESTES -->
+    <div class="page" id="p-meus-testes">
+      <div class="sec-title">Meus resultados de testes</div>
+      <div id="meus-testes-list"></div>
     </div>
 
     <!-- ATLETA: HISTÓRICO -->
     <div class="page" id="p-hist">
-      <div class="section-title">Meu historico</div>
-      <div id="hist-list"><div class="empty">Nenhum treino registrado ainda.</div></div>
+      <div class="sec-title">Meu historico</div>
+      <div id="hist-list"></div>
     </div>
 
     <!-- COACH: DASHBOARD -->
     <div class="page" id="p-dash">
-      <div class="coach-tabs">
-        <button class="coach-tab on" onclick="coachTab('overview',this)">Visao geral</button>
-        <button class="coach-tab" onclick="coachTab('atletas-lista',this)">Atletas</button>
-        <button class="coach-tab" onclick="coachTab('publicar',this)">Publicar treino</button>
-        <button class="coach-tab" onclick="coachTab('cargas-tab',this)">Cargas</button>
-        <button class="coach-tab" onclick="coachTab('biblioteca',this)">Biblioteca</button>
+      <div class="ctabs" id="ctabs">
+        <button class="ctab on" onclick="cTab('overview',this)">Visao geral</button>
+        <button class="ctab" onclick="cTab('atletas-tab',this)">Atletas</button>
+        <button class="ctab" onclick="cTab('pub-tab',this)">Publicar</button>
+        <button class="ctab" onclick="cTab('testes-tab',this)">Testes</button>
+        <button class="ctab" onclick="cTab('cargas-tab',this)">Cargas</button>
+        <button class="ctab" onclick="cTab('biblio-tab',this)">Biblioteca</button>
       </div>
 
       <!-- Overview -->
       <div id="ct-overview">
-        <div class="stats-grid">
-          <div class="stat-box red"><div class="stat-val" id="d-atletas">0</div><div class="stat-lbl">Atletas</div></div>
-          <div class="stat-box orange"><div class="stat-val" id="d-acwr">—</div><div class="stat-lbl">ACWR</div></div>
-          <div class="stat-box green"><div class="stat-val" id="d-rpe">—</div><div class="stat-lbl">RPE medio</div></div>
-          <div class="stat-box blue"><div class="stat-val" id="d-fb">0</div><div class="stat-lbl">Feedbacks (7d)</div></div>
+        <div class="sg4">
+          <div class="sb r"><div class="v" id="d-nat">—</div><div class="l">Atletas</div></div>
+          <div class="sb o"><div class="v" id="d-acwr">—</div><div class="l">ACWR</div></div>
+          <div class="sb g"><div class="v" id="d-rpe">—</div><div class="l">PSE medio</div></div>
+          <div class="sb b"><div class="v" id="d-fb">—</div><div class="l">Feedbacks (7d)</div></div>
         </div>
-        <div class="card"><div class="card-title">Alertas</div><div id="alertas-list"></div></div>
-        <div class="card"><div class="card-title">Foster — Monotonia & Strain (7 dias)</div><div id="foster-list"></div></div>
+        <div class="card"><div class="card-title">Alertas</div><div id="dash-als"></div></div>
+        <div class="card"><div class="card-title">Foster — Monotonia & Strain</div><div id="dash-foster"></div></div>
         <div class="card"><div class="card-title">Ultimos feedbacks</div>
-          <div class="table-wrap"><table><thead><tr><th>Atleta</th><th>Data</th><th>PSE</th><th>CI</th><th>Wellness</th></tr></thead>
+          <div class="tw"><table><thead><tr><th>Atleta</th><th>Data</th><th>PSE</th><th>CI</th><th>Wellness</th></tr></thead>
           <tbody id="tb-dash"></tbody></table></div>
         </div>
       </div>
 
       <!-- Atletas -->
-      <div id="ct-atletas-lista" style="display:none">
-        <div class="btn-row" style="margin-bottom:14px">
-          <button class="btn-red" onclick="abrirModalAtleta()">+ Novo atleta</button>
+      <div id="ct-atletas-tab" style="display:none">
+        <div class="btn-row" style="margin-bottom:12px">
+          <button class="btn btn-r" onclick="abrirMoAt()">+ Novo atleta</button>
         </div>
-        <div id="atletas-list"></div>
+        <div id="lista-at"></div>
       </div>
 
-      <!-- Publicar treino -->
-      <div id="ct-publicar" style="display:none">
-        <div class="publish-card">
-          <h3>Publicar treino do dia</h3>
-          <p>O treino publicado fica disponivel para todos os atletas ao abrir o app.</p>
+      <!-- Publicar -->
+      <div id="ct-pub-tab" style="display:none">
+        <div class="card" style="background:linear-gradient(135deg,#1a0808,#2a1010)">
+          <div style="font-size:14px;font-weight:700;margin-bottom:4px">Publicar treino do dia</div>
+          <div class="sm">Todos os atletas verao ao abrir o app.</div>
         </div>
         <div class="card">
-          <div class="form-group"><label>Data</label><input id="pub-data" type="date"></div>
-          <div class="form-group"><label>Treino da biblioteca</label>
-            <select id="pub-treino"><option value="">— selecionar —</option></select>
-          </div>
-          <div class="form-group"><label>Sessao</label>
-            <select id="pub-sessao">
-              <option>HIGH — Bloco A (Inferiores)</option>
-              <option>HIGH — Bloco A (Superiores)</option>
-              <option>HIGH — Bloco A (Conjugado)</option>
-              <option>HIGH — Bloco B (Inferiores)</option>
-              <option>HIGH — Bloco B (Superiores)</option>
-              <option>HIGH — Bloco B (Conjugado)</option>
-              <option>HIGH — Bloco C (Cluster)</option>
-              <option>LOW — Tecnica/Mobilidade</option>
-              <option>DELOAD</option>
-              <option>Muay Thai — Clinch tecnico</option>
-            </select>
-          </div>
-          <button class="btn-red full" onclick="publicarTreino()">Publicar para todos os atletas</button>
+          <div class="fg"><label>Data</label><input id="pub-dt" type="date"></div>
+          <div class="fg"><label>Treino da biblioteca</label>
+            <select id="pub-tr"><option value="">— nenhum —</option></select></div>
+          <div class="fg"><label>Sessao</label>
+            <select id="pub-ses">
+              <option>HIGH — Bloco A (Inferiores)</option><option>HIGH — Bloco A (Superiores)</option>
+              <option>HIGH — Bloco A (Conjugado)</option><option>HIGH — Bloco B (Inferiores)</option>
+              <option>HIGH — Bloco B (Superiores)</option><option>HIGH — Bloco B (Conjugado)</option>
+              <option>HIGH — Bloco C (Cluster)</option><option>LOW — Tecnica/Mobilidade</option>
+              <option>DELOAD</option><option>Muay Thai — Clinch tecnico</option>
+            </select></div>
+          <button class="btn btn-r btn-full" onclick="pubTreino()">Publicar agora</button>
           <div class="msg" id="pub-msg" style="margin-top:8px"></div>
         </div>
-        <div class="section-title">Treino ativo agora</div>
-        <div id="treino-ativo-coach"></div>
+        <div class="sec-title">Treino ativo hoje</div>
+        <div id="treino-ativo"></div>
+      </div>
+
+      <!-- Testes -->
+      <div id="ct-testes-tab" style="display:none">
+        <div class="btn-row" style="margin-bottom:12px">
+          <button class="btn btn-r" onclick="abrirMoTeste()">+ Registrar teste</button>
+        </div>
+        <div class="fg">
+          <label>Filtrar por atleta</label>
+          <select id="filtro-at-teste" onchange="carregarTestes()">
+            <option value="">Todos os atletas</option>
+          </select>
+        </div>
+        <div id="lista-testes"></div>
       </div>
 
       <!-- Cargas -->
       <div id="ct-cargas-tab" style="display:none">
-        <div class="form-group">
+        <div class="fg">
           <label>Filtrar por atleta</label>
-          <select id="filtro-atleta" onchange="carregarCargas()"><option value="">Todos</option></select>
+          <select id="filtro-at-carga" onchange="carregarCargas()">
+            <option value="">Todos</option>
+          </select>
         </div>
-        <div class="table-wrap">
-          <table><thead><tr><th>Atleta</th><th>Data</th><th>Exercicio</th><th>Serie</th><th>Reps</th><th>Kg</th><th>Ton</th><th>RPE</th><th>RIR</th></tr></thead>
+        <div class="tw">
+          <table><thead><tr><th>Atleta</th><th>Data</th><th>Exercicio</th><th>Serie</th><th>Reps</th><th>Kg</th><th>Ton</th><th>RPE</th><th>RIR</th><th></th></tr></thead>
           <tbody id="tb-cargas"></tbody></table>
         </div>
       </div>
 
       <!-- Biblioteca -->
-      <div id="ct-biblioteca" style="display:none">
-        <div class="btn-row" style="margin-bottom:14px">
-          <button class="btn-red" onclick="abrirModalTreino()">+ Novo treino</button>
+      <div id="ct-biblio-tab" style="display:none">
+        <div class="btn-row" style="margin-bottom:12px">
+          <button class="btn btn-r" onclick="abrirMoTr()">+ Novo treino</button>
         </div>
-        <div id="biblioteca-list"></div>
+        <div id="lista-biblio"></div>
       </div>
 
-    </div>
-
+    </div><!-- /p-dash -->
   </div><!-- /content -->
 
   <!-- Bottom Nav Atleta -->
-  <div class="bottom-nav" id="bn-atleta">
-    <button class="bn-item on" onclick="atletaTab('treino',this)">
-      <div class="bn-icon">🏋️</div><div class="bn-label">Treino</div>
-    </button>
-    <button class="bn-item" onclick="atletaTab('hist',this)">
-      <div class="bn-icon">📊</div><div class="bn-label">Historico</div>
-    </button>
+  <div class="bnav" id="bn-at">
+    <button class="bn on" onclick="atTab('treino',this)"><div class="bn-ic">🏋️</div><div class="bn-lb">Treino</div></button>
+    <button class="bn" onclick="atTab('meus-testes',this)"><div class="bn-ic">📈</div><div class="bn-lb">Testes</div></button>
+    <button class="bn" onclick="atTab('hist',this)"><div class="bn-ic">📊</div><div class="bn-lb">Historico</div></button>
   </div>
 
-  <!-- Bottom Nav Coach (oculto por padrão) -->
-  <div class="bottom-nav" id="bn-coach" style="display:none">
-    <button class="bn-item on" onclick="showPage('dash');highlightBN(this,'bn-coach')">
-      <div class="bn-icon">📊</div><div class="bn-label">Dashboard</div>
-    </button>
+  <!-- Bottom Nav Coach -->
+  <div class="bnav" id="bn-co" style="display:none">
+    <button class="bn on" onclick="showPg('dash');hiNav(this,'bn-co')"><div class="bn-ic">📊</div><div class="bn-lb">Dashboard</div></button>
   </div>
+</div>
 
-</div><!-- /s-app -->
-
-<!-- ═══ MODAL: Novo Atleta ═══ -->
-<div class="modal-overlay" id="modal-atleta">
-  <div class="modal">
-    <div class="modal-title">Novo atleta <button class="modal-close" onclick="fecharModal('modal-atleta')">✕</button></div>
-    <div class="form-group"><label>Email do atleta</label><input id="at-email" type="email" placeholder="atleta@email.com"></div>
-    <div class="form-group"><label>Nome</label><input id="at-nome" placeholder="Nome completo"></div>
-    <div class="form-group"><label>WhatsApp</label><input id="at-wp" placeholder="55DDD9XXXXXXXX" type="tel"></div>
-    <div class="form-group"><label>Peso (kg)</label><input id="at-peso" type="number" placeholder="80"></div>
-    <div class="form-group"><label>1RM Agachamento</label><input id="at-squat" type="number"></div>
-    <div class="form-group"><label>1RM Terra</label><input id="at-dl" type="number"></div>
-    <div class="form-group"><label>1RM Power Clean</label><input id="at-clean" type="number"></div>
-    <div class="form-group"><label>CMJ baseline (cm)</label><input id="at-cmj" type="number"></div>
-    <button class="btn-red full" onclick="salvarAtleta()">Salvar atleta</button>
+<!-- MODAL: Novo/Editar Atleta -->
+<div class="mo" id="mo-atleta">
+  <div class="mo-box">
+    <div class="mo-title"><span id="mo-at-title">Novo atleta</span><button class="mo-close" onclick="fecharMo('mo-atleta')">✕</button></div>
+    <input type="hidden" id="at-edit-id">
+    <div class="fg"><label>Nome *</label><input id="at-nm" placeholder="Nome completo"></div>
+    <div class="fg"><label>Email *</label><input id="at-em" type="email" placeholder="atleta@email.com"></div>
+    <div class="fg"><label>WhatsApp</label><input id="at-wp" placeholder="55DDD9XXXXXXXX" type="tel"></div>
+    <div class="fg-row">
+      <div class="fg"><label>Peso (kg)</label><input id="at-ps" type="number" placeholder="80"></div>
+      <div class="fg"><label>Sexo</label><select id="at-sx"><option value="">—</option><option>M</option><option>F</option></select></div>
+    </div>
+    <button class="btn btn-r btn-full" onclick="salvarAtleta()">Salvar</button>
     <div class="msg" id="at-msg" style="margin-top:8px"></div>
   </div>
 </div>
 
-<!-- ═══ MODAL: Novo Treino ═══ -->
-<div class="modal-overlay" id="modal-treino">
-  <div class="modal">
-    <div class="modal-title">Novo treino <button class="modal-close" onclick="fecharModal('modal-treino')">✕</button></div>
-    <div class="form-group"><label>Nome do treino</label><input id="tr-nome" placeholder="HIGH — Bloco A Terca"></div>
-    <div class="form-group"><label>Bloco</label>
-      <select id="tr-bloco">
-        <option>HIGH — Bloco A (Inferiores)</option>
-        <option>HIGH — Bloco A (Superiores)</option>
-        <option>HIGH — Bloco A (Conjugado)</option>
-        <option>HIGH — Bloco B (Inferiores)</option>
-        <option>HIGH — Bloco B (Superiores)</option>
-        <option>HIGH — Bloco C (Cluster)</option>
-        <option>LOW — Tecnica</option>
-        <option>DELOAD</option>
+<!-- MODAL: Registrar/Editar Teste -->
+<div class="mo" id="mo-teste">
+  <div class="mo-box">
+    <div class="mo-title"><span id="mo-te-title">Registrar teste</span><button class="mo-close" onclick="fecharMo('mo-teste')">✕</button></div>
+    <input type="hidden" id="te-edit-id">
+    <div class="fg"><label>Atleta *</label><select id="te-at"><option value="">— selecionar —</option></select></div>
+    <div class="fg"><label>Data *</label><input id="te-dt" type="date"></div>
+    <div class="fg"><label>Tipo de teste *</label>
+      <select id="te-tipo">
+        <option value="">— selecionar —</option>
+        <optgroup label="Forca maxima">
+          <option value="1RM Agachamento">1RM Agachamento</option>
+          <option value="1RM Terra">1RM Terra</option>
+          <option value="1RM Supino inclinado">1RM Supino inclinado</option>
+          <option value="1RM Press militar">1RM Press militar</option>
+          <option value="1RM Power Clean">1RM Power Clean</option>
+          <option value="1RM Hang Snatch">1RM Hang Snatch</option>
+          <option value="1RM Remada curvada">1RM Remada curvada</option>
+        </optgroup>
+        <optgroup label="Potencia">
+          <option value="CMJ (salto vertical)">CMJ (salto vertical)</option>
+          <option value="Broad Jump (salto horizontal)">Broad Jump (salto horizontal)</option>
+          <option value="Squat Jump">Squat Jump</option>
+        </optgroup>
+        <optgroup label="Outro">
+          <option value="Outro">Outro (descrever nas obs)</option>
+        </optgroup>
       </select>
     </div>
-    <div class="form-group"><label>JSON do treino</label>
-      <textarea class="json-area" id="tr-json" placeholder='Cole o JSON do treino aqui...'></textarea>
+    <div class="fg-row">
+      <div class="fg"><label>Valor *</label><input id="te-val" type="number" step="0.1" placeholder="0"></div>
+      <div class="fg"><label>Unidade</label>
+        <select id="te-uni">
+          <option value="kg">kg (forca)</option>
+          <option value="cm">cm (salto)</option>
+          <option value="%PC">% PC</option>
+          <option value="s">s (tempo)</option>
+        </select>
+      </div>
     </div>
-    <div style="font-size:10px;color:var(--text3);margin-bottom:10px">Nao tem JSON? Cole o modelo abaixo e edite.</div>
-    <button class="btn-ghost" onclick="colarModelo()">Colar modelo</button>
-    <button class="btn-red" style="margin-left:8px" onclick="salvarTreino()">Salvar</button>
+    <div class="fg"><label>Observacao</label><textarea id="te-obs" placeholder="Contexto, condicoes, notas..."></textarea></div>
+    <div class="btn-row">
+      <button class="btn btn-r" onclick="salvarTeste()">Salvar</button>
+      <button class="btn btn-ghost" onclick="fecharMo('mo-teste')">Cancelar</button>
+    </div>
+    <div class="msg" id="te-msg" style="margin-top:8px"></div>
+  </div>
+</div>
+
+<!-- MODAL: Editar Carga -->
+<div class="mo" id="mo-carga">
+  <div class="mo-box">
+    <div class="mo-title">Editar carga<button class="mo-close" onclick="fecharMo('mo-carga')">✕</button></div>
+    <input type="hidden" id="cg-id">
+    <div class="fg-row">
+      <div class="fg"><label>Reps</label><input id="cg-reps" type="number"></div>
+      <div class="fg"><label>Carga (kg)</label><input id="cg-carga" type="number" step="0.5"></div>
+    </div>
+    <div class="fg"><label>RPE da serie</label>
+      <select id="cg-rpe"><option value="">—</option>
+        <option>6</option><option>7</option><option>8</option><option>9</option><option>9.5</option><option>10</option>
+      </select></div>
+    <div class="fg"><label>RIR</label>
+      <select id="cg-rir"><option value="">—</option>
+        <option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3+</option>
+      </select></div>
+    <div class="btn-row">
+      <button class="btn btn-r" onclick="salvarCarga()">Salvar</button>
+      <button class="btn btn-danger" onclick="deletarCarga()">Deletar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Novo Treino -->
+<div class="mo" id="mo-treino">
+  <div class="mo-box">
+    <div class="mo-title">Novo treino<button class="mo-close" onclick="fecharMo('mo-treino')">✕</button></div>
+    <div class="fg"><label>Nome</label><input id="tr-nm" placeholder="HIGH — Bloco A Terca"></div>
+    <div class="fg"><label>Bloco</label>
+      <select id="tr-bl">
+        <option>HIGH — Bloco A (Inferiores)</option><option>HIGH — Bloco A (Superiores)</option>
+        <option>HIGH — Bloco A (Conjugado)</option><option>HIGH — Bloco B (Inferiores)</option>
+        <option>HIGH — Bloco B (Superiores)</option><option>HIGH — Bloco C (Cluster)</option>
+        <option>LOW — Tecnica</option><option>DELOAD</option>
+      </select></div>
+    <div class="fg"><label>JSON do treino</label>
+      <textarea class="json-area" id="tr-json" placeholder="Cole o JSON aqui..."></textarea></div>
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="colarModelo()">Modelo</button>
+      <button class="btn btn-r" onclick="salvarTreino()">Salvar</button>
+    </div>
     <div class="msg" id="tr-msg" style="margin-top:8px"></div>
   </div>
 </div>
 
 <script>
-// ═══════════════════════════════════════════════════════
-// CONFIG SUPABASE
-// ═══════════════════════════════════════════════════════
-const SB_URL='https://lywdtdaxcoyjuujtikbv.supabase.co';
-const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx5d2R0ZGF4Y295anV1anRpa2J2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0Nzc2MzYsImV4cCI6MjA5MDA1MzYzNn0.ymJnBiDqYZq2yCU90zpJB_y9zSmxLf7i2cnhLfz_WNk';
-const HDR={headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':'return=minimal'}};
-const HDR_GET={headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}};
+// ═══ CONFIG ═══════════════════════════════════════════════════════
+const SB='https://lywdtdaxcoyjuujtikbv.supabase.co';
+const AK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx5d2R0ZGF4Y295anV1anRpa2J2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0Nzc2MzYsImV4cCI6MjA5MDA1MzYzNn0.ymJnBiDqYZq2yCU90zpJB_y9zSmxLf7i2cnhLfz_WNk';
 
-// Auth headers
-let authToken=localStorage.getItem('smt_token')||'';
-let currentUser=JSON.parse(localStorage.getItem('smt_user')||'null');
+let tok=localStorage.getItem('smt_tok')||'';
+let user=JSON.parse(localStorage.getItem('smt_user')||'null');
 let isCoach=false;
-let seriesState={};
-let pseVal=null;
-let wState={sono:0,fadiga:0,dor:0,humor:0};
+let ssData={};let pseVal=null;let wVal={sono:0,fadiga:0,dor:0,humor:0};
 
-function authHdr(){
-  return{headers:{
-    'apikey':SB_KEY,
-    'Authorization':'Bearer '+(authToken||SB_KEY),
-    'Content-Type':'application/json',
-    'Prefer':'return=representation'
-  }};
+// ═══ HTTP ═════════════════════════════════════════════════════════
+function hdr(extra={}){
+  return{headers:{'apikey':AK,'Authorization':'Bearer '+(tok||AK),'Content-Type':'application/json',...extra}};
 }
-
-async function sb(path,opts={}){
-  const r=await fetch(SB_URL+path,{...opts,headers:{...HDR_GET.headers,...(opts.headers||{})}});
-  if(!r.ok&&r.status!==201&&r.status!==204){
-    const e=await r.text();throw new Error(e);
-  }
-  if(r.status===204)return null;
+async function GET(path){
+  const r=await fetch(SB+path,hdr());
+  if(!r.ok)throw new Error(await r.text());
   return r.json();
 }
-
-async function sbPost(path,body,method='POST'){
-  const r=await fetch(SB_URL+path,{
-    method,
-    headers:{...HDR.headers,'Authorization':'Bearer '+(authToken||SB_KEY)},
-    body:JSON.stringify(body)
-  });
-  if(!r.ok&&r.status!==201&&r.status!==204){
-    const e=await r.text();throw new Error(e);
-  }
-  if(r.status===204)return null;
+async function POST(path,body){
+  const r=await fetch(SB+path,{method:'POST',...hdr({'Prefer':'return=representation'}),body:JSON.stringify(body)});
+  if(!r.ok&&r.status!==201)throw new Error(await r.text());
   try{return await r.json();}catch{return null;}
 }
-
-// ═══════════════════════════════════════════════════════
-// AUTH
-// ═══════════════════════════════════════════════════════
-function loginTab(tab,btn){
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');
-  document.getElementById('login-form').style.display=tab==='login'?'block':'none';
-  document.getElementById('reg-form').style.display=tab==='register'?'block':'none';
+async function PATCH(path,body){
+  const r=await fetch(SB+path,{method:'PATCH',...hdr({'Prefer':'return=representation'}),body:JSON.stringify(body)});
+  if(!r.ok)throw new Error(await r.text());
+  try{return await r.json();}catch{return null;}
+}
+async function DELETE(path){
+  const r=await fetch(SB+path,{method:'DELETE',...hdr()});
+  if(!r.ok)throw new Error(await r.text());
+  return null;
 }
 
-async function fazerLogin(){
-  const email=document.getElementById('l-email').value.trim();
-  const pass=document.getElementById('l-pass').value;
+// ═══ AUTH ═════════════════════════════════════════════════════════
+function loginTab(t,btn){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');
+  document.getElementById('f-login').style.display=t==='login'?'block':'none';
+  document.getElementById('f-reg').style.display=t==='reg'?'block':'none';
+}
+
+async function doLogin(){
+  const em=document.getElementById('l-em').value.trim();
+  const pw=document.getElementById('l-pw').value;
   const msg=document.getElementById('l-msg');
-  if(!email||!pass){msg.className='msg err';msg.textContent='Preencha email e senha';return;}
+  if(!em||!pw){msg.className='msg err';msg.textContent='Preencha email e senha';return;}
   msg.className='msg';msg.textContent='Entrando...';
   try{
-    const r=await fetch(SB_URL+'/auth/v1/token?grant_type=password',{
-      method:'POST',
-      headers:{'apikey':SB_KEY,'Content-Type':'application/json'},
-      body:JSON.stringify({email,password:pass})
+    const r=await fetch(SB+'/auth/v1/token?grant_type=password',{
+      method:'POST',headers:{'apikey':AK,'Content-Type':'application/json'},
+      body:JSON.stringify({email:em,password:pw})
     });
     const d=await r.json();
-    if(!r.ok){msg.className='msg err';msg.textContent=d.error_description||d.msg||'Erro ao entrar';return;}
-    authToken=d.access_token;
-    localStorage.setItem('smt_token',authToken);
-    // Buscar perfil
-    const perfil=await sb('/rest/v1/atletas?email=eq.'+encodeURIComponent(email)+'&limit=1');
-    currentUser={id:d.user.id,email,nome:perfil?.[0]?.nome||email.split('@')[0],isCoach:perfil?.[0]?.is_coach||false};
-    localStorage.setItem('smt_user',JSON.stringify(currentUser));
-    iniciarApp();
+    if(!r.ok){msg.className='msg err';msg.textContent=d.error_description||d.msg||'Email ou senha incorretos';return;}
+    tok=d.access_token;localStorage.setItem('smt_tok',tok);
+    const perfis=await GET('/rest/v1/atletas?email=eq.'+encodeURIComponent(em)+'&limit=1');
+    user={id:d.user.id,email:em,nome:perfis?.[0]?.nome||em.split('@')[0],isCoach:perfis?.[0]?.is_coach||false};
+    localStorage.setItem('smt_user',JSON.stringify(user));
+    iniciar();
   }catch(e){msg.className='msg err';msg.textContent='Erro: '+e.message;}
 }
 
-async function fazerCadastro(){
-  const nome=document.getElementById('r-nome').value.trim();
-  const email=document.getElementById('r-email').value.trim();
-  const pass=document.getElementById('r-pass').value;
-  const cod=document.getElementById('r-cod').value.trim();
+async function doReg(){
+  const nm=document.getElementById('r-nm').value.trim();
+  const em=document.getElementById('r-em').value.trim();
+  const pw=document.getElementById('r-pw').value;
+  const cd=document.getElementById('r-cd').value.trim();
   const msg=document.getElementById('r-msg');
-  if(!nome||!email||!pass){msg.className='msg err';msg.textContent='Preencha todos os campos';return;}
-  if(pass.length<6){msg.className='msg err';msg.textContent='Senha deve ter pelo menos 6 caracteres';return;}
+  if(!nm||!em||!pw){msg.className='msg err';msg.textContent='Preencha nome, email e senha';return;}
+  if(pw.length<6){msg.className='msg err';msg.textContent='Senha: minimo 6 caracteres';return;}
   msg.className='msg';msg.textContent='Criando conta...';
   try{
-    // Criar auth
-    const r=await fetch(SB_URL+'/auth/v1/signup',{
-      method:'POST',
-      headers:{'apikey':SB_KEY,'Content-Type':'application/json'},
-      body:JSON.stringify({email,password:pass})
+    const r=await fetch(SB+'/auth/v1/signup',{
+      method:'POST',headers:{'apikey':AK,'Content-Type':'application/json'},
+      body:JSON.stringify({email:em,password:pw})
     });
     const d=await r.json();
     if(!r.ok){msg.className='msg err';msg.textContent=d.error_description||d.msg||'Erro ao criar conta';return;}
-    authToken=d.access_token||'';
-    if(authToken)localStorage.setItem('smt_token',authToken);
-    // Salvar perfil
-    const isCoachCod=cod==='COACH2024';
-    await sbPost('/rest/v1/atletas',{
-      auth_id:d.user?.id,nome,email,is_coach:isCoachCod,
-      wp:'',peso:0,squat:0,dl:0,bench:0,clean:0,cmj:0
-    });
-    currentUser={id:d.user?.id,email,nome,isCoach:isCoachCod};
-    localStorage.setItem('smt_user',JSON.stringify(currentUser));
-    if(authToken){iniciarApp();}
-    else{msg.className='msg ok';msg.textContent='Conta criada! Verifique seu email e faca login.';}
+    tok=d.access_token||'';
+    if(tok)localStorage.setItem('smt_tok',tok);
+    const coach=cd==='COACH2024';
+    await POST('/rest/v1/atletas',{auth_id:d.user?.id,nome:nm,email:em,is_coach:coach,wp:'',peso:0,squat:0,dl:0,bench:0,clean:0,cmj:0});
+    if(tok){
+      user={id:d.user?.id,email:em,nome:nm,isCoach:coach};
+      localStorage.setItem('smt_user',JSON.stringify(user));
+      iniciar();
+    } else {
+      msg.className='msg ok';msg.textContent='Conta criada! Verifique seu email e faca login.';
+    }
   }catch(e){msg.className='msg err';msg.textContent='Erro: '+e.message;}
 }
 
-function sair(){
-  authToken='';currentUser=null;
-  localStorage.removeItem('smt_token');localStorage.removeItem('smt_user');
-  document.getElementById('s-login').classList.add('active');
+function doLogout(){
+  tok='';user=null;
+  localStorage.removeItem('smt_tok');localStorage.removeItem('smt_user');
   document.getElementById('s-app').classList.remove('active');
+  document.getElementById('s-login').classList.add('active');
 }
 
-// ═══════════════════════════════════════════════════════
-// INIT APP
-// ═══════════════════════════════════════════════════════
-function iniciarApp(){
-  isCoach=currentUser?.isCoach||false;
+// ═══ INIT ════════════════════════════════════════════════════════
+function iniciar(){
+  isCoach=user?.isCoach||false;
   document.getElementById('s-login').classList.remove('active');
   document.getElementById('s-app').classList.add('active');
   document.getElementById('nav-role').textContent=isCoach?'COACH':'ATLETA';
-  document.getElementById('nav-name').textContent=currentUser?.nome||'';
-  document.getElementById('bn-atleta').style.display=isCoach?'none':'flex';
-  document.getElementById('bn-coach').style.display=isCoach?'flex':'none';
-  if(isCoach){
-    showPage('dash');
-    carregarDashboard();
-  } else {
-    showPage('treino');
-    carregarTreinoAtleta();
-  }
+  document.getElementById('nav-nm').textContent=user?.nome||'';
+  document.getElementById('bn-at').style.display=isCoach?'none':'flex';
+  document.getElementById('bn-co').style.display=isCoach?'flex':'none';
+  if(isCoach){showPg('dash');carregarDash();}
+  else{showPg('treino');carregarTreino();}
 }
 
-// ═══════════════════════════════════════════════════════
-// NAVEGAÇÃO
-// ═══════════════════════════════════════════════════════
-function showPage(id){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
-  document.getElementById('p-'+id).classList.add('on');
-}
-
-function atletaTab(id,btn){
-  showPage(id==='treino'?'treino':'hist');
-  document.querySelectorAll('#bn-atleta .bn-item').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');
-  if(id==='hist')carregarHistorico();
-}
-
-function coachTab(id,btn){
-  ['overview','atletas-lista','publicar','cargas-tab','biblioteca'].forEach(t=>{
-    document.getElementById('ct-'+t).style.display=t===id?'block':'none';
-  });
-  document.querySelectorAll('.coach-tab').forEach(b=>b.classList.remove('on'));
-  btn.classList.add('on');
-  if(id==='atletas-lista')carregarAtletas();
-  if(id==='publicar')carregarPublicar();
+// ═══ NAV ════════════════════════════════════════════════════════
+function showPg(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));document.getElementById('p-'+id).classList.add('on');}
+function hiNav(btn,navId){document.querySelectorAll('#'+navId+' .bn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');}
+function atTab(id,btn){showPg(id);hiNav(btn,'bn-at');if(id==='hist')carregarHist();if(id==='meus-testes')carregarMeusTestes();}
+function cTab(id,btn){
+  ['overview','atletas-tab','pub-tab','testes-tab','cargas-tab','biblio-tab'].forEach(t=>document.getElementById('ct-'+t).style.display=t===id?'block':'none');
+  document.querySelectorAll('.ctab').forEach(b=>b.classList.remove('on'));btn.classList.add('on');
+  if(id==='atletas-tab')carregarAtletas();
+  if(id==='pub-tab')carregarPub();
+  if(id==='testes-tab')carregarTestes();
   if(id==='cargas-tab')carregarCargas();
-  if(id==='biblioteca')carregarBiblioteca();
+  if(id==='biblio-tab')carregarBiblio();
 }
 
-// ═══════════════════════════════════════════════════════
-// TELA DO ATLETA — TREINO DO DIA
-// ═══════════════════════════════════════════════════════
-async function carregarTreinoAtleta(){
-  seriesState={};pseVal=null;wState={sono:0,fadiga:0,dor:0,humor:0};
-  const el=document.getElementById('treino-content');
+// ═══ TREINO DO ATLETA ═════════════════════════════════════════════
+async function carregarTreino(){
+  ssData={};pseVal=null;wVal={sono:0,fadiga:0,dor:0,humor:0};
+  const el=document.getElementById('treino-wrap');
   el.innerHTML='<div class="empty">Carregando treino...</div>';
-  document.getElementById('pse-section').style.display='none';
+  document.getElementById('pse-wrap').style.display='none';
   document.getElementById('treino-ok').classList.remove('show');
-
+  el.style.display='block';
   try{
     const hoje=new Date().toISOString().split('T')[0];
-    const pubs=await sb('/rest/v1/treinos_publicados?data=eq.'+hoje+'&order=criado_em.desc&limit=1');
+    const pubs=await GET('/rest/v1/treinos_publicados?data=eq.'+hoje+'&order=criado_em.desc&limit=1');
     if(!pubs||!pubs.length){
-      el.innerHTML='<div class="card tc"><div style="font-size:40px;margin-bottom:12px">🗓️</div><div style="font-size:14px;font-weight:700;margin-bottom:6px">Sem treino hoje</div><div class="sm">O coach ainda nao publicou o treino de hoje.</div></div>';
+      el.innerHTML='<div class="card tc"><div style="font-size:36px;margin-bottom:10px">🗓️</div><div style="font-size:14px;font-weight:700;margin-bottom:4px">Sem treino hoje</div><div class="sm">O coach ainda nao publicou o treino de hoje.</div><button class="btn btn-ghost mt8" onclick="mostrarPSE()">Avaliar sessao livre</button></div>';
       return;
     }
     const pub=pubs[0];
     let treino=null;
     if(pub.treino_id){
-      const ts=await sb('/rest/v1/treinos?id=eq.'+pub.treino_id+'&limit=1');
-      if(ts&&ts.length)treino=typeof ts[0].dados_json==='string'?JSON.parse(ts[0].dados_json):ts[0].dados_json;
+      const ts=await GET('/rest/v1/treinos?id=eq.'+pub.treino_id+'&limit=1');
+      if(ts&&ts.length){
+        treino=typeof ts[0].dados_json==='string'?JSON.parse(ts[0].dados_json):ts[0].dados_json;
+      }
     }
-    renderTreinoAtleta(pub,treino);
-  }catch(e){
-    el.innerHTML='<div class="alert alert-r">Erro ao carregar treino: '+e.message+'</div>';
-  }
+    renderTreino(pub,treino,el);
+  }catch(e){el.innerHTML='<div class="al al-r">Erro: '+e.message+'</div>';}
 }
 
-function renderTreinoAtleta(pub,treino){
-  const el=document.getElementById('treino-content');
-  let html=`<div class="treino-header"><h2>${pub.sessao||'Treino do dia'}</h2><p>${pub.data} — Registre suas cargas abaixo</p></div>`;
-
+function renderTreino(pub,treino,el){
+  let h=`<div class="treino-hd"><h2>${pub.sessao||'Treino do dia'}</h2><p>${pub.data}</p></div>`;
   if(treino&&treino.exercicios){
     treino.exercicios.forEach(ex=>{
-      html+=`<div class="ex-block"><div class="ex-name">${ex.nome}</div>`;
-      if(ex.instrucao)html+=`<div class="ex-inst">${ex.instrucao}</div>`;
+      h+=`<div class="ex-block"><div class="ex-name">${ex.nome}</div>`;
+      if(ex.instrucao)h+=`<div class="ex-inst">${ex.instrucao}</div>`;
       ex.series.forEach(s=>{
-        const key=`${ex.id}_${s.id}`;
-        seriesState[key]={reps:s.reps_alvo,carga:0,rpe:null,rir:null,exNome:ex.nome,rotulo:s.rotulo};
-        const isTrab=s.tipo==='trabalho';
-        html+=`<div class="serie-row">
-          <div class="serie-label">${s.rotulo} — alvo: ${s.reps_alvo}× @ ${s.carga_ref}
-            ${isTrab?'<span class="trab">TRABALHO</span>':''}
-          </div>
-          <div class="inputs-row">
-            <div class="inp-group"><label>Reps feitas</label>
-              <input type="number" value="${s.reps_alvo}" min="0"
-                oninput="seriesState['${key}'].reps=+this.value"></div>
-            <div class="inp-group"><label>Peso (kg)</label>
-              <input type="number" placeholder="0" min="0"
-                oninput="seriesState['${key}'].carga=+this.value"></div>
+        const k=ex.id+'_'+s.id;
+        ssData[k]={reps:s.reps_alvo,carga:0,rpe:null,rir:null,exNome:ex.nome,rot:s.rotulo};
+        const w=s.tipo==='trabalho';
+        h+=`<div class="sr"><div class="sr-lbl">${s.rotulo} — ${s.reps_alvo}× @ ${s.carga_ref}${w?'<span class="trab-tag">TRABALHO</span>':''}</div>
+          <div class="ir">
+            <div class="ig"><label>Reps feitas</label><input type="number" value="${s.reps_alvo}" min="0" oninput="ssData['${k}'].reps=+this.value"></div>
+            <div class="ig"><label>Peso (kg)</label><input type="number" placeholder="0" min="0" oninput="ssData['${k}'].carga=+this.value"></div>
           </div>`;
-        if(isTrab){
-          html+=`<div style="font-size:10px;color:var(--text3);margin-bottom:4px">RPE desta serie</div>
-          <div class="rpe-row" id="rpe-${key}">
-            ${['6','7','8','9','9.5','10'].map(v=>`<button class="rpe-btn" onclick="selRPE('${key}','${v}',this)">${v}</button>`).join('')}
-          </div>
-          <div style="font-size:10px;color:var(--text3);margin:5px 0 3px">RIR — reps sobrando</div>
-          <div class="rir-row" id="rir-${key}">
-            ${['0','1','2','3+'].map((v,i)=>`<button class="rir-btn" onclick="selRIR('${key}',${i},this)">${v}</button>`).join('')}
-          </div>`;
+        if(w){
+          h+=`<div style="font-size:9px;color:var(--text3);margin-bottom:3px">RPE desta serie</div>
+          <div class="rpe-row">${['6','7','8','9','9.5','10'].map(v=>`<button class="rpe-btn" onclick="selRPE('${k}','${v}',this)">${v}</button>`).join('')}</div>
+          <div style="font-size:9px;color:var(--text3);margin:4px 0 3px">RIR — reps sobrando</div>
+          <div class="rir-row">${['0','1','2','3+'].map((v,i)=>`<button class="rir-btn" onclick="selRIR('${k}',${i===3?99:i},this)">${v}</button>`).join('')}</div>`;
         }
-        html+=`</div>`;
+        h+=`</div>`;
       });
-      html+=`</div>`;
+      h+=`</div>`;
     });
-    html+=`<button class="btn-red full mt8" onclick="registrarCargas()">Registrar cargas e avaliar sessao</button>`;
+    h+=`<button class="btn btn-r btn-full mt8" onclick="registrarCargas()">Registrar cargas</button>`;
   } else {
-    html+=`<div class="alert alert-o">Treino sem exercicios detalhados. Apenas avalie a sessao abaixo.</div>
-    <button class="btn-red full mt8" onclick="mostrarPSE()">Avaliar sessao</button>`;
+    h+=`<button class="btn btn-r btn-full mt8" onclick="mostrarPSE()">Avaliar sessao</button>`;
   }
-
-  el.innerHTML=html;
-  iniciarPSEWellness();
+  el.innerHTML=h;
+  initPSE();
 }
 
-function selRPE(key,val,btn){
-  seriesState[key].rpe=val;
-  btn.closest('.rpe-row').querySelectorAll('.rpe-btn').forEach(b=>b.classList.remove('sel'));
-  btn.classList.add('sel');
-}
-function selRIR(key,val,btn){
-  seriesState[key].rir=val;
-  btn.closest('.rir-row').querySelectorAll('.rir-btn').forEach(b=>b.classList.remove('sel'));
-  btn.classList.add('sel');
-}
+function selRPE(k,v,btn){ssData[k].rpe=v;btn.closest('.rpe-row').querySelectorAll('.rpe-btn').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');}
+function selRIR(k,v,btn){ssData[k].rir=v;btn.closest('.rir-row').querySelectorAll('.rir-btn').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');}
 
 function registrarCargas(){
-  // Salvar cargas
   const hoje=new Date().toISOString().split('T')[0];
-  const uid=currentUser?.id||'anonimo';
-  const nome=currentUser?.nome||'atleta';
-  Object.entries(seriesState).forEach(([key,sd])=>{
-    if(sd.carga>0){
-      sbPost('/rest/v1/cargas',{
-        aid:uid,anom:nome,data:hoje,
-        exercicio:sd.exNome,serie:sd.rotulo,
-        reps:sd.reps,carga:sd.carga,pse:sd.rpe,rir:sd.rir,
-        tipo:'carga'
-      }).catch(()=>{});
+  const aid=user?.id||'';const anom=user?.nome||'atleta';
+  Object.entries(ssData).forEach(([k,s])=>{
+    if(s.carga>0){
+      POST('/rest/v1/cargas',{aid,anom,data:hoje,exercicio:s.exNome,serie:s.rot,reps:s.reps,carga:s.carga,pse:s.rpe,rir:s.rir,tipo:'carga'}).catch(()=>{});
     }
   });
   mostrarPSE();
 }
 
-function mostrarPSE(){
-  document.getElementById('pse-section').style.display='block';
-  document.getElementById('pse-section').scrollIntoView({behavior:'smooth'});
+function mostrarPSE(){document.getElementById('pse-wrap').style.display='block';document.getElementById('pse-wrap').scrollIntoView({behavior:'smooth'});}
+
+function initPSE(){
+  const pg=document.getElementById('pse-btns');
+  pg.innerHTML=['6','7','8','9','9.5','10'].map(v=>`<button class="pse-btn" onclick="pseVal='${v}';document.querySelectorAll('.pse-btn').forEach(b=>b.classList.remove('sel'));this.classList.add('sel')">${v}</button>`).join('');
+  const wL=['Muito ruim','Ruim','Normal','Bom','Otimo'];
+  const wCs=['w1','w2','w3','w4','w5'];
+  const wF=[{i:'ws',k:'sono',l:'Sono'},{i:'wf',k:'fadiga',l:'Fadiga'},{i:'wd',k:'dor',l:'Dor muscular'},{i:'wh',k:'humor',l:'Humor'}];
+  document.getElementById('well-wrap').innerHTML=wF.map(c=>`
+    <div class="fg"><label>${c.l}</label>
+    <div class="w-row" id="${c.i}">
+      ${wL.map((l,i)=>{const v=i+1;return`<button class="wb" onclick="wVal.${c.k}=${v};document.querySelectorAll('#${c.i} .wb').forEach(b=>b.className='wb');this.classList.add('w${v}')">${l}</button>`;}).join('')}
+    </div></div>`).join('');
 }
 
-function iniciarPSEWellness(){
-  // PSE geral
-  const pg=document.getElementById('pse-geral-btns');
-  if(pg){pg.innerHTML=['6','7','8','9','9.5','10'].map(v=>
-    `<button class="pse-btn" onclick="pseVal='${v}';document.querySelectorAll('.pse-btn').forEach(b=>b.classList.remove('sel'));this.classList.add('sel')">${v}</button>`
-  ).join('');}
-  // Wellness
-  const wLabels=['Muito ruim','Ruim','Normal','Bom','Otimo'];
-  const wCors=['w1','w2','w3','w4','w5'];
-  const wCampos=[{id:'w-sono',key:'sono',lbl:'Sono'},{id:'w-fadiga',key:'fadiga',lbl:'Fadiga'},{id:'w-dor',key:'dor',lbl:'Dor muscular'},{id:'w-humor',key:'humor',lbl:'Humor'}];
-  const wa=document.getElementById('wellness-area');
-  if(wa){wa.innerHTML=wCampos.map(c=>`
-    <div class="form-group">
-      <label>${c.lbl}</label>
-      <div class="w-row" id="${c.id}">
-        ${wLabels.map((l,i)=>{const v=i+1;return`<button class="w-btn" onclick="wState.${c.key}=${v};document.querySelectorAll('#${c.id} .w-btn').forEach(b=>{b.className='w-btn'});this.classList.add('w${v}')">${l}</button>`;}).join('')}
-      </div>
-    </div>`).join('');}
-}
-
-async function enviarFeedback(){
-  if(!pseVal)return alert('Selecione o PSE da sessao (6 a 10)');
+async function envFb(){
+  if(!pseVal)return alert('Selecione o PSE (6 a 10)');
   const dur=parseInt(prompt('Duracao do treino (min):','60'))||60;
   const hoje=new Date().toISOString().split('T')[0];
-  const uid=currentUser?.id||'anonimo';
-  const nome=currentUser?.nome||'atleta';
   try{
-    await sbPost('/rest/v1/feedbacks',{
-      aid:uid,anom:nome,data:hoje,
-      ses:document.querySelector('.treino-header h2')?.textContent||'Treino',
+    await POST('/rest/v1/feedbacks',{
+      aid:user?.id||'',anom:user?.nome||'atleta',data:hoje,
+      ses:document.querySelector('.treino-hd h2')?.textContent||'Treino',
       rpe:parseFloat(pseVal),dur,ton:0,
-      sono:wState.sono,fadiga:wState.fadiga,dor:wState.dor,humor:wState.humor,
-      obs:document.getElementById('obs-input').value,
-      tipo:'feedback'
+      sono:wVal.sono,fadiga:wVal.fadiga,dor:wVal.dor,humor:wVal.humor,
+      obs:document.getElementById('obs-inp').value,tipo:'feedback'
     });
-    document.getElementById('treino-content').style.display='none';
-    document.getElementById('pse-section').style.display='none';
+    document.getElementById('treino-wrap').style.display='none';
+    document.getElementById('pse-wrap').style.display='none';
     document.getElementById('treino-ok').classList.add('show');
-  }catch(e){alert('Erro ao enviar: '+e.message);}
+  }catch(e){alert('Erro: '+e.message);}
 }
 
-// ═══════════════════════════════════════════════════════
-// HISTÓRICO DO ATLETA
-// ═══════════════════════════════════════════════════════
-async function carregarHistorico(){
-  const uid=currentUser?.id||'';
+// ═══ MEUS TESTES (atleta) ════════════════════════════════════════
+async function carregarMeusTestes(){
+  const el=document.getElementById('meus-testes-list');
+  el.innerHTML='<div class="empty">Carregando...</div>';
   try{
-    const fbs=await sb('/rest/v1/feedbacks?aid=eq.'+uid+'&order=data.desc&limit=20');
-    const el=document.getElementById('hist-list');
+    const ts=await GET('/rest/v1/testes?aid=eq.'+user.id+'&order=data.desc');
+    if(!ts||!ts.length){el.innerHTML='<div class="empty">Nenhum teste registrado ainda.</div>';return;}
+    // Agrupar por tipo para mostrar evolucao
+    const porTipo={};
+    ts.forEach(t=>{if(!porTipo[t.tipo])porTipo[t.tipo]=[];porTipo[t.tipo].push(t);});
+    el.innerHTML=Object.entries(porTipo).map(([tipo,items])=>`
+      <div class="card">
+        <div class="card-title">${tipo}</div>
+        ${items.map(t=>`
+          <div class="teste-item">
+            <div><div class="teste-tipo">${t.data}</div><div class="teste-meta">${t.obs||''}</div></div>
+            <div class="teste-valor">${t.valor} <span style="font-size:11px;color:var(--text2)">${t.unidade||''}</span></div>
+          </div>`).join('')}
+      </div>`).join('');
+  }catch(e){el.innerHTML='<div class="al al-r">Erro: '+e.message+'</div>';}
+}
+
+// ═══ HISTÓRICO (atleta) ══════════════════════════════════════════
+async function carregarHist(){
+  const el=document.getElementById('hist-list');
+  el.innerHTML='<div class="empty">Carregando...</div>';
+  try{
+    const fbs=await GET('/rest/v1/feedbacks?aid=eq.'+user.id+'&order=data.desc&limit=30');
     if(!fbs||!fbs.length){el.innerHTML='<div class="empty">Nenhum treino registrado ainda.</div>';return;}
     el.innerHTML=fbs.map(f=>{
       const w=(f.sono||0)+(f.fadiga||0)+(f.dor||0)+(f.humor||0);
       const cor=f.rpe>=9?'var(--red)':f.rpe>=7?'var(--orange)':'var(--green)';
-      return`<div class="hist-item">
-        <div class="hist-date">${f.data}</div>
-        <div class="hist-name">${f.ses||'Treino'}</div>
+      return`<div class="hist-item"><div class="hist-date">${f.data}</div><div class="hist-name">${f.ses||'Treino'}</div>
         <div class="hist-stats">
-          <div class="hist-stat">PSE <b style="color:${cor}">${f.rpe}</b></div>
-          <div class="hist-stat">CI <b>${f.rpe*f.dur}</b></div>
-          <div class="hist-stat">Dur <b>${f.dur}min</b></div>
-          <div class="hist-stat">Wellness <b>${w}/20</b></div>
-        </div>
-      </div>`;
+          <div class="hs">PSE <b style="color:${cor}">${f.rpe}</b></div>
+          <div class="hs">CI <b>${f.rpe*f.dur}</b></div>
+          <div class="hs">Dur <b>${f.dur}min</b></div>
+          <div class="hs">W <b>${w}/20</b></div>
+        </div></div>`;
     }).join('');
-  }catch(e){document.getElementById('hist-list').innerHTML='<div class="alert alert-r">Erro: '+e.message+'</div>';}
+  }catch(e){el.innerHTML='<div class="al al-r">Erro: '+e.message+'</div>';}
 }
 
-// ═══════════════════════════════════════════════════════
-// COACH — DASHBOARD
-// ═══════════════════════════════════════════════════════
-async function carregarDashboard(){
+// ═══ COACH: DASHBOARD ════════════════════════════════════════════
+async function carregarDash(){
   try{
     const d7=new Date();d7.setDate(d7.getDate()-7);const s7=d7.toISOString().split('T')[0];
     const d28=new Date();d28.setDate(d28.getDate()-28);const s28=d28.toISOString().split('T')[0];
-    const [ats,fbs7,fbs28]=await Promise.all([
-      sb('/rest/v1/atletas?is_coach=eq.false&select=id,nome'),
-      sb('/rest/v1/feedbacks?data=gte.'+s7+'&order=data.desc'),
-      sb('/rest/v1/feedbacks?data=gte.'+s28)
+    const [ats,fb7,fb28]=await Promise.all([
+      GET('/rest/v1/atletas?is_coach=eq.false&select=id,nome'),
+      GET('/rest/v1/feedbacks?data=gte.'+s7+'&order=data.desc'),
+      GET('/rest/v1/feedbacks?data=gte.'+s28)
     ]);
-    document.getElementById('d-atletas').textContent=ats?.length||0;
-    document.getElementById('d-fb').textContent=fbs7?.length||0;
-    if(fbs7?.length){
-      const rpeAvg=(fbs7.reduce((s,f)=>s+f.rpe,0)/fbs7.length).toFixed(1);
-      document.getElementById('d-rpe').textContent=rpeAvg;
-    }
-    // ACWR
-    const ci7=fbs7?.reduce((s,f)=>s+f.rpe*f.dur,0)/7||0;
-    const ci28=fbs28?.reduce((s,f)=>s+f.rpe*f.dur,0)/28||0;
-    const acwr=ci28>0?(ci7/ci28).toFixed(2):'—';
+    document.getElementById('d-nat').textContent=ats?.length||0;
+    document.getElementById('d-fb').textContent=fb7?.length||0;
+    const rpe=fb7?.length?(fb7.reduce((s,f)=>s+f.rpe,0)/fb7.length).toFixed(1):'—';
+    document.getElementById('d-rpe').textContent=rpe;
+    const ci7=fb7?.reduce((s,f)=>s+f.rpe*f.dur,0)/7||0;
+    const ci28v=fb28?.reduce((s,f)=>s+f.rpe*f.dur,0)/28||0;
+    const acwr=ci28v>0?(ci7/ci28v).toFixed(2):'—';
     document.getElementById('d-acwr').textContent=acwr;
     // Alertas
     const als=[];const acn=parseFloat(acwr);
     if(!isNaN(acn)){
-      if(acn>1.5)als.push({t:'r',m:'ACWR '+acwr+' — ZONA DE PERIGO. Reduzir carga.'});
+      if(acn>1.5)als.push({t:'r',m:'ACWR '+acwr+' — ZONA DE PERIGO. Reduzir carga imediatamente.'});
       else if(acn>1.3)als.push({t:'o',m:'ACWR '+acwr+' — Atencao (1.3-1.5).'});
       else if(acn>=0.8)als.push({t:'g',m:'ACWR '+acwr+' — Zona segura.'});
     }
-    document.getElementById('alertas-list').innerHTML=als.length
-      ?als.map(a=>`<div class="alert alert-${a.t}">${a.m}</div>`).join('')
-      :'<div class="sm tc" style="padding:12px">Sem alertas no momento.</div>';
+    (ats||[]).forEach(a=>{
+      const af=(fb7||[]).filter(f=>f.aid===a.id).slice(-3);
+      if(af.length>=3&&af.every(f=>f.rpe>=7))als.push({t:'o',m:a.nome+': PSE ≥7 por 3+ sessoes.'});
+      const lf=(fb7||[]).filter(f=>f.aid===a.id).slice(-1)[0];
+      if(lf&&(lf.sono||0)+(lf.fadiga||0)+(lf.dor||0)+(lf.humor||0)<=8)als.push({t:'r',m:a.nome+': wellness baixo no ultimo registro.'});
+    });
+    document.getElementById('dash-als').innerHTML=als.length
+      ?als.map(a=>`<div class="al al-${a.t}">${a.m}</div>`).join('')
+      :'<div class="sm tc" style="padding:10px">Sem alertas no momento.</div>';
     // Foster
-    renderFoster(ats||[],fbs7||[]);
+    document.getElementById('dash-foster').innerHTML=(ats||[]).map(a=>{
+      const af=(fb7||[]).filter(f=>f.aid===a.id);
+      if(!af.length)return`<div class="at-row"><div class="at-name">${a.nome}</div><div class="sm">Sem dados</div></div>`;
+      const cs=af.map(f=>f.rpe*f.dur),m=cs.reduce((s,v)=>s+v,0)/cs.length;
+      const dp=Math.sqrt(cs.reduce((s,v)=>s+Math.pow(v-m,2),0)/cs.length);
+      const mo=dp>0?(m/dp).toFixed(2):'—';
+      const st=dp>0?Math.round(cs.reduce((s,v)=>s+v,0)*parseFloat(mo)):'—';
+      const ok=parseFloat(mo)>2||st>6000;
+      return`<div class="at-row"><div><div class="at-name">${a.nome}</div><div class="at-meta">CI:${Math.round(cs.reduce((s,v)=>s+v,0))} | Mono:${mo} | Strain:${st}</div></div>
+        <span class="bx ${ok?'bx-r':'bx-g'}">${ok?'RISCO':'OK'}</span></div>`;
+    }).join('')||'<div class="sm tc" style="padding:10px">Sem atletas.</div>';
     // Tabela
-    document.getElementById('tb-dash').innerHTML=(fbs7||[]).slice(0,8).map(f=>{
+    document.getElementById('tb-dash').innerHTML=(fb7||[]).slice(0,8).map(f=>{
       const w=(f.sono||0)+(f.fadiga||0)+(f.dor||0)+(f.humor||0);
-      const cor=f.rpe>=9?'badge-r':f.rpe>=7?'badge-o':'badge-g';
       return`<tr><td>${f.anom}</td><td>${f.data}</td>
-        <td><span class="badge ${cor}">${f.rpe}</span></td>
+        <td><span class="bx ${f.rpe>=9?'bx-r':f.rpe>=7?'bx-o':'bx-g'}">${f.rpe}</span></td>
         <td>${f.rpe*f.dur}</td><td>${w}/20</td></tr>`;
     }).join('');
   }catch(e){console.error(e);}
 }
 
-function renderFoster(ats,fbs){
-  const el=document.getElementById('foster-list');
-  if(!ats.length){el.innerHTML='<div class="sm tc" style="padding:12px">Sem atletas.</div>';return;}
-  el.innerHTML=ats.map(a=>{
-    const af=fbs.filter(f=>f.aid===a.id);
-    if(!af.length)return`<div class="atleta-row"><div class="atleta-name">${a.nome}</div><div class="sm">Sem dados</div></div>`;
-    const cs=af.map(f=>f.rpe*f.dur),m=cs.reduce((s,v)=>s+v,0)/cs.length;
-    const dp=Math.sqrt(cs.reduce((s,v)=>s+Math.pow(v-m,2),0)/cs.length);
-    const mono=dp>0?(m/dp).toFixed(2):'—';
-    const strain=dp>0?Math.round(cs.reduce((s,v)=>s+v,0)*parseFloat(mono)):'—';
-    const ok=parseFloat(mono)>2||strain>6000;
-    const cor=ok?'badge-r':'badge-g';
-    return`<div class="atleta-row">
-      <div><div class="atleta-name">${a.nome}</div>
-      <div class="atleta-meta">CI:${Math.round(cs.reduce((s,v)=>s+v,0))} | Mono:${mono} | Strain:${strain}</div></div>
-      <span class="badge ${cor}">${ok?'RISCO':'OK'}</span>
-    </div>`;
-  }).join('');
-}
-
-// ═══════════════════════════════════════════════════════
-// COACH — ATLETAS
-// ═══════════════════════════════════════════════════════
+// ═══ COACH: ATLETAS ══════════════════════════════════════════════
 async function carregarAtletas(){
   try{
-    const ats=await sb('/rest/v1/atletas?is_coach=eq.false&order=nome');
-    const el=document.getElementById('atletas-list');
-    if(!ats?.length){el.innerHTML='<div class="empty">Nenhum atleta cadastrado.</div>';return;}
-    el.innerHTML=ats.map(a=>{
-      const pc=a.peso||1;
-      return`<div class="atleta-row">
-        <div>
-          <div class="atleta-name">${a.nome}</div>
-          <div class="atleta-meta">${a.peso||0}kg · Squat ${(a.squat/pc).toFixed(1)}×PC · Terra ${(a.dl/pc).toFixed(1)}×PC · CMJ ${a.cmj||0}cm</div>
-        </div>
-        <div style="display:flex;gap:6px">
-          ${a.wp?`<a href="https://wa.me/${a.wp}" target="_blank" style="background:#25D366;color:#fff;border:none;padding:5px 10px;border-radius:5px;font-size:11px;font-weight:700;cursor:pointer;text-decoration:none">WA</a>`:''}
-        </div>
-      </div>`;
-    }).join('');
-    // Preencher filtro de cargas
-    const sel=document.getElementById('filtro-atleta');
-    sel.innerHTML='<option value="">Todos</option>';
-    ats.forEach(a=>sel.innerHTML+=`<option value="${a.id}">${a.nome}</option>`);
-  }catch(e){document.getElementById('atletas-list').innerHTML='<div class="alert alert-r">Erro: '+e.message+'</div>';}
-}
-
-function abrirModalAtleta(){document.getElementById('modal-atleta').classList.add('show');}
-async function salvarAtleta(){
-  const nome=document.getElementById('at-nome').value.trim();
-  const email=document.getElementById('at-email').value.trim();
-  const msg=document.getElementById('at-msg');
-  if(!nome||!email){msg.className='msg err';msg.textContent='Nome e email obrigatorios';return;}
-  try{
-    await sbPost('/rest/v1/atletas',{
-      nome,email,wp:document.getElementById('at-wp').value,
-      peso:+document.getElementById('at-peso').value||0,
-      squat:+document.getElementById('at-squat').value||0,
-      dl:+document.getElementById('at-dl').value||0,
-      clean:+document.getElementById('at-clean').value||0,
-      cmj:+document.getElementById('at-cmj').value||0,
-      is_coach:false
+    const ats=await GET('/rest/v1/atletas?is_coach=eq.false&order=nome');
+    const el=document.getElementById('lista-at');
+    // Popular filtros
+    ['filtro-at-teste','filtro-at-carga'].forEach(id=>{
+      const s=document.getElementById(id);
+      s.innerHTML='<option value="">Todos</option>';
+      (ats||[]).forEach(a=>s.innerHTML+=`<option value="${a.id}">${a.nome}</option>`);
     });
-    msg.className='msg ok';msg.textContent='Atleta salvo!';
-    setTimeout(()=>fecharModal('modal-atleta'),1500);
-  }catch(e){msg.className='msg err';msg.textContent='Erro: '+e.message;}
+    document.getElementById('te-at').innerHTML='<option value="">— selecionar —</option>';
+    (ats||[]).forEach(a=>document.getElementById('te-at').innerHTML+=`<option value="${a.id}">${a.nome}</option>`);
+    if(!ats?.length){el.innerHTML='<div class="empty">Nenhum atleta.</div>';return;}
+    el.innerHTML=ats.map(a=>`
+      <div class="at-row">
+        <div>
+          <div class="at-name">${a.nome}</div>
+          <div class="at-meta">${a.email||''} · ${a.peso||0}kg · WhatsApp: ${a.wp||'—'}</div>
+        </div>
+        <div class="at-actions">
+          ${a.wp?`<a href="https://wa.me/${a.wp}" target="_blank" style="background:#25D366;color:#fff;padding:5px 9px;border-radius:5px;font-size:10px;font-weight:700;text-decoration:none">WA</a>`:''}
+          <button class="btn btn-ghost" style="font-size:10px;padding:5px 9px" onclick="editarAtleta(${JSON.stringify(a).replace(/"/g,'&quot;')})">Editar</button>
+          <button class="btn btn-danger" style="font-size:10px;padding:5px 9px" onclick="deletarAtleta('${a.id}','${a.nome}')">Deletar</button>
+        </div>
+      </div>`).join('');
+  }catch(e){document.getElementById('lista-at').innerHTML='<div class="al al-r">'+e.message+'</div>';}
 }
 
-// ═══════════════════════════════════════════════════════
-// COACH — PUBLICAR TREINO
-// ═══════════════════════════════════════════════════════
-async function carregarPublicar(){
-  document.getElementById('pub-data').value=new Date().toISOString().split('T')[0];
+function abrirMoAt(){
+  document.getElementById('mo-at-title').textContent='Novo atleta';
+  document.getElementById('at-edit-id').value='';
+  ['at-nm','at-em','at-wp','at-ps'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('at-sx').value='';
+  document.getElementById('at-msg').textContent='';
+  document.getElementById('mo-atleta').classList.add('show');
+}
+
+function editarAtleta(a){
+  document.getElementById('mo-at-title').textContent='Editar atleta';
+  document.getElementById('at-edit-id').value=a.id;
+  document.getElementById('at-nm').value=a.nome||'';
+  document.getElementById('at-em').value=a.email||'';
+  document.getElementById('at-wp').value=a.wp||'';
+  document.getElementById('at-ps').value=a.peso||'';
+  document.getElementById('at-sx').value=a.sexo||'';
+  document.getElementById('at-msg').textContent='';
+  document.getElementById('mo-atleta').classList.add('show');
+}
+
+async function salvarAtleta(){
+  const nm=document.getElementById('at-nm').value.trim();
+  const em=document.getElementById('at-em').value.trim();
+  const editId=document.getElementById('at-edit-id').value;
+  const msg=document.getElementById('at-msg');
+  if(!nm||!em){msg.className='msg err';msg.textContent='Nome e email obrigatorios';return;}
+  const body={nome:nm,email:em,wp:document.getElementById('at-wp').value,
+    peso:+document.getElementById('at-ps').value||0,sexo:document.getElementById('at-sx').value};
   try{
-    const ts=await sb('/rest/v1/treinos?order=nome&select=id,nome,bloco');
-    const sel=document.getElementById('pub-treino');
-    sel.innerHTML='<option value="">— selecionar —</option>';
-    (ts||[]).forEach(t=>sel.innerHTML+=`<option value="${t.id}">${t.nome}</option>`);
-    // Treino ativo
-    const hoje=new Date().toISOString().split('T')[0];
-    const ativo=await sb('/rest/v1/treinos_publicados?data=eq.'+hoje+'&order=criado_em.desc&limit=1');
-    const el=document.getElementById('treino-ativo-coach');
-    if(ativo?.length){
-      el.innerHTML=`<div class="card"><div style="font-size:14px;font-weight:700">${ativo[0].sessao}</div><div class="sm">${ativo[0].data}</div></div>`;
+    if(editId){
+      await PATCH('/rest/v1/atletas?id=eq.'+editId,body);
+      msg.className='msg ok';msg.textContent='Atleta atualizado!';
     } else {
-      el.innerHTML='<div class="empty">Nenhum treino publicado hoje.</div>';
+      await POST('/rest/v1/atletas',{...body,is_coach:false,squat:0,dl:0,bench:0,clean:0,cmj:0});
+      msg.className='msg ok';msg.textContent='Atleta salvo!';
     }
-  }catch(e){console.error(e);}
-}
-
-async function publicarTreino(){
-  const data=document.getElementById('pub-data').value;
-  const tid=document.getElementById('pub-treino').value;
-  const sessao=document.getElementById('pub-sessao').value;
-  const msg=document.getElementById('pub-msg');
-  if(!data||!sessao){msg.className='msg err';msg.textContent='Preencha data e sessao';return;}
-  try{
-    await sbPost('/rest/v1/treinos_publicados',{data,treino_id:tid||null,sessao});
-    msg.className='msg ok';msg.textContent='Treino publicado! Os atletas ja podem ver.';
-    carregarPublicar();
+    setTimeout(()=>{fecharMo('mo-atleta');carregarAtletas();},1200);
   }catch(e){msg.className='msg err';msg.textContent='Erro: '+e.message;}
 }
 
-// ═══════════════════════════════════════════════════════
-// COACH — CARGAS
-// ═══════════════════════════════════════════════════════
-async function carregarCargas(){
-  const filtro=document.getElementById('filtro-atleta')?.value;
+async function deletarAtleta(id,nome){
+  if(!confirm('Deletar '+nome+'?\n\nIsso tambem deleta todos os feedbacks e cargas deste atleta.'))return;
   try{
-    let url='/rest/v1/cargas?order=data.desc&limit=50';
+    // Deletar em cascata
+    await DELETE('/rest/v1/feedbacks?aid=eq.'+id);
+    await DELETE('/rest/v1/cargas?aid=eq.'+id);
+    await DELETE('/rest/v1/testes?aid=eq.'+id);
+    await DELETE('/rest/v1/atletas?id=eq.'+id);
+    carregarAtletas();
+  }catch(e){alert('Erro: '+e.message);}
+}
+
+// ═══ COACH: PUBLICAR ════════════════════════════════════════════
+async function carregarPub(){
+  document.getElementById('pub-dt').value=new Date().toISOString().split('T')[0];
+  try{
+    const ts=await GET('/rest/v1/treinos?order=nome&select=id,nome');
+    const sel=document.getElementById('pub-tr');
+    sel.innerHTML='<option value="">— nenhum —</option>';
+    (ts||[]).forEach(t=>sel.innerHTML+=`<option value="${t.id}">${t.nome}</option>`);
+    const hoje=new Date().toISOString().split('T')[0];
+    const ativo=await GET('/rest/v1/treinos_publicados?data=eq.'+hoje+'&order=criado_em.desc&limit=1');
+    const el=document.getElementById('treino-ativo');
+    el.innerHTML=ativo?.length?`<div class="card"><div style="font-weight:700">${ativo[0].sessao}</div><div class="sm">${ativo[0].data}</div></div>`:'<div class="empty">Nenhum treino publicado hoje.</div>';
+  }catch(e){}
+}
+
+async function pubTreino(){
+  const data=document.getElementById('pub-dt').value;
+  const tid=document.getElementById('pub-tr').value;
+  const ses=document.getElementById('pub-ses').value;
+  const msg=document.getElementById('pub-msg');
+  if(!data||!ses){msg.className='msg err';msg.textContent='Preencha data e sessao';return;}
+  try{
+    await POST('/rest/v1/treinos_publicados',{data,treino_id:tid||null,sessao:ses});
+    msg.className='msg ok';msg.textContent='Publicado! Atletas ja podem ver.';
+    carregarPub();
+  }catch(e){msg.className='msg err';msg.textContent='Erro: '+e.message;}
+}
+
+// ═══ COACH: TESTES ══════════════════════════════════════════════
+async function carregarTestes(){
+  const filtro=document.getElementById('filtro-at-teste')?.value;
+  const el=document.getElementById('lista-testes');
+  el.innerHTML='<div class="empty">Carregando...</div>';
+  try{
+    let url='/rest/v1/testes?order=data.desc&limit=100';
     if(filtro)url+='&aid=eq.'+filtro;
-    const cs=await sb(url);
+    const ts=await GET(url);
+    if(!ts?.length){el.innerHTML='<div class="empty">Nenhum teste registrado.</div>';return;}
+    // Agrupar por atleta e tipo
+    const grupos={};
+    ts.forEach(t=>{
+      const k=t.anom+'|'+t.tipo;
+      if(!grupos[k])grupos[k]={anom:t.anom,tipo:t.tipo,items:[]};
+      grupos[k].items.push(t);
+    });
+    el.innerHTML=Object.values(grupos).map(g=>`
+      <div class="card">
+        <div class="card-title">${g.anom} — ${g.tipo}</div>
+        ${g.items.map(t=>`
+          <div class="teste-item">
+            <div>
+              <div class="teste-tipo">${t.data}</div>
+              <div class="teste-meta">${t.obs||''}</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <div><div class="teste-valor">${t.valor}</div><div style="font-size:9px;color:var(--text2);text-align:right">${t.unidade||''}</div></div>
+              <div class="teste-actions">
+                <button class="btn btn-ghost" style="font-size:10px;padding:4px 8px" onclick="editarTeste(${JSON.stringify(t).replace(/"/g,'&quot;')})">✏️</button>
+                <button class="btn btn-danger" style="font-size:10px;padding:4px 8px" onclick="deletarTeste(${t.id})">✕</button>
+              </div>
+            </div>
+          </div>`).join('')}
+      </div>`).join('');
+  }catch(e){el.innerHTML='<div class="al al-r">'+e.message+'</div>';}
+}
+
+function abrirMoTeste(atId=''){
+  document.getElementById('mo-te-title').textContent='Registrar teste';
+  document.getElementById('te-edit-id').value='';
+  document.getElementById('te-dt').value=new Date().toISOString().split('T')[0];
+  document.getElementById('te-tipo').value='';
+  document.getElementById('te-val').value='';
+  document.getElementById('te-uni').value='kg';
+  document.getElementById('te-obs').value='';
+  document.getElementById('te-msg').textContent='';
+  if(atId)document.getElementById('te-at').value=atId;
+  document.getElementById('mo-teste').classList.add('show');
+}
+
+function editarTeste(t){
+  document.getElementById('mo-te-title').textContent='Editar teste';
+  document.getElementById('te-edit-id').value=t.id;
+  document.getElementById('te-at').value=t.aid;
+  document.getElementById('te-dt').value=t.data;
+  document.getElementById('te-tipo').value=t.tipo;
+  document.getElementById('te-val').value=t.valor;
+  document.getElementById('te-uni').value=t.unidade||'kg';
+  document.getElementById('te-obs').value=t.obs||'';
+  document.getElementById('te-msg').textContent='';
+  document.getElementById('mo-teste').classList.add('show');
+}
+
+async function salvarTeste(){
+  const aid=document.getElementById('te-at').value;
+  const data=document.getElementById('te-dt').value;
+  const tipo=document.getElementById('te-tipo').value;
+  const valor=parseFloat(document.getElementById('te-val').value);
+  const editId=document.getElementById('te-edit-id').value;
+  const msg=document.getElementById('te-msg');
+  if(!aid||!data||!tipo||isNaN(valor)){msg.className='msg err';msg.textContent='Preencha todos os campos';return;}
+  const ats=await GET('/rest/v1/atletas?id=eq.'+aid+'&select=nome&limit=1').catch(()=>[]);
+  const anom=ats?.[0]?.nome||'?';
+  const body={aid,anom,data,tipo,valor,unidade:document.getElementById('te-uni').value,obs:document.getElementById('te-obs').value,criado_por:user?.nome||'coach'};
+  try{
+    if(editId){
+      await PATCH('/rest/v1/testes?id=eq.'+editId,body);
+      msg.className='msg ok';msg.textContent='Atualizado!';
+    } else {
+      await POST('/rest/v1/testes',body);
+      msg.className='msg ok';msg.textContent='Teste salvo!';
+    }
+    setTimeout(()=>{fecharMo('mo-teste');carregarTestes();},1200);
+  }catch(e){msg.className='msg err';msg.textContent='Erro: '+e.message;}
+}
+
+async function deletarTeste(id){
+  if(!confirm('Deletar este teste?'))return;
+  try{await DELETE('/rest/v1/testes?id=eq.'+id);carregarTestes();}
+  catch(e){alert('Erro: '+e.message);}
+}
+
+// ═══ COACH: CARGAS ══════════════════════════════════════════════
+async function carregarCargas(){
+  const filtro=document.getElementById('filtro-at-carga')?.value;
+  try{
+    let url='/rest/v1/cargas?order=data.desc&limit=100';
+    if(filtro)url+='&aid=eq.'+filtro;
+    const cs=await GET(url);
     document.getElementById('tb-cargas').innerHTML=(cs||[]).map(c=>`<tr>
       <td>${c.anom}</td><td>${c.data}</td><td>${c.exercicio}</td><td>${c.serie}</td>
       <td>${c.reps}</td><td>${c.carga}</td><td>${c.reps*c.carga}</td>
-      <td>${c.pse||'—'}</td><td>${c.rir!==null&&c.rir!==undefined?c.rir:'—'}</td></tr>`).join('');
-  }catch(e){console.error(e);}
+      <td>${c.pse||'—'}</td><td>${c.rir!==null&&c.rir!==undefined?c.rir:'—'}</td>
+      <td><button class="btn btn-ghost" style="font-size:10px;padding:4px 7px" onclick="editarCarga(${JSON.stringify(c).replace(/"/g,'&quot;')})">✏️</button></td></tr>`).join('');
+  }catch(e){}
 }
 
-// ═══════════════════════════════════════════════════════
-// COACH — BIBLIOTECA DE TREINOS
-// ═══════════════════════════════════════════════════════
-async function carregarBiblioteca(){
+function editarCarga(c){
+  document.getElementById('cg-id').value=c.id;
+  document.getElementById('cg-reps').value=c.reps;
+  document.getElementById('cg-carga').value=c.carga;
+  document.getElementById('cg-rpe').value=c.pse||'';
+  document.getElementById('cg-rir').value=c.rir!==null&&c.rir!==undefined?c.rir:'';
+  document.getElementById('mo-carga').classList.add('show');
+}
+
+async function salvarCarga(){
+  const id=document.getElementById('cg-id').value;
+  const body={reps:+document.getElementById('cg-reps').value,carga:+document.getElementById('cg-carga').value,
+    pse:document.getElementById('cg-rpe').value||null,rir:document.getElementById('cg-rir').value!==''?+document.getElementById('cg-rir').value:null};
+  try{await PATCH('/rest/v1/cargas?id=eq.'+id,body);fecharMo('mo-carga');carregarCargas();}
+  catch(e){alert('Erro: '+e.message);}
+}
+
+async function deletarCarga(){
+  const id=document.getElementById('cg-id').value;
+  if(!confirm('Deletar esta carga?'))return;
+  try{await DELETE('/rest/v1/cargas?id=eq.'+id);fecharMo('mo-carga');carregarCargas();}
+  catch(e){alert('Erro: '+e.message);}
+}
+
+// ═══ COACH: BIBLIOTECA ══════════════════════════════════════════
+async function carregarBiblio(){
   try{
-    const ts=await sb('/rest/v1/treinos?order=nome&select=id,nome,bloco,descricao');
-    const el=document.getElementById('biblioteca-list');
-    if(!ts?.length){el.innerHTML='<div class="empty">Nenhum treino na biblioteca.</div>';return;}
+    const ts=await GET('/rest/v1/treinos?order=nome&select=id,nome,bloco');
+    const el=document.getElementById('lista-biblio');
+    if(!ts?.length){el.innerHTML='<div class="empty">Nenhum treino.</div>';return;}
     el.innerHTML=ts.map(t=>`
-      <div class="card" style="margin-bottom:8px">
+      <div class="card" style="margin-bottom:7px">
         <div style="display:flex;justify-content:space-between;align-items:center">
-          <div>
-            <div style="font-size:14px;font-weight:700">${t.nome}</div>
-            <div class="sm mt8"><span class="tag">${t.bloco||'—'}</span></div>
-          </div>
-          <button class="btn-ghost" onclick="excluirTreino(${t.id})">✕</button>
+          <div><div style="font-size:13px;font-weight:700">${t.nome}</div>
+          <div class="sm mt8"><span class="tag">${t.bloco||'—'}</span></div></div>
+          <button class="btn btn-danger" style="font-size:10px;padding:5px 9px" onclick="deletarTreinoBiblio(${t.id})">✕</button>
         </div>
       </div>`).join('');
-  }catch(e){document.getElementById('biblioteca-list').innerHTML='<div class="alert alert-r">'+e.message+'</div>';}
+  }catch(e){}
 }
 
-function abrirModalTreino(){document.getElementById('modal-treino').classList.add('show');}
+function abrirMoTr(){document.getElementById('mo-treino').classList.add('show');}
+
 async function salvarTreino(){
-  const nome=document.getElementById('tr-nome').value.trim();
-  const bloco=document.getElementById('tr-bloco').value;
-  const jsonStr=document.getElementById('tr-json').value.trim();
+  const nm=document.getElementById('tr-nm').value.trim();
+  const bl=document.getElementById('tr-bl').value;
+  const js=document.getElementById('tr-json').value.trim();
   const msg=document.getElementById('tr-msg');
-  if(!nome){msg.className='msg err';msg.textContent='Informe o nome do treino';return;}
+  if(!nm){msg.className='msg err';msg.textContent='Informe o nome';return;}
   let dados=null;
-  if(jsonStr){
-    try{dados=JSON.parse(jsonStr);}
-    catch(e){msg.className='msg err';msg.textContent='JSON invalido: '+e.message;return;}
-  }
+  if(js){try{dados=JSON.parse(js);}catch(e){msg.className='msg err';msg.textContent='JSON invalido: '+e.message;return;}}
   try{
-    await sbPost('/rest/v1/treinos',{
-      nome,bloco,dados_json:dados?JSON.stringify(dados):null,tipo:'treino'
-    });
-    msg.className='msg ok';msg.textContent='Treino salvo!';
-    setTimeout(()=>{fecharModal('modal-treino');carregarBiblioteca();},1500);
+    await POST('/rest/v1/treinos',{nome:nm,bloco:bl,dados_json:dados?JSON.stringify(dados):null,tipo:'treino'});
+    msg.className='msg ok';msg.textContent='Salvo!';
+    setTimeout(()=>{fecharMo('mo-treino');carregarBiblio();},1200);
   }catch(e){msg.className='msg err';msg.textContent='Erro: '+e.message;}
 }
 
-async function excluirTreino(id){
-  if(!confirm('Excluir treino?'))return;
-  try{
-    await fetch(SB_URL+'/rest/v1/treinos?id=eq.'+id,{method:'DELETE',headers:HDR.headers});
-    carregarBiblioteca();
-  }catch(e){alert('Erro: '+e.message);}
+async function deletarTreinoBiblio(id){
+  if(!confirm('Deletar treino?'))return;
+  try{await DELETE('/rest/v1/treinos?id=eq.'+id);carregarBiblio();}
+  catch(e){alert('Erro: '+e.message);}
 }
 
 const modeloTreino={nome:'HIGH — Bloco A Terca',exercicios:[{id:'ex1',nome:'Hang Power Clean',instrucao:'Foco na velocidade. Nunca falha.',series:[{id:'s1',rotulo:'Aq 1',reps_alvo:3,carga_ref:'40%',tipo:'aquecimento'},{id:'s2',rotulo:'S1',reps_alvo:3,carga_ref:'68%',tipo:'trabalho'},{id:'s3',rotulo:'S2',reps_alvo:3,carga_ref:'70%',tipo:'trabalho'},{id:'s4',rotulo:'S3',reps_alvo:3,carga_ref:'72%',tipo:'trabalho'}]},{id:'ex2',nome:'Agachamento Traseiro',instrucao:'Excentrica 2s, subida explosiva.',series:[{id:'s5',rotulo:'Aq 1',reps_alvo:5,carga_ref:'50%',tipo:'aquecimento'},{id:'s6',rotulo:'S1',reps_alvo:4,carga_ref:'70%',tipo:'trabalho'},{id:'s7',rotulo:'S2',reps_alvo:4,carga_ref:'72%',tipo:'trabalho'},{id:'s8',rotulo:'S3',reps_alvo:4,carga_ref:'72%',tipo:'trabalho'}]}]};
 function colarModelo(){document.getElementById('tr-json').value=JSON.stringify(modeloTreino,null,2);}
 
-// ═══════════════════════════════════════════════════════
-// MODAL
-// ═══════════════════════════════════════════════════════
-function fecharModal(id){document.getElementById(id).classList.remove('show');}
-document.addEventListener('click',e=>{
-  if(e.target.classList.contains('modal-overlay'))fecharModal(e.target.id);
-});
+// ═══ MODAL ══════════════════════════════════════════════════════
+function fecharMo(id){document.getElementById(id).classList.remove('show');}
+document.addEventListener('click',e=>{if(e.target.classList.contains('mo'))fecharMo(e.target.id);});
 
-// ═══════════════════════════════════════════════════════
-// INIT — verificar sessao salva
-// ═══════════════════════════════════════════════════════
+// ═══ INIT ════════════════════════════════════════════════════════
 window.onload=()=>{
-  if(currentUser&&authToken){
-    iniciarApp();
-  }
+  if(user&&tok)iniciar();
 };
 </script>
 </body>
