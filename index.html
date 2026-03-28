@@ -1,0 +1,2904 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>SMT — S&C Muay Thai</title>
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="SMT">
+<meta name="theme-color" content="#0d0d0d">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════
+   DESIGN SYSTEM — SMT
+═══════════════════════════════════════════════════════════ */
+:root {
+  /* Core palette */
+  --bg:        #0d0d0d;
+  --bg2:       #141414;
+  --surface:   #1a1a1a;
+  --surface2:  #222222;
+  --border:    rgba(255,255,255,.08);
+  --border2:   rgba(255,255,255,.13);
+
+  /* Brand */
+  --red:       #e8192c;
+  --red-dim:   rgba(232,25,44,.15);
+  --red-glow:  rgba(232,25,44,.3);
+
+  /* Semantic */
+  --green:     #22c55e;
+  --green-dim: rgba(34,197,94,.15);
+  --orange:    #f97316;
+  --orange-dim:rgba(249,115,22,.15);
+  --blue:      #3b82f6;
+  --blue-dim:  rgba(59,130,246,.15);
+  --yellow:    #eab308;
+
+  /* Text */
+  --t1: #f5f5f5;
+  --t2: #888;
+  --t3: #444;
+
+  /* Radii */
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 20px;
+  --r-xl: 28px;
+
+  /* Font */
+  --font: 'Barlow', -apple-system, sans-serif;
+  --font-cond: 'Barlow Condensed', sans-serif;
+
+  /* Spacing */
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--t1);
+  min-height: 100dvh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+input, select, textarea, button { font-family: inherit; }
+input[type=number] { -moz-appearance: textfield; }
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; }
+
+/* ── Screens ── */
+.screen { display: none; min-height: 100dvh; flex-direction: column; }
+.screen.active { display: flex; }
+
+/* ═══════════════════════════════════════════════════════════
+   LOGIN SCREEN
+═══════════════════════════════════════════════════════════ */
+#s-login {
+  background: var(--bg);
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Red gradient top accent */
+#s-login::before {
+  content: '';
+  position: absolute;
+  top: -120px; left: 50%; transform: translateX(-50%);
+  width: 500px; height: 400px;
+  background: radial-gradient(ellipse at center, rgba(232,25,44,.25) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.login-wrap {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 64px 24px 40px;
+  position: relative;
+  z-index: 1;
+}
+
+.brand {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.brand-mark {
+  width: 68px; height: 68px;
+  background: var(--red);
+  border-radius: 22px;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px;
+  box-shadow: 0 0 40px var(--red-glow);
+  font-size: 28px;
+  position: relative;
+}
+
+.brand-mark::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 23px;
+  background: linear-gradient(135deg, rgba(255,255,255,.2), transparent);
+  pointer-events: none;
+}
+
+.brand h1 {
+  font-family: var(--font-cond);
+  font-size: 32px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  line-height: 1;
+}
+
+.brand h1 span { color: var(--red); }
+
+.brand p {
+  font-size: 12px;
+  color: var(--t2);
+  margin-top: 4px;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+/* Segmented control */
+.seg {
+  display: flex;
+  background: var(--surface);
+  border-radius: var(--r-md);
+  padding: 3px;
+  margin-bottom: 28px;
+  border: 1px solid var(--border);
+}
+
+.seg-btn {
+  flex: 1;
+  padding: 9px;
+  border: none;
+  background: none;
+  color: var(--t2);
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: 11px;
+  cursor: pointer;
+  transition: all .2s;
+  letter-spacing: .3px;
+}
+
+.seg-btn.on {
+  background: var(--red);
+  color: #fff;
+  box-shadow: 0 2px 12px var(--red-glow);
+}
+
+/* Form fields */
+.field {
+  margin-bottom: 14px;
+}
+
+.field label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--t2);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: .8px;
+}
+
+.field input {
+  width: 100%;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-md);
+  color: var(--t1);
+  font-size: 15px;
+  font-weight: 500;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.field input:focus {
+  outline: none;
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px var(--red-dim);
+}
+
+.field input::placeholder { color: var(--t3); }
+
+/* Primary button */
+.btn-primary {
+  width: 100%;
+  padding: 16px;
+  background: var(--red);
+  color: #fff;
+  border: none;
+  border-radius: var(--r-md);
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: .5px;
+  cursor: pointer;
+  transition: all .2s;
+  box-shadow: 0 4px 20px var(--red-glow);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary:active { transform: scale(.98); }
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: rgba(255,255,255,.2);
+  border-radius: var(--r-md) var(--r-md) 0 0;
+}
+
+.f-msg {
+  font-size: 12px;
+  text-align: center;
+  margin-top: 12px;
+  min-height: 18px;
+  font-weight: 500;
+}
+.f-msg.err { color: var(--red); }
+.f-msg.ok { color: var(--green); }
+
+/* ═══════════════════════════════════════════════════════════
+   APP SHELL
+═══════════════════════════════════════════════════════════ */
+#s-app { background: var(--bg); }
+
+/* Top nav */
+.topnav {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  background: rgba(13,13,13,.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 100;
+  flex-shrink: 0;
+}
+
+.topnav-brand {
+  font-family: var(--font-cond);
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.role-pill {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+}
+
+.role-pill.coach { background: var(--red); color: #fff; }
+.role-pill.atleta { background: var(--surface2); color: var(--t2); }
+
+.topnav-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-name {
+  font-size: 12px;
+  color: var(--t2);
+  max-width: 90px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.btn-out {
+  padding: 6px 12px;
+  border: 1.5px solid var(--border2);
+  border-radius: var(--r-sm);
+  background: none;
+  color: var(--t2);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: .3px;
+  transition: all .15s;
+}
+.btn-out:hover { border-color: var(--t2); color: var(--t1); }
+
+/* Scrollable content area */
+.content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 16px calc(80px + var(--safe-bottom));
+  max-width: 680px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Pages */
+.page { display: none; animation: fadeIn .2s ease; }
+.page.on { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   BOTTOM NAV
+═══════════════════════════════════════════════════════════ */
+.bnav {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: rgba(20,20,20,.97);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border);
+  display: flex;
+  padding-bottom: var(--safe-bottom);
+  z-index: 100;
+}
+
+.bn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 4px 8px;
+  border: none;
+  background: none;
+  color: var(--t3);
+  cursor: pointer;
+  gap: 3px;
+  transition: color .2s;
+  position: relative;
+}
+
+.bn.on { color: var(--red); }
+
+.bn-ic {
+  font-size: 22px;
+  line-height: 1;
+  transition: transform .2s;
+}
+
+.bn.on .bn-ic { transform: scale(1.1); }
+
+.bn-lb {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+/* Active indicator dot */
+.bn.on::after {
+  content: '';
+  position: absolute;
+  bottom: calc(var(--safe-bottom) + 2px);
+  width: 4px; height: 4px;
+  background: var(--red);
+  border-radius: 50%;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CARDS & LAYOUT
+═══════════════════════════════════════════════════════════ */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 16px;
+  margin-bottom: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.08), transparent);
+}
+
+.card-hd {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.card-label {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--t2);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Section title */
+.sec-hd {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--t3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 20px 0 10px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   STAT BOXES
+═══════════════════════════════════════════════════════════ */
+.stats-grid {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.stats-2 { grid-template-columns: 1fr 1fr; }
+.stats-4 { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 380px) { .stats-4 { grid-template-columns: 1fr 1fr; } }
+
+.stat-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 14px 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-box::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 2px;
+}
+
+.stat-box.red::after   { background: var(--red); }
+.stat-box.green::after { background: var(--green); }
+.stat-box.blue::after  { background: var(--blue); }
+.stat-box.orange::after{ background: var(--orange); }
+
+.stat-val {
+  font-family: var(--font-cond);
+  font-size: 30px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -1px;
+}
+
+.stat-box.red .stat-val   { color: var(--red); }
+.stat-box.green .stat-val { color: var(--green); }
+.stat-box.blue .stat-val  { color: var(--blue); }
+.stat-box.orange .stat-val{ color: var(--orange); }
+
+.stat-lbl {
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--t2);
+  text-transform: uppercase;
+  letter-spacing: .8px;
+  margin-top: 3px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ALERTS
+═══════════════════════════════════════════════════════════ */
+.alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 11px 13px;
+  border-radius: var(--r-md);
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.alert-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+.alert-red    { background: rgba(232,25,44,.1);  color: #ff6b77; border: 1px solid rgba(232,25,44,.2); }
+.alert-green  { background: rgba(34,197,94,.1);  color: #4ade80; border: 1px solid rgba(34,197,94,.2); }
+.alert-orange { background: rgba(249,115,22,.1); color: #fb923c; border: 1px solid rgba(249,115,22,.2); }
+
+/* ═══════════════════════════════════════════════════════════
+   BUTTONS
+═══════════════════════════════════════════════════════════ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: var(--r-sm);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .3px;
+  cursor: pointer;
+  transition: all .15s;
+  text-transform: uppercase;
+}
+
+.btn:active { transform: scale(.97); }
+.btn-red    { background: var(--red);    color: #fff; box-shadow: 0 2px 12px var(--red-dim); }
+.btn-green  { background: var(--green);  color: #fff; }
+.btn-blue   { background: var(--blue);   color: #fff; }
+.btn-orange { background: var(--orange); color: #fff; }
+.btn-ghost  { background: var(--surface2); color: var(--t2); border: 1px solid var(--border2); }
+.btn-ghost:hover { color: var(--t1); }
+.btn-danger { background: var(--red-dim); color: var(--red); border: 1px solid rgba(232,25,44,.3); }
+.btn-full   { width: 100%; padding: 15px; font-size: 14px; border-radius: var(--r-md); }
+.btn-lg     { padding: 14px 24px; font-size: 13px; border-radius: var(--r-md); }
+
+.btn-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FORMS
+═══════════════════════════════════════════════════════════ */
+.fg { margin-bottom: 13px; }
+.fg label {
+  display: block;
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--t2);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: .8px;
+}
+
+.fg input, .fg select, .fg textarea {
+  width: 100%;
+  padding: 12px 14px;
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-md);
+  color: var(--t1);
+  font-size: 14px;
+  font-weight: 500;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.fg input:focus, .fg select:focus, .fg textarea:focus {
+  outline: none;
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px var(--red-dim);
+}
+
+.fg select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23666'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+.fg select option { background: var(--surface); }
+.fg textarea { resize: vertical; min-height: 60px; line-height: 1.5; }
+.fg input::placeholder { color: var(--t3); }
+.fg-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.fg-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+
+/* ═══════════════════════════════════════════════════════════
+   TABLE
+═══════════════════════════════════════════════════════════ */
+.tbl-wrap { overflow-x: auto; border-radius: var(--r-md); border: 1px solid var(--border); }
+table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 480px; }
+th {
+  background: var(--surface2);
+  color: var(--t2);
+  padding: 10px 12px;
+  text-align: left;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .8px;
+  white-space: nowrap;
+}
+td { padding: 11px 12px; border-bottom: 1px solid var(--border); color: var(--t1); vertical-align: middle; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(255,255,255,.02); }
+
+/* Badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .3px;
+}
+.badge-red    { background: var(--red-dim);    color: var(--red); }
+.badge-green  { background: var(--green-dim);  color: var(--green); }
+.badge-orange { background: var(--orange-dim); color: var(--orange); }
+.badge-blue   { background: var(--blue-dim);   color: var(--blue); }
+.badge-gray   { background: var(--surface2);   color: var(--t2); }
+
+/* ═══════════════════════════════════════════════════════════
+   COACH TABS (horizontal scroll)
+═══════════════════════════════════════════════════════════ */
+.ctabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 16px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.ctabs::-webkit-scrollbar { display: none; }
+
+.ctab {
+  flex-shrink: 0;
+  padding: 8px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  background: none;
+  color: var(--t2);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .2s;
+  white-space: nowrap;
+  letter-spacing: .3px;
+}
+
+.ctab.on {
+  background: var(--red);
+  color: #fff;
+  border-color: var(--red);
+  box-shadow: 0 2px 12px var(--red-glow);
+}
+
+/* Coach tab content */
+.ctab-content { display: none; }
+.ctab-content.on { display: block; }
+
+/* ═══════════════════════════════════════════════════════════
+   TREINO (ATLETA VIEW)
+═══════════════════════════════════════════════════════════ */
+.treino-header {
+  background: linear-gradient(135deg, #1a0000, #2a0508);
+  border: 1px solid rgba(232,25,44,.2);
+  border-radius: var(--r-xl);
+  padding: 20px;
+  margin-bottom: 14px;
+  position: relative;
+  overflow: hidden;
+}
+
+.treino-header::before {
+  content: '';
+  position: absolute;
+  top: -30px; right: -30px;
+  width: 120px; height: 120px;
+  background: radial-gradient(circle, var(--red-glow), transparent 70%);
+}
+
+.treino-header h2 {
+  font-family: var(--font-cond);
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: .5px;
+  position: relative;
+}
+
+.treino-header p {
+  font-size: 12px;
+  color: rgba(255,255,255,.6);
+  margin-top: 4px;
+  position: relative;
+}
+
+/* Exercise block */
+.ex-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.ex-header {
+  padding: 14px 16px 10px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.ex-num {
+  width: 26px; height: 26px;
+  background: var(--red);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-cond);
+  font-size: 13px;
+  font-weight: 900;
+  flex-shrink: 0;
+}
+
+.ex-info { flex: 1; }
+
+.ex-name {
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.ex-inst {
+  font-size: 11px;
+  color: var(--t2);
+  margin-top: 3px;
+  line-height: 1.4;
+}
+
+/* Series */
+.series-wrap { padding: 0 16px 12px; }
+
+.serie {
+  border-top: 1px solid var(--border);
+  padding: 12px 0;
+}
+
+.serie-hd {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.serie-label {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--t2);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.serie-ref {
+  font-size: 10px;
+  color: var(--t1);
+  background: var(--surface2);
+  padding: 2px 7px;
+  border-radius: 5px;
+  font-weight: 700;
+}
+
+.tag-work {
+  font-size: 9px;
+  background: var(--red-dim);
+  color: var(--red);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 800;
+  letter-spacing: .3px;
+}
+
+.tag-warmup {
+  font-size: 9px;
+  background: rgba(234,179,8,.1);
+  color: var(--yellow);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 800;
+  letter-spacing: .3px;
+}
+
+/* Input grid */
+.inp-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.inp-box label {
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--t3);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.inp-big {
+  width: 100%;
+  padding: 10px;
+  background: var(--bg2);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-sm);
+  color: var(--t1);
+  font-size: 22px;
+  font-weight: 800;
+  text-align: center;
+  font-family: var(--font-cond);
+  transition: border-color .15s;
+}
+
+.inp-big:focus {
+  outline: none;
+  border-color: var(--red);
+}
+
+/* RPE row */
+.rpe-row, .rir-row {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.rpe-row label, .rir-row label {
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--t3);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 4px;
+  letter-spacing: .5px;
+}
+
+.chip {
+  flex: 1;
+  padding: 8px 2px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg2);
+  color: var(--t2);
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  text-align: center;
+  transition: all .12s;
+  min-width: 0;
+}
+
+.chip.sel-red  { border-color: var(--red);   background: var(--red-dim);   color: var(--red); }
+.chip.sel-green{ border-color: var(--green);  background: var(--green-dim); color: var(--green); }
+
+/* PSE */
+.pse-row {
+  display: flex;
+  gap: 4px;
+}
+
+.pse-chip {
+  flex: 1;
+  padding: 13px 2px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface2);
+  color: var(--t2);
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  text-align: center;
+  transition: all .12s;
+  font-family: var(--font-cond);
+}
+
+.pse-chip.sel {
+  border-color: var(--red);
+  background: var(--red-dim);
+  color: var(--red);
+}
+
+/* Wellness */
+.well-row {
+  display: flex;
+  gap: 4px;
+  margin: 5px 0;
+}
+
+.well-item label {
+  font-size: 10px;
+  color: var(--t2);
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.well-chips { display: flex; gap: 3px; }
+
+.wchip {
+  flex: 1;
+  padding: 8px 1px;
+  border: 1.5px solid var(--border);
+  border-radius: 7px;
+  background: var(--surface2);
+  color: var(--t3);
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+  line-height: 1.3;
+  transition: all .12s;
+}
+
+.wchip.w1 { border-color: var(--red);    background: var(--red-dim);    color: var(--red); }
+.wchip.w2 { border-color: var(--orange); background: var(--orange-dim); color: var(--orange); }
+.wchip.w3 { border-color: rgba(255,255,255,.15); color: var(--t1); }
+.wchip.w4 { border-color: var(--blue);   background: var(--blue-dim);   color: var(--blue); }
+.wchip.w5 { border-color: var(--green);  background: var(--green-dim);  color: var(--green); }
+
+/* Success screen */
+.ok-screen { text-align: center; padding: 40px 20px; display: none; }
+.ok-screen.show { display: block; animation: fadeIn .3s ease; }
+
+.ok-circle {
+  width: 80px; height: 80px;
+  background: var(--green-dim);
+  border: 2px solid var(--green);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  font-size: 32px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ATLETA CARDS
+═══════════════════════════════════════════════════════════ */
+.atleta-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.atleta-avatar {
+  width: 40px; height: 40px;
+  background: linear-gradient(135deg, var(--red), #7b0000);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-cond);
+  font-size: 16px;
+  font-weight: 900;
+  flex-shrink: 0;
+}
+
+.atleta-info { flex: 1; min-width: 0; }
+
+.atleta-name {
+  font-size: 14px;
+  font-weight: 800;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.atleta-meta {
+  font-size: 11px;
+  color: var(--t2);
+  margin-top: 2px;
+}
+
+.atleta-actions { display: flex; gap: 6px; flex-shrink: 0; }
+
+/* ═══════════════════════════════════════════════════════════
+   TESTE ITEM
+═══════════════════════════════════════════════════════════ */
+.teste-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.teste-val {
+  font-family: var(--font-cond);
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--red);
+  line-height: 1;
+  flex-shrink: 0;
+  min-width: 70px;
+  text-align: right;
+}
+
+.teste-info { flex: 1; }
+
+.teste-tipo {
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.teste-meta {
+  font-size: 11px;
+  color: var(--t2);
+  margin-top: 2px;
+}
+
+.teste-actions { display: flex; gap: 4px; flex-shrink: 0; }
+
+/* ═══════════════════════════════════════════════════════════
+   HISTORICO ITEM
+═══════════════════════════════════════════════════════════ */
+.hist-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 14px 16px;
+  margin-bottom: 8px;
+}
+
+.hist-date { font-size: 10px; color: var(--t2); margin-bottom: 4px; font-weight: 600; letter-spacing: .3px; }
+.hist-name { font-size: 14px; font-weight: 800; margin-bottom: 8px; }
+
+.hist-stats {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.hist-stat { font-size: 11px; color: var(--t2); }
+.hist-stat b { color: var(--t1); font-weight: 700; }
+
+/* ═══════════════════════════════════════════════════════════
+   MODAL (bottom sheet)
+═══════════════════════════════════════════════════════════ */
+.mo {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.8);
+  z-index: 300;
+  align-items: flex-end;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+
+.mo.show { display: flex; }
+
+.mo-sheet {
+  background: var(--surface);
+  border-radius: var(--r-xl) var(--r-xl) 0 0;
+  padding: 20px 20px calc(20px + var(--safe-bottom));
+  width: 100%;
+  max-width: 560px;
+  max-height: 90dvh;
+  overflow-y: auto;
+  border-top: 1px solid var(--border2);
+  animation: slideUp .25s cubic-bezier(.32,1,.32,1);
+}
+
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.mo-handle {
+  width: 36px; height: 4px;
+  background: var(--surface2);
+  border-radius: 2px;
+  margin: 0 auto 16px;
+}
+
+.mo-title {
+  font-size: 17px;
+  font-weight: 800;
+  margin-bottom: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mo-close {
+  width: 28px; height: 28px;
+  background: var(--surface2);
+  border: none;
+  border-radius: 8px;
+  color: var(--t2);
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .15s;
+}
+
+.mo-close:hover { background: var(--border2); color: var(--t1); }
+
+/* ═══════════════════════════════════════════════════════════
+   MISC
+═══════════════════════════════════════════════════════════ */
+.divider { height: 1px; background: var(--border); margin: 14px 0; }
+.empty { text-align: center; padding: 36px 20px; color: var(--t3); font-size: 13px; }
+.empty-icon { font-size: 36px; margin-bottom: 10px; }
+.msg { font-size: 12px; font-weight: 600; margin-top: 10px; min-height: 18px; text-align: center; }
+.msg.err { color: var(--red); } .msg.ok { color: var(--green); }
+.prog-bar { height: 4px; background: var(--surface2); border-radius: 2px; overflow: hidden; margin-top: 4px; }
+.prog-fill { height: 100%; border-radius: 2px; transition: width .4s ease; }
+.json-area { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 11px; min-height: 140px; background: var(--bg); color: #a8d8a8; border: 1.5px solid var(--border); border-radius: var(--r-md); padding: 12px; width: 100%; resize: vertical; line-height: 1.6; }
+.tag { display: inline-flex; align-items: center; padding: 3px 8px; border-radius: 5px; font-size: 10px; font-weight: 700; background: var(--surface2); color: var(--t2); }
+
+/* Loading spinner */
+.spin {
+  display: inline-block;
+  width: 16px; height: 16px;
+  border: 2px solid var(--border2);
+  border-top-color: var(--red);
+  border-radius: 50%;
+  animation: spin .6s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ═══════════════════════════════════════════════════════════
+   WELLBEING GRID
+═══════════════════════════════════════════════════════════ */
+.well-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.well-box {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 12px;
+}
+
+.well-box-label {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--t2);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  margin-bottom: 8px;
+}
+
+.well-box-chips { display: flex; gap: 3px; }
+
+/* ═══════════════════════════════════════════════════════════
+   SESSÃO AO VIVO — novos estilos
+═══════════════════════════════════════════════════════════ */
+
+/* Toggle Terça / Quinta */
+.day-toggle {
+  display: flex;
+  background: var(--surface2);
+  border-radius: var(--r-md);
+  padding: 3px;
+  margin-bottom: 16px;
+  border: 1px solid var(--border);
+}
+.day-btn {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  background: none;
+  color: var(--t2);
+  font-size: 13px;
+  font-weight: 800;
+  border-radius: 11px;
+  cursor: pointer;
+  transition: all .2s;
+  letter-spacing: .3px;
+  text-align: center;
+}
+.day-btn.on {
+  background: var(--surface);
+  color: var(--t1);
+  border: 1px solid var(--border2);
+  box-shadow: 0 2px 8px rgba(0,0,0,.4);
+}
+.day-btn.on.terca { color: var(--blue); border-color: rgba(59,130,246,.3); }
+.day-btn.on.quinta { color: var(--orange); border-color: rgba(249,115,22,.3); }
+
+/* Card de atleta na sessão */
+.athlete-session-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  margin-bottom: 10px;
+  overflow: hidden;
+  transition: border-color .2s;
+}
+.athlete-session-card.presente { border-color: rgba(34,197,94,.25); }
+.athlete-session-card.ausente  { border-color: rgba(232,25,44,.15); opacity: .6; }
+
+/* Header do card de atleta */
+.asc-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.asc-avatar {
+  width: 38px; height: 38px;
+  background: linear-gradient(135deg, var(--red), #7b0000);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-cond);
+  font-size: 16px;
+  font-weight: 900;
+  flex-shrink: 0;
+}
+
+.asc-info { flex: 1; min-width: 0; }
+.asc-name {
+  font-size: 14px;
+  font-weight: 800;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.asc-meta { font-size: 11px; color: var(--t2); margin-top: 2px; }
+
+/* Badge de presença toggle */
+.presence-badge {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  border: 2px solid var(--border2);
+  background: var(--surface2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  font-weight: 900;
+  cursor: pointer;
+  transition: all .15s;
+  flex-shrink: 0;
+  font-family: var(--font-cond);
+}
+.presence-badge.p { background: var(--green-dim); border-color: var(--green); color: var(--green); }
+.presence-badge.f { background: var(--red-dim);   border-color: var(--red);   color: var(--red); }
+.presence-badge.q { background: var(--surface2);  border-color: var(--border2); color: var(--t2); }
+
+/* Semáforo CMJ */
+.cmj-semaforo {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px 3px 6px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 800;
+}
+.cmj-semaforo .dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.cmj-verde   { background: var(--green-dim);  color: var(--green); }
+.cmj-verde .dot   { background: var(--green); }
+.cmj-amarelo { background: var(--orange-dim); color: var(--orange); }
+.cmj-amarelo .dot { background: var(--orange); }
+.cmj-vermelho{ background: var(--red-dim);    color: var(--red); }
+.cmj-vermelho .dot{ background: var(--red); }
+
+/* Corpo expansível do card */
+.asc-body {
+  display: none;
+  padding: 0 16px 16px;
+  border-top: 1px solid var(--border);
+}
+.asc-body.open { display: block; }
+
+/* Grid de 3 inputs CMJ */
+.cmj-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.cmj-box label {
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--t3);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  display: block;
+  margin-bottom: 4px;
+}
+.cmj-inp {
+  width: 100%;
+  padding: 10px 6px;
+  background: var(--bg2);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-sm);
+  color: var(--t1);
+  font-size: 20px;
+  font-weight: 800;
+  text-align: center;
+  font-family: var(--font-cond);
+  transition: border-color .15s;
+}
+.cmj-inp:focus { outline: none; border-color: var(--green); }
+
+/* Resultado CMJ */
+.cmj-result {
+  background: var(--surface2);
+  border-radius: var(--r-sm);
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.cmj-result-val {
+  font-family: var(--font-cond);
+  font-size: 24px;
+  font-weight: 900;
+}
+.cmj-result-info { font-size: 11px; color: var(--t2); text-align: right; }
+
+/* RPE selector na sessão */
+.rpe-selector {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+.rpe-chip-sess {
+  flex: 1;
+  padding: 10px 2px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg2);
+  color: var(--t2);
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  text-align: center;
+  transition: all .12s;
+  font-family: var(--font-cond);
+}
+/* RPE com cores semânticas */
+.rpe-chip-sess[data-v="6"].sel,.rpe-chip-sess[data-v="7"].sel { border-color: var(--blue);   background: var(--blue-dim);   color: var(--blue); }
+.rpe-chip-sess[data-v="8"].sel  { border-color: var(--green);  background: var(--green-dim);  color: var(--green); }
+.rpe-chip-sess[data-v="9"].sel  { border-color: var(--yellow); background: rgba(234,179,8,.15); color: var(--yellow); }
+.rpe-chip-sess[data-v="9.5"].sel,.rpe-chip-sess[data-v="10"].sel { border-color: var(--red); background: var(--red-dim); color: var(--red); }
+
+/* Sessão salva */
+.sess-saved-banner {
+  background: var(--green-dim);
+  border: 1px solid rgba(34,197,94,.3);
+  border-radius: var(--r-md);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  display: none;
+}
+.sess-saved-banner.show { display: flex; }
+
+/* Resumo da sessão no topo */
+.sess-summary {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.sess-sum-box {
+  background: var(--surface2);
+  border-radius: var(--r-sm);
+  padding: 10px;
+  text-align: center;
+}
+.sess-sum-val {
+  font-family: var(--font-cond);
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 1;
+}
+.sess-sum-lbl {
+  font-size: 9px;
+  color: var(--t2);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  margin-top: 2px;
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     LOGIN
+═══════════════════════════════════════════════════════════ -->
+<div class="screen active" id="s-login">
+  <div class="login-wrap">
+    <div class="brand">
+      <div class="brand-mark">🥊</div>
+      <h1>S&C <span>MUAY</span></h1>
+      <p>Força &amp; Potência · Monitoramento</p>
+    </div>
+
+    <div class="seg">
+      <button class="seg-btn on" onclick="loginTab('login',this)">Entrar</button>
+      <button class="seg-btn" onclick="loginTab('reg',this)">Criar conta</button>
+    </div>
+
+    <div id="f-login">
+      <div class="field">
+        <label>Email</label>
+        <input id="l-em" type="email" inputmode="email" placeholder="seu@email.com" autocomplete="email">
+      </div>
+      <div class="field">
+        <label>Senha</label>
+        <input id="l-pw" type="password" placeholder="••••••••" autocomplete="current-password">
+      </div>
+      <button class="btn-primary" onclick="doLogin()">Entrar</button>
+      <div class="f-msg" id="l-msg"></div>
+    </div>
+
+    <div id="f-reg" style="display:none">
+      <div class="field">
+        <label>Nome</label>
+        <input id="r-nm" placeholder="Seu nome completo" autocomplete="name">
+      </div>
+      <div class="field">
+        <label>Email</label>
+        <input id="r-em" type="email" inputmode="email" placeholder="seu@email.com" autocomplete="email">
+      </div>
+      <div class="field">
+        <label>Senha (mín. 6 caracteres)</label>
+        <input id="r-pw" type="password" placeholder="••••••••" autocomplete="new-password">
+      </div>
+      <div class="field">
+        <label>Código do coach (opcional)</label>
+        <input id="r-cd" placeholder="Fornecido pelo coach" autocomplete="off">
+      </div>
+      <button class="btn-primary" onclick="doReg()">Criar conta</button>
+      <div class="f-msg" id="r-msg"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     APP
+═══════════════════════════════════════════════════════════ -->
+<div class="screen" id="s-app">
+
+  <nav class="topnav">
+    <div class="topnav-brand">
+      SMT <span class="role-pill atleta" id="nav-role">ATLETA</span>
+    </div>
+    <div class="topnav-right">
+      <span class="nav-name" id="nav-nm"></span>
+      <button class="btn-out" onclick="doLogout()">Sair</button>
+    </div>
+  </nav>
+
+  <div class="content">
+
+    <!-- ─── ATLETA: TREINO ─────────────────────────────────── -->
+    <div class="page on" id="p-treino">
+      <div id="treino-wrap"></div>
+
+      <div id="pse-wrap" style="display:none">
+        <div class="card">
+          <div class="card-hd">
+            <div class="card-label">PSE — Esforço Percebido</div>
+          </div>
+          <div class="alert alert-orange" style="margin-bottom:12px">
+            <span class="alert-icon">ℹ️</span>
+            <span>6 = muito leve · 8 = moderado · 9.5 = quase limite · 10 = máximo</span>
+          </div>
+          <div class="pse-row" id="pse-btns"></div>
+
+          <div class="divider"></div>
+
+          <div class="card-hd" style="margin-bottom:8px">
+            <div class="card-label">Como você está hoje?</div>
+          </div>
+
+          <div class="well-grid" id="well-wrap"></div>
+
+          <div class="fg" style="margin-top:14px">
+            <label>Observação (opcional)</label>
+            <textarea id="obs-inp" placeholder="Algo para o coach saber..."></textarea>
+          </div>
+
+          <button class="btn btn-red btn-full" style="margin-top:8px" onclick="envFb()">
+            ✓ &nbsp;Enviar feedback
+          </button>
+        </div>
+      </div>
+
+      <div class="ok-screen" id="treino-ok">
+        <div class="ok-circle">✓</div>
+        <div style="font-size:22px;font-weight:900;color:var(--green);margin-bottom:8px">Treino registrado!</div>
+        <div style="font-size:13px;color:var(--t2)">O coach já recebeu suas informações.</div>
+      </div>
+    </div>
+
+    <!-- ─── ATLETA: MEUS TESTES ───────────────────────────── -->
+    <div class="page" id="p-meus-testes">
+      <div class="sec-hd">Meus resultados de testes</div>
+      <div id="meus-testes-list"></div>
+    </div>
+
+    <!-- ─── ATLETA: HISTÓRICO ─────────────────────────────── -->
+    <div class="page" id="p-hist">
+      <div class="sec-hd">Meu histórico</div>
+      <div id="hist-list"></div>
+    </div>
+
+    <!-- ─── COACH: DASHBOARD ──────────────────────────────── -->
+    <div class="page" id="p-dash">
+      <div class="ctabs" id="ctabs">
+        <button class="ctab on"  onclick="cTab('overview',this)">Visão geral</button>
+        <button class="ctab"     onclick="cTab('sessao-tab',this);iniciarSessao()">⚡ Sessão</button>
+        <button class="ctab"     onclick="cTab('atletas-tab',this)">Atletas</button>
+        <button class="ctab"     onclick="cTab('pub-tab',this)">Publicar</button>
+        <button class="ctab"     onclick="cTab('testes-tab',this)">Testes</button>
+        <button class="ctab"     onclick="cTab('cargas-tab',this)">Cargas</button>
+        <button class="ctab"     onclick="cTab('biblio-tab',this)">Biblioteca</button>
+      </div>
+
+      <!-- Overview -->
+      <div class="ctab-content on" id="ct-overview">
+        <div class="stats-grid stats-4">
+          <div class="stat-box red">
+            <div class="stat-val" id="d-nat">—</div>
+            <div class="stat-lbl">Atletas</div>
+          </div>
+          <div class="stat-box orange">
+            <div class="stat-val" id="d-acwr">—</div>
+            <div class="stat-lbl">ACWR</div>
+          </div>
+          <div class="stat-box green">
+            <div class="stat-val" id="d-rpe">—</div>
+            <div class="stat-lbl">PSE médio</div>
+          </div>
+          <div class="stat-box blue">
+            <div class="stat-val" id="d-fb">—</div>
+            <div class="stat-lbl">Feedbacks (7d)</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-hd">
+            <div class="card-label">Alertas</div>
+          </div>
+          <div id="dash-als"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-hd">
+            <div class="card-label">Foster — Monotonia &amp; Strain</div>
+          </div>
+          <div id="dash-foster"></div>
+        </div>
+      </div>
+
+      <!-- ─── SESSÃO AO VIVO ────────────────────────────────── -->
+      <div class="ctab-content" id="ct-sessao-tab">
+
+        <!-- Toggle Terça / Quinta -->
+        <div class="day-toggle">
+          <button class="day-btn on terca" id="btn-terca" onclick="setDiaSessao('ter',this)">
+            Terça · Força-Base
+          </button>
+          <button class="day-btn quinta" id="btn-quinta" onclick="setDiaSessao('qui',this)">
+            Quinta · Potência
+          </button>
+        </div>
+
+        <!-- Banner de sessão salva -->
+        <div class="sess-saved-banner" id="sess-saved-banner">
+          <span style="font-size:20px">✅</span>
+          <div>
+            <div style="font-size:13px;font-weight:800;color:var(--green)">Sessão salva!</div>
+            <div style="font-size:11px;color:var(--t2)" id="sess-saved-info"></div>
+          </div>
+        </div>
+
+        <!-- Resumo dinâmico -->
+        <div class="sess-summary">
+          <div class="sess-sum-box">
+            <div class="sess-sum-val" id="ss-presentes" style="color:var(--green)">0</div>
+            <div class="sess-sum-lbl">Presentes</div>
+          </div>
+          <div class="sess-sum-box">
+            <div class="sess-sum-val" id="ss-rpe-med" style="color:var(--orange)">—</div>
+            <div class="sess-sum-lbl">RPE médio</div>
+          </div>
+          <div class="sess-sum-box">
+            <div class="sess-sum-val" id="ss-cmj-med" style="color:var(--blue)">—</div>
+            <div class="sess-sum-lbl">CMJ médio</div>
+          </div>
+        </div>
+
+        <!-- Lista de atletas -->
+        <div id="sess-atletas-list"></div>
+
+        <!-- Botão salvar sessão -->
+        <button class="btn btn-red btn-full" style="margin-top:4px" onclick="salvarSessao()">
+          💾 &nbsp;Salvar sessão completa
+        </button>
+        <div class="msg" id="sess-msg"></div>
+
+      </div><!-- /ct-sessao-tab -->
+
+      <!-- Atletas -->
+      <div class="ctab-content" id="ct-atletas-tab">
+        <div class="btn-row" style="margin-bottom:14px">
+          <button class="btn btn-red btn-lg" onclick="abrirMoAt()">+ Novo atleta</button>
+        </div>
+        <div id="lista-atletas"></div>
+      </div>
+
+      <!-- Publicar -->
+      <div class="ctab-content" id="ct-pub-tab">
+        <div class="card">
+          <div class="card-hd">
+            <div class="card-label">Publicar treino do dia</div>
+          </div>
+          <div class="fg">
+            <label>Atleta (vazio = todos)</label>
+            <select id="pub-at"><option value="">Todos os atletas</option></select>
+          </div>
+          <div class="fg">
+            <label>Treino</label>
+            <select id="pub-tr"><option value="">Selecione...</option></select>
+          </div>
+          <div class="fg">
+            <label>Data</label>
+            <input id="pub-dt" type="date">
+          </div>
+          <button class="btn btn-red btn-full" onclick="publicarTreino()">Publicar treino</button>
+          <div class="msg" id="pub-msg"></div>
+        </div>
+
+        <div class="card" style="margin-top:4px">
+          <div class="card-hd">
+            <div class="card-label">Publicações recentes</div>
+          </div>
+          <div id="pub-lista"></div>
+        </div>
+      </div>
+
+      <!-- Testes -->
+      <div class="ctab-content" id="ct-testes-tab">
+        <div class="fg-2" style="margin-bottom:12px">
+          <div class="fg">
+            <label>Filtrar atleta</label>
+            <select id="filtro-at-teste" onchange="carregarTestes()">
+              <option value="">Todos</option>
+            </select>
+          </div>
+          <div class="fg" style="display:flex;align-items:flex-end">
+            <button class="btn btn-red btn-full" onclick="abrirMoTeste()">+ Novo teste</button>
+          </div>
+        </div>
+        <div id="lista-testes"></div>
+      </div>
+
+      <!-- Cargas -->
+      <div class="ctab-content" id="ct-cargas-tab">
+        <div class="fg" style="margin-bottom:12px">
+          <label>Filtrar atleta</label>
+          <select id="filtro-at-carga" onchange="carregarCargas()">
+            <option value="">Todos</option>
+          </select>
+        </div>
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Atleta</th><th>Data</th><th>Exercício</th><th>Série</th>
+                <th>Reps</th><th>Kg</th><th>Vol</th><th>RPE</th><th>RIR</th><th></th>
+              </tr>
+            </thead>
+            <tbody id="tb-cargas"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Biblioteca -->
+      <div class="ctab-content" id="ct-biblio-tab">
+        <div class="btn-row" style="margin-bottom:14px">
+          <button class="btn btn-red btn-lg" onclick="abrirMoTr()">+ Novo treino</button>
+        </div>
+        <div id="lista-biblio"></div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+
+  <!-- Bottom Nav -->
+  <nav class="bnav" id="bnav"></nav>
+
+</div><!-- /s-app -->
+
+<!-- ═══ MODALS ══════════════════════════════════════════════ -->
+
+<!-- Modal: Novo Atleta -->
+<div class="mo" id="mo-at">
+  <div class="mo-sheet">
+    <div class="mo-handle"></div>
+    <div class="mo-title">
+      <span id="mo-at-title">Novo atleta</span>
+      <button class="mo-close" onclick="fecharMo('mo-at')">✕</button>
+    </div>
+    <input type="hidden" id="at-edit-id">
+    <div class="fg"><label>Nome</label><input id="at-nm" placeholder="Nome completo"></div>
+    <div class="fg"><label>Email</label><input id="at-em" type="email" inputmode="email" placeholder="atleta@email.com"></div>
+    <div class="fg"><label>WhatsApp</label><input id="at-wp" type="tel" inputmode="tel" placeholder="+55 11 99999-9999"></div>
+    <div class="fg-2">
+      <div class="fg"><label>Peso (kg)</label><input id="at-peso" type="number" step="0.5" placeholder="75"></div>
+      <div class="fg">
+        <label>Sexo</label>
+        <select id="at-sx">
+          <option value="M">Masculino</option>
+          <option value="F">Feminino</option>
+        </select>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-red" onclick="salvarAt()">Salvar</button>
+      <button class="btn btn-ghost" onclick="fecharMo('mo-at')">Cancelar</button>
+      <button class="btn btn-danger" id="btn-del-at" onclick="deletarAt()" style="display:none">Deletar</button>
+    </div>
+    <div class="msg" id="at-msg"></div>
+  </div>
+</div>
+
+<!-- Modal: Novo Teste -->
+<div class="mo" id="mo-teste">
+  <div class="mo-sheet">
+    <div class="mo-handle"></div>
+    <div class="mo-title">
+      <span id="mo-te-title">Novo teste</span>
+      <button class="mo-close" onclick="fecharMo('mo-teste')">✕</button>
+    </div>
+    <input type="hidden" id="te-edit-id">
+    <div class="fg">
+      <label>Atleta</label>
+      <select id="te-at"></select>
+    </div>
+    <div class="fg">
+      <label>Data</label>
+      <input id="te-dt" type="date">
+    </div>
+    <div class="fg">
+      <label>Tipo de teste</label>
+      <select id="te-tipo">
+        <option>1RM Agachamento</option>
+        <option>1RM Terra</option>
+        <option>1RM Supino</option>
+        <option>1RM Power Clean</option>
+        <option>1RM Press Militar</option>
+        <option>CMJ (cm)</option>
+        <option>Broad Jump (cm)</option>
+        <option>Barra fixa (reps)</option>
+        <option>Sprint 20m (s)</option>
+        <option>Outro</option>
+      </select>
+    </div>
+    <div class="fg-2">
+      <div class="fg"><label>Valor</label><input id="te-val" type="number" step="0.1" placeholder="0"></div>
+      <div class="fg">
+        <label>Unidade</label>
+        <select id="te-uni">
+          <option value="kg">kg</option>
+          <option value="cm">cm</option>
+          <option value="reps">reps</option>
+          <option value="s">s</option>
+          <option value="%PC">% PC</option>
+        </select>
+      </div>
+    </div>
+    <div class="fg"><label>Observação</label><textarea id="te-obs" placeholder="Contexto, condições..."></textarea></div>
+    <div class="btn-row">
+      <button class="btn btn-red" onclick="salvarTeste()">Salvar</button>
+      <button class="btn btn-ghost" onclick="fecharMo('mo-teste')">Cancelar</button>
+    </div>
+    <div class="msg" id="te-msg"></div>
+  </div>
+</div>
+
+<!-- Modal: Editar Carga -->
+<div class="mo" id="mo-carga">
+  <div class="mo-sheet">
+    <div class="mo-handle"></div>
+    <div class="mo-title">
+      Editar carga
+      <button class="mo-close" onclick="fecharMo('mo-carga')">✕</button>
+    </div>
+    <input type="hidden" id="cg-id">
+    <div class="fg-2">
+      <div class="fg"><label>Reps</label><input id="cg-reps" type="number" inputmode="numeric"></div>
+      <div class="fg"><label>Carga (kg)</label><input id="cg-carga" type="number" step="0.5" inputmode="decimal"></div>
+    </div>
+    <div class="fg">
+      <label>RPE</label>
+      <select id="cg-rpe">
+        <option value="">—</option>
+        <option>6</option><option>7</option><option>8</option>
+        <option>9</option><option>9.5</option><option>10</option>
+      </select>
+    </div>
+    <div class="fg">
+      <label>RIR</label>
+      <select id="cg-rir">
+        <option value="">—</option>
+        <option value="0">0</option><option value="1">1</option>
+        <option value="2">2</option><option value="3">3+</option>
+      </select>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-red" onclick="salvarCarga()">Salvar</button>
+      <button class="btn btn-danger" onclick="deletarCarga()">Deletar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Novo Treino -->
+<div class="mo" id="mo-treino">
+  <div class="mo-sheet">
+    <div class="mo-handle"></div>
+    <div class="mo-title">
+      Novo treino
+      <button class="mo-close" onclick="fecharMo('mo-treino')">✕</button>
+    </div>
+    <div class="fg"><label>Nome</label><input id="tr-nm" placeholder="HIGH — Bloco A Terça"></div>
+    <div class="fg">
+      <label>Bloco</label>
+      <select id="tr-bl">
+        <option>HIGH — Bloco A (Inferiores)</option>
+        <option>HIGH — Bloco A (Superiores)</option>
+        <option>HIGH — Bloco A (Conjugado)</option>
+        <option>HIGH — Bloco B (Inferiores)</option>
+        <option>HIGH — Bloco B (Superiores)</option>
+        <option>HIGH — Bloco C (Cluster)</option>
+        <option>LOW — Técnica</option>
+        <option>DELOAD</option>
+      </select>
+    </div>
+    <div class="fg"><label>JSON do treino</label>
+      <textarea class="json-area" id="tr-json" placeholder="Cole o JSON aqui..."></textarea>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="colarModelo()">Modelo</button>
+      <button class="btn btn-red" onclick="salvarTreino()">Salvar</button>
+    </div>
+    <div class="msg" id="tr-msg"></div>
+  </div>
+</div>
+
+<!-- ═══ JAVASCRIPT ════════════════════════════════════════════
+     (All original logic preserved, only UI rendering updated)
+═══════════════════════════════════════════════════════════ -->
+<script>
+// ═══ CONFIG ═══════════════════════════════════════════════
+const SB='https://lywdtdaxcoyjuujtikbv.supabase.co';
+const AK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx5d2R0ZGF4Y295anV1anRpa2J2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0Nzc2MzYsImV4cCI6MjA5MDA1MzYzNn0.ymJnBiDqYZq2yCU90zpJB_y9zSmxLf7i2cnhLfz_WNk';
+
+let tok=localStorage.getItem('smt_tok')||'';
+let user=JSON.parse(localStorage.getItem('smt_user')||'null');
+let isCoach=false;
+let ssData={};let pseVal=null;let wVal={sono:0,fadiga:0,dor:0,humor:0};
+
+// ═══ HTTP ═════════════════════════════════════════════════
+function hdr(extra={}){return{headers:{'apikey':AK,'Authorization':'Bearer '+(tok||AK),'Content-Type':'application/json',...extra}};}
+async function GET(p){const r=await fetch(SB+p,hdr());if(!r.ok)throw new Error(await r.text());return r.json();}
+async function POST(p,b){const r=await fetch(SB+p,{method:'POST',...hdr({'Prefer':'return=representation'}),body:JSON.stringify(b)});if(!r.ok&&r.status!==201)throw new Error(await r.text());try{return await r.json();}catch{return null;}}
+async function PATCH(p,b){const r=await fetch(SB+p,{method:'PATCH',...hdr({'Prefer':'return=representation'}),body:JSON.stringify(b)});if(!r.ok)throw new Error(await r.text());try{return await r.json();}catch{return null;}}
+async function DELETE(p){const r=await fetch(SB+p,{method:'DELETE',...hdr()});if(!r.ok)throw new Error(await r.text());return null;}
+
+// ═══ AUTH ═════════════════════════════════════════════════
+function loginTab(t,btn){
+  document.querySelectorAll('.seg-btn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');
+  document.getElementById('f-login').style.display=t==='login'?'block':'none';
+  document.getElementById('f-reg').style.display=t==='reg'?'block':'none';
+}
+
+async function doLogin(){
+  const em=document.getElementById('l-em').value.trim();
+  const pw=document.getElementById('l-pw').value;
+  const msg=document.getElementById('l-msg');
+  if(!em||!pw){msg.className='f-msg err';msg.textContent='Preencha email e senha';return;}
+  msg.className='f-msg';msg.innerHTML='<span class="spin"></span>';
+  try{
+    const r=await fetch(SB+'/auth/v1/token?grant_type=password',{method:'POST',headers:{'apikey':AK,'Content-Type':'application/json'},body:JSON.stringify({email:em,password:pw})});
+    const d=await r.json();
+    if(!r.ok){msg.className='f-msg err';msg.textContent=d.error_description||d.msg||'Email ou senha incorretos';return;}
+    tok=d.access_token;localStorage.setItem('smt_tok',tok);
+    const perfis=await GET('/rest/v1/atletas?email=eq.'+encodeURIComponent(em)+'&limit=1');
+    user={id:d.user.id,email:em,nome:perfis?.[0]?.nome||em.split('@')[0],isCoach:perfis?.[0]?.is_coach||false};
+    localStorage.setItem('smt_user',JSON.stringify(user));
+    iniciar();
+  }catch(e){msg.className='f-msg err';msg.textContent='Erro: '+e.message;}
+}
+
+async function doReg(){
+  const nm=document.getElementById('r-nm').value.trim();
+  const em=document.getElementById('r-em').value.trim();
+  const pw=document.getElementById('r-pw').value;
+  const cd=document.getElementById('r-cd').value.trim();
+  const msg=document.getElementById('r-msg');
+  if(!nm||!em||!pw){msg.className='f-msg err';msg.textContent='Preencha nome, email e senha';return;}
+  if(pw.length<6){msg.className='f-msg err';msg.textContent='Senha: mínimo 6 caracteres';return;}
+  msg.className='f-msg';msg.innerHTML='<span class="spin"></span>';
+  try{
+    const r=await fetch(SB+'/auth/v1/signup',{method:'POST',headers:{'apikey':AK,'Content-Type':'application/json'},body:JSON.stringify({email:em,password:pw})});
+    const d=await r.json();
+    if(!r.ok){msg.className='f-msg err';msg.textContent=d.error_description||d.msg||'Erro ao criar conta';return;}
+    tok=d.access_token||'';
+    if(tok)localStorage.setItem('smt_tok',tok);
+    const coach=cd==='COACH2024';
+    await POST('/rest/v1/atletas',{auth_id:d.user?.id,nome:nm,email:em,is_coach:coach,wp:'',peso:0,squat:0,dl:0,bench:0,clean:0,cmj:0});
+    if(tok){user={id:d.user?.id,email:em,nome:nm,isCoach:coach};localStorage.setItem('smt_user',JSON.stringify(user));iniciar();}
+    else{msg.className='f-msg ok';msg.textContent='Conta criada! Verifique seu email.';}
+  }catch(e){msg.className='f-msg err';msg.textContent='Erro: '+e.message;}
+}
+
+function doLogout(){
+  tok='';user=null;
+  localStorage.removeItem('smt_tok');localStorage.removeItem('smt_user');
+  document.getElementById('s-app').classList.remove('active');
+  document.getElementById('s-login').classList.add('active');
+}
+
+// ═══ INIT ═════════════════════════════════════════════════
+async function iniciar(){
+  document.getElementById('s-login').classList.remove('active');
+  document.getElementById('s-app').classList.add('active');
+  isCoach=user?.isCoach||false;
+  document.getElementById('nav-nm').textContent=user?.nome?.split(' ')[0]||'';
+  const pill=document.getElementById('nav-role');
+  if(isCoach){pill.textContent='COACH';pill.className='role-pill coach';}
+  else{pill.textContent='ATLETA';pill.className='role-pill atleta';}
+  buildNav();
+  if(isCoach){showPage('p-dash');iniciarDash();}
+  else{showPage('p-treino');carregarTreinoAtleta();}
+}
+
+function buildNav(){
+  const bnav=document.getElementById('bnav');
+  const items=isCoach
+    ?[{id:'p-dash',ic:'📊',lb:'Dashboard',fn:"navTo('p-dash')"}]
+    :[
+      {id:'p-treino',ic:'🏋️',lb:'Treino',fn:"navTo('p-treino')"},
+      {id:'p-meus-testes',ic:'📈',lb:'Testes',fn:"navTo('p-meus-testes');carregarMeusTestes()"},
+      {id:'p-hist',ic:'📋',lb:'Histórico',fn:"navTo('p-hist');carregarHist()"},
+    ];
+  bnav.innerHTML=items.map(it=>`<button class="bn ${document.getElementById(it.id)?.classList.contains('on')?'on':''}" id="bn-${it.id}" onclick="${it.fn}">
+    <span class="bn-ic">${it.ic}</span>
+    <span class="bn-lb">${it.lb}</span>
+  </button>`).join('');
+}
+
+function navTo(id){
+  showPage(id);
+  document.querySelectorAll('.bn').forEach(b=>b.classList.remove('on'));
+  const btn=document.getElementById('bn-'+id);
+  if(btn)btn.classList.add('on');
+}
+
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  const pg=document.getElementById(id);
+  if(pg)pg.classList.add('on');
+}
+
+// ═══ ATLETA: TREINO ═══════════════════════════════════════
+async function carregarTreinoAtleta(){
+  const wrap=document.getElementById('treino-wrap');
+  wrap.innerHTML='<div class="empty"><div class="spin" style="width:28px;height:28px;border-width:3px"></div></div>';
+  const hoje=new Date().toISOString().slice(0,10);
+  try{
+    let pubs=await GET('/rest/v1/treinos_publicados?data=eq.'+hoje+'&order=criado_em.desc&limit=5');
+    const uid=user?.id;
+    if(pubs?.length){
+      let pub=pubs.find(p=>p.atleta_id===uid||p.atleta_id===null)||pubs[0];
+      const trs=await GET('/rest/v1/treinos?id=eq.'+pub.treino_id+'&limit=1');
+      if(trs?.[0]){renderTreino(trs[0]);return;}
+    }
+    wrap.innerHTML=`<div class="treino-header">
+      <h2>Sem treino hoje</h2>
+      <p>O coach ainda não publicou o treino de hoje.</p>
+    </div>
+    <div class="card" style="text-align:center;padding:32px">
+      <div style="font-size:36px;margin-bottom:12px">🥊</div>
+      <div style="font-size:14px;color:var(--t2)">Aguardando publicação do coach.</div>
+    </div>`;
+  }catch(e){wrap.innerHTML='<div class="empty">Erro ao carregar treino.</div>';}
+}
+
+function renderTreino(t){
+  const dados=typeof t.dados_json==='string'?JSON.parse(t.dados_json||'null'):t.dados_json;
+  const wrap=document.getElementById('treino-wrap');
+  if(!dados?.exercicios){
+    wrap.innerHTML=`<div class="treino-header"><h2>${t.nome}</h2><p>${t.bloco||''}</p></div>
+    <div class="card"><div style="color:var(--t2);font-size:13px">Treino sem exercícios cadastrados em JSON.</div></div>`;
+    return;
+  }
+  ssData={};
+  let exHtml='';
+  dados.exercicios.forEach((ex,ei)=>{
+    ssData[ex.id]={};
+    let seriesHtml='';
+    ex.series.forEach((s,si)=>{
+      const isW=s.tipo==='trabalho';
+      ssData[ex.id][s.id]={rpe:null,rir:null};
+      seriesHtml+=`
+      <div class="serie">
+        <div class="serie-hd">
+          <div class="serie-label">
+            ${s.rotulo}
+            ${isW?'<span class="tag-work">TRABALHO</span>':'<span class="tag-warmup">AQUEC.</span>'}
+          </div>
+          ${s.carga_ref?'<span class="serie-ref">Ref: '+s.carga_ref+'</span>':''}
+        </div>
+        ${isW?`
+        <div class="inp-grid">
+          <div class="inp-box">
+            <label>Reps realizadas</label>
+            <input class="inp-big" type="number" inputmode="numeric" id="rp-${ex.id}-${s.id}" placeholder="${s.reps_alvo}">
+          </div>
+          <div class="inp-box">
+            <label>Carga (kg)</label>
+            <input class="inp-big" type="number" step="0.5" inputmode="decimal" id="kg-${ex.id}-${s.id}" placeholder="0">
+          </div>
+        </div>
+        <div>
+          <div style="font-size:9px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">RPE</div>
+          <div class="rpe-row">
+            ${['6','7','8','9','9.5','10'].map(v=>`<button class="chip" onclick="selChip(this,'rpe','${ex.id}','${s.id}',${v})" data-v="${v}">${v}</button>`).join('')}
+          </div>
+        </div>
+        <div>
+          <div style="font-size:9px;font-weight:700;color:var(--t3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">RIR</div>
+          <div class="rir-row">
+            ${['0','1','2','3+'].map((v,i)=>`<button class="chip" onclick="selChip(this,'rir','${ex.id}','${s.id}',${i})" data-v="${i}">${v}</button>`).join('')}
+          </div>
+        </div>
+        `:''}
+      </div>`;
+    });
+    exHtml+=`
+    <div class="ex-block">
+      <div class="ex-header">
+        <div class="ex-num">${ei+1}</div>
+        <div class="ex-info">
+          <div class="ex-name">${ex.nome}</div>
+          ${ex.instrucao?'<div class="ex-inst">'+ex.instrucao+'</div>':''}
+        </div>
+      </div>
+      <div class="series-wrap">${seriesHtml}</div>
+    </div>`;
+  });
+
+  wrap.innerHTML=`
+  <div class="treino-header">
+    <h2>${t.nome}</h2>
+    <p>${t.bloco||'Treino de hoje'}</p>
+  </div>
+  ${exHtml}
+  <button class="btn btn-red btn-full" style="margin-bottom:12px" onclick="finalizarTreino()">
+    Finalizar treino →
+  </button>`;
+}
+
+function selChip(btn,tipo,exId,sId,val){
+  const parentClass=tipo==='rpe'?'.rpe-row':'.rir-row';
+  btn.closest(parentClass).querySelectorAll('.chip').forEach(c=>{c.classList.remove('sel-red','sel-green');});
+  if(tipo==='rpe'){btn.classList.add('sel-red');if(ssData[exId])ssData[exId][sId].rpe=val;}
+  else{btn.classList.add('sel-green');if(ssData[exId])ssData[exId][sId].rir=val;}
+}
+
+function finalizarTreino(){
+  document.getElementById('treino-wrap').style.display='none';
+  document.getElementById('pse-wrap').style.display='block';
+  // Build PSE buttons
+  const pseEl=document.getElementById('pse-btns');
+  pseEl.innerHTML=['6','7','8','9','9.5','10'].map(v=>`<button class="pse-chip" onclick="selPse(this,${v})">${v}</button>`).join('');
+  // Build wellness
+  const cats=[
+    {key:'sono',label:'Sono',opts:['😴','😑','😐','🙂','😊']},
+    {key:'fadiga',label:'Fadiga',opts:['💀','😓','😑','💪','⚡']},
+    {key:'dor',label:'Dor',opts:['🔥','😣','😐','✅','🌟']},
+    {key:'humor',label:'Humor',opts:['😤','😞','😐','😊','🤩']},
+  ];
+  const wellEl=document.getElementById('well-wrap');
+  wellEl.innerHTML=cats.map(c=>`
+    <div class="well-box">
+      <div class="well-box-label">${c.label}</div>
+      <div class="well-box-chips">
+        ${c.opts.map((o,i)=>`<button class="wchip" onclick="selWell(this,'${c.key}',${i+1})" data-v="${i+1}">${o}<br><span style="font-size:8px">${i+1}</span></button>`).join('')}
+      </div>
+    </div>`).join('');
+}
+
+function selPse(btn,val){
+  document.querySelectorAll('.pse-chip').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');pseVal=val;
+}
+
+function selWell(btn,key,val){
+  btn.closest('.well-box-chips').querySelectorAll('.wchip').forEach(b=>{b.className='wchip';});
+  const colors=['w1','w2','w3','w4','w5'];
+  btn.classList.add(colors[val-1]);
+  wVal[key]=val;
+}
+
+async function envFb(){
+  if(!pseVal){alert('Selecione o PSE do treino.');return;}
+  const hoje=new Date().toISOString().slice(0,10);
+  // Salvar cargas
+  try{
+    const trs=await GET('/rest/v1/treinos_publicados?data=eq.'+hoje+'&limit=1');
+    const tid=trs?.[0]?.treino_id;
+    if(tid){
+      const t=await GET('/rest/v1/treinos?id=eq.'+tid+'&limit=1');
+      const dados=typeof t[0]?.dados_json==='string'?JSON.parse(t[0].dados_json||'null'):t[0]?.dados_json;
+      if(dados?.exercicios){
+        for(const ex of dados.exercicios){
+          for(const s of ex.series){
+            if(s.tipo!=='trabalho')continue;
+            const rps=document.getElementById('rp-'+ex.id+'-'+s.id)?.value;
+            const kg=document.getElementById('kg-'+ex.id+'-'+s.id)?.value;
+            if(!rps&&!kg)continue;
+            const sInfo=ssData[ex.id]?.[s.id]||{};
+            await POST('/rest/v1/cargas',{
+              aid:null,anom:user?.nome||'?',auth_id:user?.id,
+              data:hoje,exercicio:ex.nome,serie:s.rotulo,
+              reps:+rps||0,carga:+kg||0,
+              pse:sInfo.rpe||null,rir:sInfo.rir!==null&&sInfo.rir!==undefined?sInfo.rir:null
+            });
+          }
+        }
+      }
+    }
+    await POST('/rest/v1/feedbacks',{
+      aid:null,anom:user?.nome||'?',auth_id:user?.id,
+      data:hoje,pse:pseVal,
+      sono:wVal.sono||null,fadiga:wVal.fadiga||null,
+      dor:wVal.dor||null,humor:wVal.humor||null,
+      obs:document.getElementById('obs-inp').value.trim()||null
+    });
+    document.getElementById('pse-wrap').style.display='none';
+    document.getElementById('treino-ok').classList.add('show');
+  }catch(e){alert('Erro ao enviar: '+e.message);}
+}
+
+// ═══ ATLETA: MEUS TESTES ══════════════════════════════════
+async function carregarMeusTestes(){
+  const el=document.getElementById('meus-testes-list');
+  el.innerHTML='<div class="empty"><div class="spin" style="width:28px;height:28px;border-width:3px"></div></div>';
+  try{
+    const ts=await GET('/rest/v1/testes?auth_id=eq.'+user?.id+'&order=data.desc&limit=30');
+    if(!ts?.length){el.innerHTML='<div class="empty"><div class="empty-icon">📊</div>Nenhum teste registrado ainda.</div>';return;}
+    el.innerHTML=ts.map(t=>`
+    <div class="teste-card">
+      <div class="teste-val">${t.valor}<span style="font-size:12px;color:var(--t2)">${t.unidade||'kg'}</span></div>
+      <div class="teste-info">
+        <div class="teste-tipo">${t.tipo}</div>
+        <div class="teste-meta">${t.data}${t.obs?' · '+t.obs:''}</div>
+      </div>
+    </div>`).join('');
+  }catch(e){el.innerHTML='<div class="empty">Erro ao carregar.</div>';}
+}
+
+// ═══ ATLETA: HISTÓRICO ════════════════════════════════════
+async function carregarHist(){
+  const el=document.getElementById('hist-list');
+  el.innerHTML='<div class="empty"><div class="spin" style="width:28px;height:28px;border-width:3px"></div></div>';
+  try{
+    const fbs=await GET('/rest/v1/feedbacks?auth_id=eq.'+user?.id+'&order=data.desc&limit=20');
+    if(!fbs?.length){el.innerHTML='<div class="empty"><div class="empty-icon">📋</div>Nenhum histórico ainda.</div>';return;}
+    el.innerHTML=fbs.map(f=>`
+    <div class="hist-card">
+      <div class="hist-date">${f.data}</div>
+      <div class="hist-name">${f.treino_nome||'Sessão'}</div>
+      <div class="hist-stats">
+        <div class="hist-stat">PSE <b>${f.pse||'—'}</b></div>
+        ${f.sono?'<div class="hist-stat">Sono <b>'+f.sono+'/5</b></div>':''}
+        ${f.fadiga?'<div class="hist-stat">Fadiga <b>'+f.fadiga+'/5</b></div>':''}
+        ${f.humor?'<div class="hist-stat">Humor <b>'+f.humor+'/5</b></div>':''}
+        ${f.obs?'<div class="hist-stat" style="color:var(--t1)"><i>'+f.obs+'</i></div>':''}
+      </div>
+    </div>`).join('');
+  }catch(e){el.innerHTML='<div class="empty">Erro ao carregar.</div>';}
+}
+
+// ═══ COACH: DASHBOARD ═════════════════════════════════════
+async function iniciarDash(){
+  await Promise.all([carregarOverview(),carregarAtletas(),carregarPub(),carregarTestes(),carregarCargas(),carregarBiblio()]);
+}
+
+function cTab(id,btn){
+  document.querySelectorAll('.ctab').forEach(b=>b.classList.remove('on'));btn.classList.add('on');
+  document.querySelectorAll('.ctab-content').forEach(c=>c.classList.remove('on'));
+  const el=document.getElementById('ct-'+id);if(el)el.classList.add('on');
+}
+
+async function carregarOverview(){
+  try{
+    const [ats,fbs7,cargas28,cargas7]=await Promise.all([
+      GET('/rest/v1/atletas?is_coach=eq.false&select=id,nome'),
+      GET('/rest/v1/feedbacks?data=gte.'+dias(-7)+'&select=pse,data'),
+      GET('/rest/v1/cargas?data=gte.'+dias(-28)+'&select=pse,data'),
+      GET('/rest/v1/cargas?data=gte.'+dias(-7)+'&select=pse,data'),
+    ]);
+    document.getElementById('d-nat').textContent=ats?.length||0;
+    const rpe7=fbs7?.length?avg(fbs7.map(f=>f.pse)).toFixed(1):'—';
+    document.getElementById('d-rpe').textContent=rpe7;
+    document.getElementById('d-fb').textContent=fbs7?.length||0;
+    // ACWR
+    const l7=cargas7?.length?avg(cargas7.map(c=>c.pse||0)):0;
+    const l28=cargas28?.length?avg(cargas28.map(c=>c.pse||0)):0;
+    const acwr=l28>0?(l7/l28).toFixed(2):'—';
+    document.getElementById('d-acwr').textContent=acwr;
+    // Alertas
+    const alEl=document.getElementById('dash-als');
+    const als=[];
+    if(acwr!=='—'&&+acwr>1.3)als.push({type:'red',icon:'🔴',txt:'ACWR alto ('+acwr+'). Risco de overtraining. Considerar LOW ou deload.'});
+    if(acwr!=='—'&&+acwr>=0.8&&+acwr<=1.3)als.push({type:'green',icon:'🟢',txt:'ACWR ideal ('+acwr+'). Carga de treinamento equilibrada.'});
+    if(acwr!=='—'&&+acwr<0.8)als.push({type:'orange',icon:'🟡',txt:'ACWR baixo ('+acwr+'). Grupo em undertraining — pode aumentar carga.'});
+    if(!als.length)als.push({type:'green',icon:'✅',txt:'Sem alertas no momento.'});
+    alEl.innerHTML=als.map(a=>`<div class="alert alert-${a.type}"><span class="alert-icon">${a.icon}</span><span>${a.txt}</span></div>`).join('');
+    // Foster
+    const pses=fbs7?.map(f=>f.pse)||[];
+    if(pses.length){
+      const m=avg(pses);const sd=Math.sqrt(pses.map(v=>(v-m)**2).reduce((a,b)=>a+b,0)/pses.length);
+      const mono=(sd<0.01?m:m/sd).toFixed(2);const strain=(m*pses.length*(sd<0.01?m:m/sd)).toFixed(0);
+      document.getElementById('dash-foster').innerHTML=`
+        <div class="stats-grid stats-2">
+          <div class="stat-box orange"><div class="stat-val">${mono}</div><div class="stat-lbl">Monotonia</div></div>
+          <div class="stat-box red"><div class="stat-val">${strain}</div><div class="stat-lbl">Strain</div></div>
+        </div>`;
+    } else {
+      document.getElementById('dash-foster').innerHTML='<div style="color:var(--t2);font-size:12px">Sem dados suficientes.</div>';
+    }
+  }catch(e){}
+}
+
+function dias(n){const d=new Date();d.setDate(d.getDate()+n);return d.toISOString().slice(0,10);}
+function avg(arr){return arr.length?arr.reduce((a,b)=>a+b,0)/arr.length:0;}
+
+// ═══ COACH: ATLETAS ═══════════════════════════════════════
+let todosAtletas=[];
+
+async function carregarAtletas(){
+  try{
+    const ats=await GET('/rest/v1/atletas?order=nome&select=id,nome,email,wp,peso,is_coach');
+    todosAtletas=ats||[];
+    const el=document.getElementById('lista-atletas');
+    const lista=ats?.filter(a=>!a.is_coach)||[];
+    if(!lista.length){el.innerHTML='<div class="empty"><div class="empty-icon">👤</div>Nenhum atleta cadastrado.</div>';return;}
+    el.innerHTML=lista.map(a=>`
+    <div class="atleta-card">
+      <div class="atleta-avatar">${a.nome?.charAt(0)||'?'}</div>
+      <div class="atleta-info">
+        <div class="atleta-name">${a.nome}</div>
+        <div class="atleta-meta">${a.peso?a.peso+'kg · ':''}'${a.email||'—'}</div>
+      </div>
+      <div class="atleta-actions">
+        <button class="btn btn-ghost" style="padding:7px 10px;font-size:11px" onclick="editarAt(${JSON.stringify(a).replace(/"/g,'&quot;')})">✏️</button>
+      </div>
+    </div>`).join('');
+    // Preencher selects de filtro
+    ['filtro-at-teste','filtro-at-carga','pub-at','te-at'].forEach(sid=>{
+      const sel=document.getElementById(sid);if(!sel)return;
+      const def=sel.options[0]?.value===''?[sel.options[0]]:[...sel.options].filter(o=>o.value==='');
+      sel.innerHTML='';
+      if(def[0])sel.appendChild(def[0]);
+      lista.forEach(a=>{const o=document.createElement('option');o.value=a.id;o.textContent=a.nome;sel.appendChild(o);});
+    });
+    // Treinos no select de publicar
+    carregarTreinosSelect();
+  }catch(e){}
+}
+
+async function carregarTreinosSelect(){
+  try{
+    const ts=await GET('/rest/v1/treinos?order=nome&select=id,nome,bloco');
+    const sel=document.getElementById('pub-tr');
+    if(!sel)return;
+    sel.innerHTML='<option value="">Selecione...</option>';
+    (ts||[]).forEach(t=>{const o=document.createElement('option');o.value=t.id;o.textContent=t.nome+(t.bloco?' ('+t.bloco+')':'');sel.appendChild(o);});
+  }catch(e){}
+}
+
+function abrirMoAt(){
+  document.getElementById('mo-at-title').textContent='Novo atleta';
+  document.getElementById('at-edit-id').value='';
+  ['at-nm','at-em','at-wp','at-peso'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('at-sx').value='M';
+  document.getElementById('btn-del-at').style.display='none';
+  document.getElementById('at-msg').textContent='';
+  document.getElementById('mo-at').classList.add('show');
+}
+
+function editarAt(a){
+  document.getElementById('mo-at-title').textContent='Editar atleta';
+  document.getElementById('at-edit-id').value=a.id;
+  document.getElementById('at-nm').value=a.nome||'';
+  document.getElementById('at-em').value=a.email||'';
+  document.getElementById('at-wp').value=a.wp||'';
+  document.getElementById('at-peso').value=a.peso||'';
+  document.getElementById('at-msg').textContent='';
+  document.getElementById('btn-del-at').style.display='inline-flex';
+  document.getElementById('mo-at').classList.add('show');
+}
+
+async function salvarAt(){
+  const editId=document.getElementById('at-edit-id').value;
+  const body={nome:document.getElementById('at-nm').value.trim(),email:document.getElementById('at-em').value.trim(),
+    wp:document.getElementById('at-wp').value.trim(),peso:+document.getElementById('at-peso').value||0};
+  const msg=document.getElementById('at-msg');
+  if(!body.nome){msg.className='msg err';msg.textContent='Informe o nome';return;}
+  try{
+    if(editId)await PATCH('/rest/v1/atletas?id=eq.'+editId,body);
+    else await POST('/rest/v1/atletas',{...body,is_coach:false,wp:'',squat:0,dl:0,bench:0,clean:0,cmj:0});
+    msg.className='msg ok';msg.textContent='Salvo!';
+    setTimeout(()=>{fecharMo('mo-at');carregarAtletas();},1200);
+  }catch(e){msg.className='msg err';msg.textContent='Erro: '+e.message;}
+}
+
+async function deletarAt(){
+  const id=document.getElementById('at-edit-id').value;
+  if(!confirm('Deletar atleta e todos os dados?'))return;
+  try{
+    await DELETE('/rest/v1/cargas?aid=eq.'+id);
+    await DELETE('/rest/v1/feedbacks?aid=eq.'+id);
+    await DELETE('/rest/v1/atletas?id=eq.'+id);
+    fecharMo('mo-at');carregarAtletas();
+  }catch(e){alert('Erro: '+e.message);}
+}
+
+// ═══ COACH: PUBLICAR ══════════════════════════════════════
+async function carregarPub(){
+  document.getElementById('pub-dt').value=new Date().toISOString().slice(0,10);
+  try{
+    const ps=await GET('/rest/v1/treinos_publicados?order=criado_em.desc&limit=10');
+    const el=document.getElementById('pub-lista');
+    if(!ps?.length){el.innerHTML='<div style="color:var(--t2);font-size:12px">Nenhuma publicação recente.</div>';return;}
+    el.innerHTML=ps.map(p=>`
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)">
+      <div>
+        <div style="font-size:13px;font-weight:700">${p.treino_nome||'Treino'}</div>
+        <div style="font-size:11px;color:var(--t2)">${p.data} · ${p.atleta_nome||'Todos'}</div>
+      </div>
+      <button class="btn btn-danger" style="padding:5px 10px;font-size:10px" onclick="deletarPub(${p.id})">✕</button>
+    </div>`).join('');
+  }catch(e){}
+}
+
+async function publicarTreino(){
+  const tid=document.getElementById('pub-tr').value;
+  const dt=document.getElementById('pub-dt').value;
+  const aid=document.getElementById('pub-at').value;
+  const msg=document.getElementById('pub-msg');
+  if(!tid||!dt){msg.className='msg err';msg.textContent='Selecione treino e data';return;}
+  const tr=todosAtletas.find(a=>a.id===+aid);
+  const ts=(await GET('/rest/v1/treinos?id=eq.'+tid+'&limit=1'))||[];
+  const tnome=ts[0]?.nome||'Treino';
+  try{
+    await POST('/rest/v1/treinos_publicados',{treino_id:+tid,treino_nome:tnome,data:dt,atleta_id:aid||null,atleta_nome:tr?.nome||null});
+    msg.className='msg ok';msg.textContent='Publicado!';
+    setTimeout(()=>{msg.textContent='';carregarPub();},2000);
+  }catch(e){msg.className='msg err';msg.textContent='Erro: '+e.message;}
+}
+
+async function deletarPub(id){
+  if(!confirm('Remover publicação?'))return;
+  try{await DELETE('/rest/v1/treinos_publicados?id=eq.'+id);carregarPub();}
+  catch(e){alert('Erro: '+e.message);}
+}
+
+// ═══ COACH: TESTES ════════════════════════════════════════
+async function carregarTestes(){
+  const filtro=document.getElementById('filtro-at-teste')?.value;
+  try{
+    let url='/rest/v1/testes?order=data.desc&limit=50';
+    if(filtro)url+='&aid=eq.'+filtro;
+    const ts=await GET(url);
+    const el=document.getElementById('lista-testes');
+    if(!ts?.length){el.innerHTML='<div class="empty"><div class="empty-icon">📊</div>Nenhum teste registrado.</div>';return;}
+    el.innerHTML=ts.map(t=>`
+    <div class="teste-card">
+      <div class="teste-val">${t.valor}<span style="font-size:12px;color:var(--t2)">${t.unidade||'kg'}</span></div>
+      <div class="teste-info">
+        <div class="teste-tipo">${t.tipo}</div>
+        <div class="teste-meta">${t.anom} · ${t.data}${t.obs?' · '+t.obs:''}</div>
+      </div>
+      <div class="teste-actions">
+        <button class="btn btn-ghost" style="padding:7px 10px;font-size:11px" onclick="editarTeste(${JSON.stringify(t).replace(/"/g,'&quot;')})">✏️</button>
+        <button class="btn btn-danger" style="padding:7px 10px;font-size:11px" onclick="deletarTeste(${t.id})">✕</button>
+      </div>
+    </div>`).join('');
+  }catch(e){}
+}
+
+function abrirMoTeste(atId){
+  document.getElementById('mo-te-title').textContent='Novo teste';
+  document.getElementById('te-edit-id').value='';
+  document.getElementById('te-dt').value=new Date().toISOString().slice(0,10);
+  document.getElementById('te-val').value='';
+  document.getElementById('te-obs').value='';
+  document.getElementById('te-msg').textContent='';
+  if(atId)document.getElementById('te-at').value=atId;
+  document.getElementById('mo-teste').classList.add('show');
+}
+
+function editarTeste(t){
+  document.getElementById('mo-te-title').textContent='Editar teste';
+  document.getElementById('te-edit-id').value=t.id;
+  document.getElementById('te-at').value=t.aid;
+  document.getElementById('te-dt').value=t.data;
+  document.getElementById('te-tipo').value=t.tipo;
+  document.getElementById('te-val').value=t.valor;
+  document.getElementById('te-uni').value=t.unidade||'kg';
+  document.getElementById('te-obs').value=t.obs||'';
+  document.getElementById('te-msg').textContent='';
+  document.getElementById('mo-teste').classList.add('show');
+}
+
+async function salvarTeste(){
+  const aid=document.getElementById('te-at').value;
+  const data=document.getElementById('te-dt').value;
+  const tipo=document.getElementById('te-tipo').value;
+  const valor=parseFloat(document.getElementById('te-val').value);
+  const editId=document.getElementById('te-edit-id').value;
+  const msg=document.getElementById('te-msg');
+  if(!aid||!data||!tipo||isNaN(valor)){msg.className='msg err';msg.textContent='Preencha todos os campos';return;}
+  const ats=await GET('/rest/v1/atletas?id=eq.'+aid+'&select=nome&limit=1').catch(()=>[]);
+  const anom=ats?.[0]?.nome||'?';
+  const body={aid,anom,data,tipo,valor,unidade:document.getElementById('te-uni').value,obs:document.getElementById('te-obs').value,criado_por:user?.nome||'coach'};
+  try{
+    if(editId)await PATCH('/rest/v1/testes?id=eq.'+editId,body);
+    else await POST('/rest/v1/testes',body);
+    msg.className='msg ok';msg.textContent='Salvo!';
+    setTimeout(()=>{fecharMo('mo-teste');carregarTestes();},1200);
+  }catch(e){msg.className='msg err';msg.textContent='Erro: '+e.message;}
+}
+
+async function deletarTeste(id){
+  if(!confirm('Deletar este teste?'))return;
+  try{await DELETE('/rest/v1/testes?id=eq.'+id);carregarTestes();}
+  catch(e){alert('Erro: '+e.message);}
+}
+
+// ═══ COACH: CARGAS ════════════════════════════════════════
+async function carregarCargas(){
+  const filtro=document.getElementById('filtro-at-carga')?.value;
+  try{
+    let url='/rest/v1/cargas?order=data.desc&limit=100';
+    if(filtro)url+='&aid=eq.'+filtro;
+    const cs=await GET(url);
+    document.getElementById('tb-cargas').innerHTML=(cs||[]).map(c=>`<tr>
+      <td>${c.anom}</td><td>${c.data}</td><td>${c.exercicio}</td><td>${c.serie}</td>
+      <td>${c.reps}</td><td>${c.carga}</td><td>${c.reps*c.carga}</td>
+      <td>${c.pse||'—'}</td><td>${c.rir!==null&&c.rir!==undefined?c.rir:'—'}</td>
+      <td><button class="btn btn-ghost" style="font-size:10px;padding:5px 9px" onclick="editarCarga(${JSON.stringify(c).replace(/"/g,'&quot;')})">✏️</button></td>
+    </tr>`).join('');
+  }catch(e){}
+}
+
+function editarCarga(c){
+  document.getElementById('cg-id').value=c.id;
+  document.getElementById('cg-reps').value=c.reps;
+  document.getElementById('cg-carga').value=c.carga;
+  document.getElementById('cg-rpe').value=c.pse||'';
+  document.getElementById('cg-rir').value=c.rir!==null&&c.rir!==undefined?c.rir:'';
+  document.getElementById('mo-carga').classList.add('show');
+}
+
+async function salvarCarga(){
+  const id=document.getElementById('cg-id').value;
+  const body={reps:+document.getElementById('cg-reps').value,carga:+document.getElementById('cg-carga').value,pse:document.getElementById('cg-rpe').value||null,rir:document.getElementById('cg-rir').value!==''?+document.getElementById('cg-rir').value:null};
+  try{await PATCH('/rest/v1/cargas?id=eq.'+id,body);fecharMo('mo-carga');carregarCargas();}
+  catch(e){alert('Erro: '+e.message);}
+}
+
+async function deletarCarga(){
+  const id=document.getElementById('cg-id').value;
+  if(!confirm('Deletar esta carga?'))return;
+  try{await DELETE('/rest/v1/cargas?id=eq.'+id);fecharMo('mo-carga');carregarCargas();}
+  catch(e){alert('Erro: '+e.message);}
+}
+
+// ═══ COACH: BIBLIOTECA ════════════════════════════════════
+async function carregarBiblio(){
+  try{
+    const ts=await GET('/rest/v1/treinos?order=nome&select=id,nome,bloco');
+    const el=document.getElementById('lista-biblio');
+    if(!ts?.length){el.innerHTML='<div class="empty"><div class="empty-icon">📚</div>Nenhum treino na biblioteca.</div>';return;}
+    el.innerHTML=ts.map(t=>`
+    <div class="atleta-card">
+      <div class="atleta-avatar" style="font-size:18px;background:linear-gradient(135deg,#1a5276,#0a2744)">📋</div>
+      <div class="atleta-info">
+        <div class="atleta-name">${t.nome}</div>
+        <div class="atleta-meta">${t.bloco||'—'}</div>
+      </div>
+      <button class="btn btn-danger" style="padding:7px 10px;font-size:11px;flex-shrink:0" onclick="deletarTreinoBiblio(${t.id})">✕</button>
+    </div>`).join('');
+  }catch(e){}
+}
+
+function abrirMoTr(){document.getElementById('mo-treino').classList.add('show');}
+
+async function salvarTreino(){
+  const nm=document.getElementById('tr-nm').value.trim();
+  const bl=document.getElementById('tr-bl').value;
+  const js=document.getElementById('tr-json').value.trim();
+  const msg=document.getElementById('tr-msg');
+  if(!nm){msg.className='msg err';msg.textContent='Informe o nome';return;}
+  let dados=null;
+  if(js){try{dados=JSON.parse(js);}catch(e){msg.className='msg err';msg.textContent='JSON inválido: '+e.message;return;}}
+  try{
+    await POST('/rest/v1/treinos',{nome:nm,bloco:bl,dados_json:dados?JSON.stringify(dados):null,tipo:'treino'});
+    msg.className='msg ok';msg.textContent='Salvo!';
+    setTimeout(()=>{fecharMo('mo-treino');carregarBiblio();carregarTreinosSelect();},1200);
+  }catch(e){msg.className='msg err';msg.textContent='Erro: '+e.message;}
+}
+
+async function deletarTreinoBiblio(id){
+  if(!confirm('Deletar treino?'))return;
+  try{await DELETE('/rest/v1/treinos?id=eq.'+id);carregarBiblio();}
+  catch(e){alert('Erro: '+e.message);}
+}
+
+const modeloTreino={nome:'HIGH — Bloco A Terça',exercicios:[{id:'ex1',nome:'Hang Power Clean',instrucao:'Foco na velocidade. Nunca falha.',series:[{id:'s1',rotulo:'Aq 1',reps_alvo:3,carga_ref:'40%',tipo:'aquecimento'},{id:'s2',rotulo:'S1',reps_alvo:3,carga_ref:'68%',tipo:'trabalho'},{id:'s3',rotulo:'S2',reps_alvo:3,carga_ref:'70%',tipo:'trabalho'},{id:'s4',rotulo:'S3',reps_alvo:3,carga_ref:'72%',tipo:'trabalho'}]},{id:'ex2',nome:'Agachamento Traseiro',instrucao:'Excêntrica 2s, subida explosiva.',series:[{id:'s5',rotulo:'Aq 1',reps_alvo:5,carga_ref:'50%',tipo:'aquecimento'},{id:'s6',rotulo:'S1',reps_alvo:4,carga_ref:'70%',tipo:'trabalho'},{id:'s7',rotulo:'S2',reps_alvo:4,carga_ref:'72%',tipo:'trabalho'},{id:'s8',rotulo:'S3',reps_alvo:4,carga_ref:'72%',tipo:'trabalho'}]}]};
+function colarModelo(){document.getElementById('tr-json').value=JSON.stringify(modeloTreino,null,2);}
+
+// ═══ MODAL ════════════════════════════════════════════════
+function fecharMo(id){document.getElementById(id).classList.remove('show');}
+document.addEventListener('click',e=>{if(e.target.classList.contains('mo'))fecharMo(e.target.id);});
+
+// ═══ INIT ═════════════════════════════════════════════════
+// ═══ SESSÃO AO VIVO ══════════════════════════════════════════
+// Estado da sessão
+let sessData = {};      // { [atletaId]: { presente, cmj1, cmj2, cmj3, rpe, carga, notas } }
+let sessAtletas = [];   // lista de atletas carregada
+let sessDia = 'ter';    // 'ter' ou 'qui'
+let sessIniciada = false;
+
+// Calcula a semana do ano (ISO)
+function weekNum(d) {
+  const date = d ? new Date(d) : new Date();
+  date.setHours(0,0,0,0);
+  date.setDate(date.getDate() + 3 - (date.getDay() + 6) % 7);
+  const week1 = new Date(date.getFullYear(), 0, 4);
+  return 1 + Math.round(((date.getTime() - week1.getTime()) / 86400000 - 3 + (week1.getDay() + 6) % 7) / 7);
+}
+
+// Calcula melhor CMJ e delta% vs baseline
+function calcCMJ(s1, s2, s3, baseline) {
+  const vals = [s1, s2, s3].map(v => parseFloat(v) || 0).filter(v => v > 0);
+  if (!vals.length) return { best: null, delta: null, zona: null };
+  const best = Math.max(...vals);
+  if (!baseline || baseline <= 0) return { best, delta: null, zona: null };
+  const delta = ((best - baseline) / baseline) * 100;
+  const zona = delta >= -3 ? 'verde' : delta >= -5 ? 'amarelo' : 'vermelho';
+  return { best, delta, zona };
+}
+
+// Semáforo HTML
+function semaforo(zona, delta) {
+  if (zona === null) return '';
+  const map = {
+    verde:    { cls: 'cmj-verde',    label: delta !== null ? delta.toFixed(1)+'%' : 'OK' },
+    amarelo:  { cls: 'cmj-amarelo',  label: delta !== null ? delta.toFixed(1)+'%' : 'Vol-20%' },
+    vermelho: { cls: 'cmj-vermelho', label: delta !== null ? delta.toFixed(1)+'%' : 'Recup.' },
+  };
+  const m = map[zona];
+  return `<span class="cmj-semaforo ${m.cls}"><span class="dot"></span>${m.label}</span>`;
+}
+
+// Atualiza resumo no topo da sessão
+function atualizarResumoSessao() {
+  const ids = Object.keys(sessData);
+  const presentes = ids.filter(id => sessData[id].presente === 'P').length;
+  document.getElementById('ss-presentes').textContent = presentes;
+
+  const rpes = ids.map(id => parseFloat(sessData[id].rpe)).filter(v => !isNaN(v) && v > 0);
+  document.getElementById('ss-rpe-med').textContent = rpes.length ? (rpes.reduce((a,b)=>a+b,0)/rpes.length).toFixed(1) : '—';
+
+  const cmjs = ids.map(id => {
+    const d = sessData[id];
+    const r = calcCMJ(d.cmj1, d.cmj2, d.cmj3, d.baseline);
+    return r.best;
+  }).filter(v => v !== null && v > 0);
+  document.getElementById('ss-cmj-med').textContent = cmjs.length ? (cmjs.reduce((a,b)=>a+b,0)/cmjs.length).toFixed(1) : '—';
+}
+
+// Alterna dia Terça / Quinta
+function setDiaSessao(dia, btn) {
+  sessDia = dia;
+  document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('on','terca','quinta'));
+  btn.classList.add('on', dia === 'ter' ? 'terca' : 'quinta');
+}
+
+// Alterna presença P → F → ? → P
+function togglePresenca(id) {
+  const d = sessData[id] || {};
+  const ciclo = { 'P': 'F', 'F': '?', '?': 'P', undefined: 'P' };
+  sessData[id] = { ...d, presente: ciclo[d.presente] };
+  renderPresencaBadge(id);
+  atualizarCardClasse(id);
+  atualizarResumoSessao();
+}
+
+function renderPresencaBadge(id) {
+  const badge = document.getElementById(`pb-${id}`);
+  if (!badge) return;
+  const v = sessData[id]?.presente || '?';
+  badge.textContent = v;
+  badge.className = 'presence-badge ' + (v === 'P' ? 'p' : v === 'F' ? 'f' : 'q');
+}
+
+function atualizarCardClasse(id) {
+  const card = document.getElementById(`asc-${id}`);
+  if (!card) return;
+  const v = sessData[id]?.presente || '?';
+  card.className = 'athlete-session-card ' + (v === 'P' ? 'presente' : v === 'F' ? 'ausente' : '');
+}
+
+// Expande/recolhe card do atleta
+function toggleAscBody(id) {
+  const body = document.getElementById(`asc-body-${id}`);
+  if (!body) return;
+  body.classList.toggle('open');
+}
+
+// Atualiza CMJ ao digitar
+function onCMJChange(id) {
+  const d = sessData[id] || {};
+  d.cmj1 = document.getElementById(`cmj1-${id}`)?.value || '';
+  d.cmj2 = document.getElementById(`cmj2-${id}`)?.value || '';
+  d.cmj3 = document.getElementById(`cmj3-${id}`)?.value || '';
+  sessData[id] = d;
+
+  const r = calcCMJ(d.cmj1, d.cmj2, d.cmj3, d.baseline);
+  const resEl = document.getElementById(`cmj-res-${id}`);
+  if (resEl) {
+    if (r.best) {
+      resEl.innerHTML = `
+        <div>
+          <span class="cmj-result-val" style="color:var(--green)">${r.best.toFixed(1)}</span>
+          <span style="font-size:11px;color:var(--t2)"> cm melhor</span>
+        </div>
+        <div>
+          ${semaforo(r.zona, r.delta)}
+          <div style="font-size:9px;color:var(--t3);margin-top:3px">
+            ${r.zona === 'verde' ? 'Treino normal' : r.zona === 'amarelo' ? 'Volume −20%' : r.zona === 'vermelho' ? 'Recuperação ativa' : ''}
+          </div>
+        </div>`;
+    } else {
+      resEl.innerHTML = '<div style="color:var(--t3);font-size:12px">Digite os 3 saltos</div>';
+    }
+  }
+  atualizarResumoSessao();
+}
+
+// Seleciona RPE
+function selRPESessao(btn, id, val) {
+  btn.closest('.rpe-selector').querySelectorAll('.rpe-chip-sess').forEach(c => c.classList.remove('sel'));
+  btn.classList.add('sel');
+  sessData[id] = { ...(sessData[id]||{}), rpe: val };
+  atualizarResumoSessao();
+}
+
+// Atualiza carga e notas ao digitar
+function onSessFieldChange(id, field, val) {
+  sessData[id] = { ...(sessData[id]||{}), [field]: val };
+}
+
+// Renderiza lista de atletas da sessão
+function renderSessAtletas() {
+  const el = document.getElementById('sess-atletas-list');
+  if (!sessAtletas.length) {
+    el.innerHTML = '<div class="empty"><div class="empty-icon">👥</div>Nenhum atleta cadastrado.</div>';
+    return;
+  }
+
+  el.innerHTML = sessAtletas.map(a => {
+    const d = sessData[a.id] || {};
+    const pres = d.presente || '?';
+    const presClass = pres === 'P' ? 'p' : pres === 'F' ? 'f' : 'q';
+    const cardClass = pres === 'P' ? 'presente' : pres === 'F' ? 'ausente' : '';
+    const baseline = a.cmj || 0;
+    // Pré-preencher baseline no estado
+    if (!sessData[a.id]) sessData[a.id] = {};
+    sessData[a.id].baseline = baseline;
+
+    return `
+    <div class="athlete-session-card ${cardClass}" id="asc-${a.id}">
+
+      <!-- Header clicável -->
+      <div class="asc-header" onclick="toggleAscBody(${a.id})">
+        <div class="asc-avatar">${a.nome?.charAt(0) || '?'}</div>
+        <div class="asc-info">
+          <div class="asc-name">${a.nome}</div>
+          <div class="asc-meta">${baseline > 0 ? 'Baseline CMJ: ' + baseline + ' cm' : 'Sem baseline'}</div>
+        </div>
+        <!-- Presença (clique separado, não propaga para o card) -->
+        <div class="presence-badge ${presClass}" id="pb-${a.id}"
+             onclick="event.stopPropagation();togglePresenca(${a.id})">${pres}</div>
+      </div>
+
+      <!-- Corpo expansível -->
+      <div class="asc-body" id="asc-body-${a.id}">
+
+        <!-- CMJ -->
+        <div style="font-size:10px;font-weight:800;color:var(--t2);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;margin-top:4px">
+          CMJ — 3 saltos (cm)
+        </div>
+        <div class="cmj-inputs">
+          <div class="cmj-box">
+            <label>1º</label>
+            <input class="cmj-inp" type="number" step="0.1" inputmode="decimal" id="cmj1-${a.id}"
+              placeholder="—" value="${d.cmj1||''}"
+              oninput="onCMJChange(${a.id})">
+          </div>
+          <div class="cmj-box">
+            <label>2º</label>
+            <input class="cmj-inp" type="number" step="0.1" inputmode="decimal" id="cmj2-${a.id}"
+              placeholder="—" value="${d.cmj2||''}"
+              oninput="onCMJChange(${a.id})">
+          </div>
+          <div class="cmj-box">
+            <label>3º</label>
+            <input class="cmj-inp" type="number" step="0.1" inputmode="decimal" id="cmj3-${a.id}"
+              placeholder="—" value="${d.cmj3||''}"
+              oninput="onCMJChange(${a.id})">
+          </div>
+        </div>
+
+        <!-- Resultado CMJ -->
+        <div class="cmj-result" id="cmj-res-${a.id}">
+          <div style="color:var(--t3);font-size:12px">Digite os 3 saltos</div>
+        </div>
+
+        <!-- RPE -->
+        <div style="font-size:10px;font-weight:800;color:var(--t2);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px">
+          RPE da sessão
+        </div>
+        <div class="rpe-selector">
+          ${['6','7','8','9','9.5','10'].map(v => `
+            <button class="rpe-chip-sess${d.rpe==v?' sel':''}" data-v="${v}"
+              onclick="selRPESessao(this,${a.id},${v})">${v}</button>
+          `).join('')}
+        </div>
+
+        <!-- Carga e notas -->
+        <div class="fg-2" style="margin-top:4px">
+          <div class="fg">
+            <label>Carga principal (kg)</label>
+            <input type="number" step="0.5" inputmode="decimal"
+              style="padding:10px 12px;background:var(--bg2);border:1.5px solid var(--border);border-radius:var(--r-sm);color:var(--t1);font-size:15px;font-weight:700;width:100%"
+              placeholder="0" value="${d.carga||''}"
+              oninput="onSessFieldChange(${a.id},'carga',this.value)">
+          </div>
+          <div class="fg">
+            <label>Notas</label>
+            <input type="text"
+              style="padding:10px 12px;background:var(--bg2);border:1.5px solid var(--border);border-radius:var(--r-sm);color:var(--t1);font-size:13px;width:100%"
+              placeholder="Observações..." value="${d.notas||''}"
+              oninput="onSessFieldChange(${a.id},'notas',this.value)">
+          </div>
+        </div>
+
+      </div><!-- /asc-body -->
+    </div><!-- /athlete-session-card -->`;
+  }).join('');
+}
+
+// Inicia a sessão: carrega atletas e baselines
+async function iniciarSessao() {
+  if (sessIniciada) { renderSessAtletas(); return; }
+  const el = document.getElementById('sess-atletas-list');
+  el.innerHTML = '<div class="empty"><div class="spin" style="width:28px;height:28px;border-width:3px"></div></div>';
+  try {
+    // Busca atletas (não coach) com baseline de CMJ
+    const ats = await GET('/rest/v1/atletas?is_coach=eq.false&order=nome&select=id,nome,cmj,peso');
+    sessAtletas = ats || [];
+    // Inicializa estado vazio para cada atleta
+    sessAtletas.forEach(a => {
+      if (!sessData[a.id]) sessData[a.id] = { presente: '?', baseline: a.cmj || 0 };
+    });
+    sessIniciada = true;
+    renderSessAtletas();
+    atualizarResumoSessao();
+  } catch(e) {
+    el.innerHTML = '<div class="empty">Erro ao carregar atletas.</div>';
+  }
+}
+
+// Salva a sessão inteira no Supabase
+async function salvarSessao() {
+  const msg = document.getElementById('sess-msg');
+  const hoje = new Date().toISOString().slice(0, 10);
+  const wn = weekNum();
+  msg.className = 'msg'; msg.innerHTML = '<span class="spin"></span>';
+
+  const presentes = sessAtletas.filter(a => sessData[a.id]?.presente === 'P');
+  if (!presentes.length) {
+    msg.className = 'msg err'; msg.textContent = 'Marque pelo menos 1 atleta como presente.';
+    return;
+  }
+
+  try {
+    // Salva um registro por atleta presente
+    for (const a of sessAtletas) {
+      const d = sessData[a.id] || {};
+      const r = calcCMJ(d.cmj1, d.cmj2, d.cmj3, d.baseline);
+      await POST('/rest/v1/sessions', {
+        athlete_id: a.id,
+        date: hoje,
+        day: sessDia,
+        week_num: wn,
+        presente: d.presente === 'P',
+        cmj_1: parseFloat(d.cmj1) || null,
+        cmj_2: parseFloat(d.cmj2) || null,
+        cmj_3: parseFloat(d.cmj3) || null,
+        cmj_best: r.best || null,
+        cmj_delta_pct: r.delta !== null ? parseFloat(r.delta.toFixed(2)) : null,
+        rpe: parseFloat(d.rpe) || null,
+        carga: parseFloat(d.carga) || null,
+        notas: d.notas || null
+      });
+    }
+
+    // Banner de sucesso
+    msg.textContent = '';
+    const banner = document.getElementById('sess-saved-banner');
+    document.getElementById('sess-saved-info').textContent =
+      `${hoje} · ${sessDia === 'ter' ? 'Terça' : 'Quinta'} · ${presentes.length} presentes`;
+    banner.classList.add('show');
+    setTimeout(() => banner.classList.remove('show'), 5000);
+
+    // Resetar estado para nova sessão
+    sessData = {};
+    sessAtletas.forEach(a => { sessData[a.id] = { presente: '?', baseline: a.cmj || 0 }; });
+    renderSessAtletas();
+    atualizarResumoSessao();
+
+  } catch(e) {
+    msg.className = 'msg err';
+    msg.textContent = 'Erro ao salvar: ' + e.message;
+  }
+}
+
+// ═══ FIM SESSÃO AO VIVO ═══════════════════════════════════
+
+window.onload=()=>{if(user&&tok)iniciar();};
+</script>
+</body>
+</html>
